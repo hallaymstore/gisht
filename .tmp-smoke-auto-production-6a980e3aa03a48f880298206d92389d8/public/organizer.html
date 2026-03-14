@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organizer Paneli | G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #f7f0e4;
+      --bg-main: #f3eee6;
+      --bg-bottom: #e7e1d8;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: #ffffff;
+      --surface-soft: #f8f3ea;
+      --text-main: #201911;
+      --text-strong: #110e09;
+      --text-soft: #685a4c;
+      --line: rgba(32, 25, 17, 0.11);
+      --accent: #ba7d1a;
+      --accent-strong: #966115;
+      --accent-soft: rgba(186, 125, 26, 0.14);
+      --accent-rgb: 186 125 26;
+      --success-soft: rgba(33, 150, 83, 0.12);
+      --success-text: #1f8d56;
+      --warning-soft: rgba(186, 125, 26, 0.14);
+      --warning-text: #a26913;
+      --info-soft: rgba(44, 114, 152, 0.12);
+      --info-text: #2c7298;
+      --danger-soft: rgba(184, 72, 72, 0.12);
+      --danger-text: #b65353;
+      --muted-soft: rgba(32, 25, 17, 0.06);
+      --shadow-panel: 0 18px 44px rgba(36, 27, 18, 0.08);
+      --shadow-card: 0 8px 22px rgba(36, 27, 18, 0.06);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #1a1710;
+      --bg-main: #13100c;
+      --bg-bottom: #0d0a07;
+      --surface: rgba(30, 24, 17, 0.84);
+      --surface-strong: #1d1711;
+      --surface-soft: #271f17;
+      --text-main: #f3efe9;
+      --text-strong: #ffffff;
+      --text-soft: #cbbfb3;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #efc26d;
+      --accent-strong: #f7d99b;
+      --accent-soft: rgba(239, 194, 109, 0.14);
+      --accent-rgb: 239 194 109;
+      --success-soft: rgba(92, 209, 149, 0.18);
+      --success-text: #90e4b7;
+      --warning-soft: rgba(239, 194, 109, 0.18);
+      --warning-text: #f0cb7d;
+      --info-soft: rgba(114, 192, 236, 0.18);
+      --info-text: #8fd7ff;
+      --danger-soft: rgba(239, 124, 124, 0.18);
+      --danger-text: #ffb3b3;
+      --muted-soft: rgba(255, 255, 255, 0.08);
+      --shadow-panel: 0 20px 56px rgba(0, 0, 0, 0.36);
+      --shadow-card: 0 10px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.15), transparent 28%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 54%, var(--bg-bottom) 100%);
+    }
+
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-panel); backdrop-filter: blur(18px); }
+    .card { background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+    .soft-card { background: var(--surface-soft); border: 1px solid var(--line); }
+    .text-strong { color: var(--text-strong); }
+    .text-soft { color: var(--text-soft); }
+    .accent { color: var(--accent); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .6rem .95rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: .55rem; height: .55rem; border-radius: 999px; background: var(--accent); }
+    .btn-main, .btn-outline, .theme-button {
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .2s ease, color .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn-main:hover, .btn-outline:hover, .theme-button:hover { transform: translateY(-1px); }
+    .btn-main { background: var(--accent); color: #fff; }
+    .btn-main:hover { background: var(--accent-strong); }
+    .btn-outline, .theme-button { background: var(--surface-strong); border: 1px solid var(--line); color: var(--text-main); }
+    .btn-outline:hover, .theme-button:hover { border-color: var(--accent); color: var(--accent); }
+    input, textarea, select {
+      background: var(--surface-strong);
+      color: var(--text-main);
+      border-color: var(--line);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .message-box {
+      border: 1px solid var(--line);
+    }
+    .message-box.success {
+      background: var(--success-soft);
+      color: var(--success-text);
+    }
+    .message-box.error {
+      background: var(--danger-soft);
+      color: var(--danger-text);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: .5rem .8rem;
+      border: 1px solid transparent;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      line-height: 1;
+    }
+    .status-pill.success {
+      background: var(--success-soft);
+      color: var(--success-text);
+    }
+    .status-pill.warning {
+      background: var(--warning-soft);
+      color: var(--warning-text);
+    }
+    .status-pill.info {
+      background: var(--info-soft);
+      color: var(--info-text);
+    }
+    .status-pill.muted {
+      background: var(--muted-soft);
+      color: var(--text-soft);
+    }
+  </style>
+</head>
+<body>
+  <header class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <span class="eyebrow">Organizer paneli</span>
+        <h1 class="mt-4 font-display text-[clamp(2rem,4vw,3.4rem)] font-bold tracking-[-0.04em] text-strong">Avtomatik ishlab chiqarish va buyurtma boshqaruvi</h1>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button type="button" class="theme-button px-4 py-3 text-sm" onclick="toggleTheme()"><span data-theme-label>Tungi mavzu</span></button>
+        <a href="/profile.html" class="btn-outline px-4 py-3 text-sm">Profil</a>
+        <a href="/index.html" class="btn-outline px-4 py-3 text-sm">Saytga qaytish</a>
+        <button id="logoutButton" class="btn-main px-5 py-3 text-sm">Chiqish</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl space-y-7 px-4 pb-16 sm:px-6 lg:px-8">
+    <p id="message" class="hidden rounded-[22px] px-5 py-4 text-sm"></p>
+    <section id="summaryGrid" class="grid gap-4 lg:grid-cols-5"></section>
+
+    <section class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Yangi topshiriq</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-strong">Topshirish yoki maxsus ish yozuvi</h2>
+        <form id="taskForm" class="mt-6 space-y-4">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Yo'nalish</label>
+              <select name="type" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="delivery">Buyurtmani topshirish</option>
+              </select>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Sana</label>
+              <input id="taskDate" name="scheduledDate" type="date" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Zakazchi</label>
+            <input name="customerName" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Zakazchi nomi" />
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Miqdor</label>
+            <input name="quantity" type="number" min="1" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Miqdor" />
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Izoh</label>
+            <textarea name="notes" rows="4" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Qo'shimcha izoh"></textarea>
+          </div>
+          <button class="btn-main w-full px-5 py-3 text-sm">Topshiriqni saqlash</button>
+        </form>
+      </div>
+
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <span class="eyebrow">Reja taxtasi</span>
+            <h2 class="mt-4 font-display text-2xl font-bold text-strong">Sana bo'yicha topshiriqlar</h2>
+          </div>
+          <div class="flex gap-3">
+            <input id="filterDate" type="date" class="rounded-[18px] border px-4 py-3 text-sm" />
+            <button id="refreshButton" class="btn-outline px-5 py-3 text-sm">Yangilash</button>
+          </div>
+        </div>
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <div>
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="font-display text-xl font-bold text-strong">Avtomatik ishlab chiqarish</h3>
+              <span class="status-pill success">Kamera</span>
+            </div>
+            <div id="productionBoard" class="space-y-4"></div>
+          </div>
+          <div>
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="font-display text-xl font-bold text-strong">Topshirish rejasi</h3>
+              <span class="status-pill info">Topshirish</span>
+            </div>
+            <div id="deliveryBoard" class="space-y-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+      <div class="space-y-6">
+        <div class="panel rounded-[28px] p-5 sm:p-6">
+          <span class="eyebrow">Mening profilim</span>
+          <div id="profileCard" class="mt-6"></div>
+        </div>
+        <div class="panel rounded-[28px] p-5 sm:p-6">
+          <span class="eyebrow">Oylik holati</span>
+          <div id="salaryCard" class="mt-6"></div>
+        </div>
+      </div>
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Xabarnomalar</span>
+        <div id="notificationList" class="mt-6 space-y-4"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) localStorage.setItem(key, theme);
+      }
+      applyTheme(localStorage.getItem(key) || (media.matches ? "dark" : "light"), false);
+      window.toggleTheme = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    })();
+
+    const logoutButton = document.getElementById("logoutButton");
+    const message = document.getElementById("message");
+    const taskForm = document.getElementById("taskForm");
+    const taskDate = document.getElementById("taskDate");
+    const filterDate = document.getElementById("filterDate");
+    const refreshButton = document.getElementById("refreshButton");
+    const summaryGrid = document.getElementById("summaryGrid");
+    const productionBoard = document.getElementById("productionBoard");
+    const deliveryBoard = document.getElementById("deliveryBoard");
+    const profileCard = document.getElementById("profileCard");
+    const salaryCard = document.getElementById("salaryCard");
+    const notificationList = document.getElementById("notificationList");
+
+    function setMessage(text, isError = false) {
+      message.textContent = text;
+      message.className = `message-box ${isError ? "error" : "success"} rounded-[22px] px-5 py-4 text-sm`;
+      message.classList.remove("hidden");
+    }
+
+    function toLocalYmd(date) {
+      const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0, 10);
+    }
+
+    function tomorrowYmd() {
+      const now = new Date();
+      now.setDate(now.getDate() + 1);
+      return toLocalYmd(now);
+    }
+
+    async function request(url, options = {}) {
+      const response = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "So'rov bajarilmadi.");
+      }
+      return data;
+    }
+
+    function currentMonthKey() {
+      const date = new Date();
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function formatMoney(value) {
+      return `${new Intl.NumberFormat("uz-UZ").format(Number(value || 0))} so'm`;
+    }
+
+    function statusBadge(status) {
+      const classes = {
+        planned: "muted",
+        accepted: "warning",
+        in_progress: "info",
+        done: "success"
+      };
+      return classes[status] || classes.planned;
+    }
+
+    function statusLabel(status) {
+      return {
+        planned: "Rejada",
+        accepted: "Qabul qilingan",
+        in_progress: "Jarayonda",
+        done: "Yakunlangan"
+      }[status] || status;
+    }
+
+    function renderProfile(profile) {
+      const user = profile?.user;
+      if (!user) {
+        profileCard.innerHTML = `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Profil ma'lumotlari topilmadi.</div>`;
+        return;
+      }
+
+      profileCard.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <h3 class="font-display text-xl font-bold text-strong">${user.fullName}</h3>
+          <p class="mt-2 text-sm text-soft">${user.positionTitle || "Lavozim ko'rsatilmagan"}</p>
+          <p class="mt-3 text-sm text-soft">@${user.username}</p>
+          <p class="mt-2 text-sm text-soft">${user.phone || "Telefon kiritilmagan"}</p>
+          <a href="/profile.html" class="btn-outline mt-5 inline-flex px-4 py-2 text-xs">Profilni ochish</a>
+        </article>
+      `;
+    }
+
+    function renderSalary(payroll) {
+      if (!payroll) {
+        salaryCard.innerHTML = `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bu oy uchun oylik yozuvi hali shakllanmagan.</div>`;
+        return;
+      }
+
+      const statusMeta = payroll.status === "paid"
+        ? { label: "To'langan", tone: "success" }
+        : { label: "Kutilmoqda", tone: "warning" };
+
+      salaryCard.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-bold text-strong">${formatMoney(payroll.amount)}</h3>
+            <span class="status-pill ${statusMeta.tone}">${statusMeta.label}</span>
+          </div>
+          <p class="mt-3 text-sm text-soft">${payroll.monthKey} oyi • to'lov sanasi ${payroll.dueDate}</p>
+        </article>
+      `;
+    }
+
+    function renderNotifications(items) {
+      notificationList.innerHTML = items.length
+        ? items.map((item) => `
+            <article class="soft-card rounded-[22px] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-display text-lg font-bold text-strong">${item.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-soft">${item.body}</p>
+                  <p class="mt-3 text-xs text-soft">${formatDate(item.createdAt)}</p>
+                </div>
+                ${!item.isRead ? `<button data-notification-id="${item.id}" class="btn-outline px-4 py-2 text-xs">O'qildi</button>` : `<span class="status-pill muted">O'qilgan</span>`}
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Hozircha xabarnomalar yo'q.</div>`;
+    }
+
+    function renderSummary(summary, production) {
+      const totals = production?.totals || {};
+      const items = [
+        { label: "Faol turlar", value: totals.workTypeCount || 0 },
+        { label: "Bugungi dona", value: totals.loggedQuantity || 0 },
+        { label: "Bugungi summa", value: formatMoney(totals.totalAmount || 0) },
+        { label: "Topshirish", value: summary.delivery || 0 },
+        { label: "Jarayonda", value: summary.inProgress || 0 },
+        { label: "Yakunlangan", value: summary.done || 0 }
+      ];
+      summaryGrid.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong sm:text-4xl">${item.value}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderTaskCard(task) {
+      return `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-strong">${task.customerName}</h3>
+              <p class="mt-2 text-sm text-soft">${task.quantity} ta • ${task.scheduledDate}</p>
+            </div>
+            <span class="status-pill ${statusBadge(task.status)}">${statusLabel(task.status)}</span>
+          </div>
+          <p class="mt-3 text-sm leading-7 text-soft">${task.notes || "Izoh kiritilmagan."}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button data-task="${task.id}" data-action="edit" class="btn-outline px-4 py-2 text-xs">Tahrirlash</button>
+            <button data-task="${task.id}" data-status="planned" class="btn-outline px-4 py-2 text-xs">Rejaga qaytarish</button>
+            <button data-task="${task.id}" data-status="in_progress" class="btn-outline px-4 py-2 text-xs">Jarayonda</button>
+            <button data-task="${task.id}" data-status="done" class="btn-main px-4 py-2 text-xs">Yakunlash</button>
+          </div>
+          ${task.acceptedBy ? `<p class="mt-3 text-xs text-soft">Qabul qilgan: ${task.acceptedBy.fullName}</p>` : ""}
+        </article>
+      `;
+    }
+
+    function renderProductionBoard(production) {
+      const items = production?.items || [];
+      productionBoard.innerHTML = items.length ? items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-display text-lg font-bold text-strong">${item.workTypeLabel}</h3>
+              <p class="mt-2 text-sm text-soft">${item.loggedQuantity || 0} ta • ${formatMoney(item.totalAmount || 0)}</p>
+            </div>
+            <span class="status-pill ${item.automated ? "success" : "warning"}">${item.automated ? "Avtomatik" : "Kutilmoqda"}</span>
+          </div>
+          <p class="mt-3 text-sm leading-7 text-soft">${item.note}</p>
+          <p class="mt-3 text-xs text-soft">Ishchilar: ${(item.workers || []).map((worker) => `${worker.fullName} (${formatMoney(worker.todayAmount || 0)})`).join(", ") || "biriktirilmagan"}</p>
+        </article>
+      `).join("") : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bugungi avtomatik ishlab chiqarish yozuvlari hali ko'rinmadi.</div>`;
+    }
+
+    function renderBoards(tasks, production) {
+      const delivery = tasks.filter((task) => task.type === "delivery");
+      renderProductionBoard(production);
+      deliveryBoard.innerHTML = delivery.length ? delivery.map(renderTaskCard).join("") : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bu sana uchun topshirish topshiriqlari yo'q.</div>`;
+    }
+
+    function renderProfile(profile) {
+      const user = profile?.user;
+      if (!user) {
+        profileCard.innerHTML = `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Profil ma'lumotlari topilmadi.</div>`;
+        return;
+      }
+
+      profileCard.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <h3 class="font-display text-xl font-bold text-strong">${user.fullName}</h3>
+          <p class="mt-2 text-sm text-soft">${user.positionTitle || "Lavozim ko'rsatilmagan"}</p>
+          <p class="mt-3 text-sm text-soft">@${user.username}</p>
+          <p class="mt-2 text-sm text-soft">${user.phone || "Telefon kiritilmagan"}</p>
+          <a href="/profile.html" class="btn-outline mt-5 inline-flex px-4 py-2 text-xs">Profilni ochish</a>
+        </article>
+      `;
+    }
+
+    function renderSalary(payroll) {
+      if (!payroll) {
+        salaryCard.innerHTML = `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bu oy uchun hisob-kitob hali shakllanmagan.</div>`;
+        return;
+      }
+
+      const statusMeta = payroll.status === "debt"
+        ? { label: "Qarzdor", tone: "danger" }
+        : payroll.status === "partial"
+          ? { label: "Qisman", tone: "warning" }
+          : payroll.status === "paid"
+            ? { label: "To'langan", tone: "success" }
+            : { label: "Kutilmoqda", tone: "warning" };
+
+      salaryCard.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-bold text-strong">${formatMoney(payroll.accruedAmount || payroll.amount)}</h3>
+            <span class="status-pill ${statusMeta.tone}">${statusMeta.label}</span>
+          </div>
+          <p class="mt-3 text-sm text-soft">${payroll.monthKey} oyi • hisob sanasi ${payroll.dueDate}</p>
+          <div class="mt-4 space-y-2 text-sm">
+            <p class="text-soft">Hisoblangan: <span class="font-semibold text-strong">${formatMoney(payroll.accruedAmount)}</span></p>
+            <p class="text-soft">Avans va chiqim: <span class="font-semibold text-strong">${formatMoney(payroll.advanceAmount)}</span></p>
+            <p class="text-soft">To'langan: <span class="font-semibold text-strong">${formatMoney(payroll.paidAmount)}</span></p>
+            <p class="text-soft">Qolgan summa: <span class="font-semibold text-strong">${formatMoney(payroll.payableAmount)}</span></p>
+            ${payroll.debtAmount > 0 ? `<p class="text-soft">Qarz balansi: <span class="font-semibold text-strong">${formatMoney(payroll.debtAmount)}</span></p>` : ""}
+          </div>
+        </article>
+      `;
+    }
+
+    async function loadBoard() {
+      const [summaryData, tasksData, profileData, notificationsData, payrollData, productionData] = await Promise.all([
+        request(`/api/tasks/summary?scheduledDate=${encodeURIComponent(filterDate.value)}`),
+        request(`/api/tasks?scheduledDate=${encodeURIComponent(filterDate.value)}`),
+        request("/api/profile"),
+        request("/api/notifications?limit=12"),
+        request(`/api/payroll?mine=true&monthKey=${encodeURIComponent(currentMonthKey())}`),
+        request(`/api/production-summary?date=${encodeURIComponent(filterDate.value)}`)
+      ]);
+      renderSummary(summaryData.summary || {}, productionData);
+      renderBoards(tasksData.tasks || [], productionData);
+      renderProfile(profileData);
+      renderNotifications(notificationsData.notifications || []);
+      renderSalary((payrollData.items || [])[0] || profileData.payroll || null);
+    }
+
+    async function ensureOrganizer() {
+      const data = await request("/api/auth/me");
+      if (!data.authenticated || data.user.role !== "organizer") {
+        window.location.href = data.redirectTo || "/login.html";
+      }
+    }
+
+    taskForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await request("/api/tasks", {
+          method: "POST",
+          body: JSON.stringify({
+            type: taskForm.type.value,
+            customerName: taskForm.customerName.value,
+            quantity: Number(taskForm.quantity.value),
+            scheduledDate: taskForm.scheduledDate.value,
+            notes: taskForm.notes.value
+          })
+        });
+        taskForm.reset();
+        taskDate.value = tomorrowYmd();
+        setMessage("Topshiriq saqlandi.");
+        await loadBoard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    async function updateTaskStatus(taskId, status) {
+      const note = prompt("Qisqa izoh kiriting:") || "";
+      await request(`/api/tasks/${taskId}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status, note })
+      });
+    }
+
+    [productionBoard, deliveryBoard].forEach((board) => {
+      board.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-task]");
+        if (!button) return;
+        try {
+          if (button.dataset.action === "edit") {
+            const tasksData = await request(`/api/tasks?scheduledDate=${encodeURIComponent(filterDate.value)}`);
+            const selected = (tasksData.tasks || []).find((item) => item.id === button.dataset.task);
+            if (!selected) return;
+            const customerName = prompt("Zakazchi nomi", selected.customerName);
+            if (!customerName) return;
+            const quantity = prompt("Miqdor", selected.quantity);
+            if (!quantity) return;
+            const scheduledDate = prompt("Sana (YYYY-MM-DD)", selected.scheduledDate);
+            if (!scheduledDate) return;
+            const notes = prompt("Izoh", selected.notes || "") || "";
+            await request(`/api/tasks/${button.dataset.task}`, {
+              method: "PATCH",
+              body: JSON.stringify({
+                type: selected.type,
+                customerName,
+                quantity,
+                scheduledDate,
+                notes
+              })
+            });
+            setMessage("Topshiriq yangilandi.");
+            await loadBoard();
+            return;
+          }
+
+          await updateTaskStatus(button.dataset.task, button.dataset.status);
+          setMessage("Holat yangilandi.");
+          await loadBoard();
+        } catch (error) {
+          setMessage(error.message, true);
+        }
+      });
+    });
+
+    notificationList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-notification-id]");
+      if (!button) return;
+      try {
+        await request(`/api/notifications/${button.dataset.notificationId}/read`, {
+          method: "PATCH",
+          body: JSON.stringify({})
+        });
+        await loadBoard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    refreshButton.addEventListener("click", async () => {
+      try {
+        await loadBoard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    filterDate.addEventListener("change", () => {
+      loadBoard().catch((error) => setMessage(error.message, true));
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    (async () => {
+      try {
+        taskDate.value = tomorrowYmd();
+        filterDate.value = tomorrowYmd();
+        await ensureOrganizer();
+        await loadBoard();
+      } catch (error) {
+        setMessage(error.message || "Panel yuklanmadi.", true);
+      }
+    })();
+  </script>
+</body>
+</html>

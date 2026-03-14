@@ -1,0 +1,705 @@
+{
+  "users": [
+    {
+      "fullName": "Bosh Admin",
+      "username": "admin",
+      "usernameLower": "admin",
+      "passwordHash": "96f9f94de17146ee56b88ca405e515a5:9c425c8b2f091f0faa3993e3c7e19e99e40447d0326143a274dfb4e5b5e49269572c7155f3783ea50ac3946eb3dc4d85f6e583814de66277f7f5378a1c3546d3",
+      "role": "admin",
+      "isActive": true,
+      "createdAt": "2026-03-06T16:57:02.874Z",
+      "updatedAt": "2026-03-13T15:37:44.900Z",
+      "_id": "90f385c52188515d6c8ed5a3",
+      "lastLoginAt": "2026-03-13T15:37:44.900Z"
+    },
+    {
+      "fullName": "Bosh Organizer",
+      "username": "organizer",
+      "usernameLower": "organizer",
+      "passwordHash": "1922467d69e467cfe36aaa3347e71645:31eaf7bc392e264f205e2b38d9438070e6a81360c51ba1392c9cce166c76de830cf7c820f84f24fbbf63ef4a74ebdd828fc711c51cb2ce5a5a85ecf1336c7691",
+      "role": "organizer",
+      "isActive": true,
+      "createdAt": "2026-03-06T16:57:03.087Z",
+      "updatedAt": "2026-03-06T16:57:03.087Z",
+      "_id": "16fdba727da50547403185d8"
+    },
+    {
+      "fullName": "Namuna Ishchi",
+      "username": "worker",
+      "usernameLower": "worker",
+      "passwordHash": "5cf78441923cf1599f45da009463be03:bb55215f0bb5afe2b358fede2820926136e33b334f718306368c32149a1d820b03650304b10356dab1fbd5caf7546baa86515d870fd4a4fb47f755725bee0726",
+      "role": "worker",
+      "isActive": true,
+      "createdAt": "2026-03-06T16:57:03.191Z",
+      "updatedAt": "2026-03-13T15:20:48.780Z",
+      "_id": "911211bf849250c5ee9a8801",
+      "positionTitle": "Ishchi",
+      "phone": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "lastLoginAt": "2026-03-13T15:20:48.780Z",
+      "assignedWorkType": "parmofka"
+    }
+  ],
+  "sessions": [
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "1c9bcd05e8725c4ff4eb221d332c087c9b39ef724926de0d76e66db0ca789c27",
+      "role": "admin",
+      "createdAt": "2026-03-07T09:25:07.792Z",
+      "lastSeenAt": "2026-03-07T09:25:07.962Z",
+      "expiresAt": "2026-04-06T09:25:07.792Z",
+      "_id": "f10213d0cb2f918f69eabd0a"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "bff0fdeebe072e1c671776c7b090c8ce69637356deefd8e96e4afe13c56f1a91",
+      "role": "admin",
+      "createdAt": "2026-03-07T09:25:38.359Z",
+      "lastSeenAt": "2026-03-07T09:25:38.509Z",
+      "expiresAt": "2026-04-06T09:25:38.359Z",
+      "_id": "e00256bdc1957f1e591e8cf6"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "e883ca662d1d2c5a6177909fd40f56c222c6ac4689e59e61a82e9a43d4c798d3",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:21.383Z",
+      "lastSeenAt": "2026-03-07T10:07:22.172Z",
+      "expiresAt": "2026-04-06T10:07:21.383Z",
+      "_id": "0363310566834d3d27ec98d1"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "3b3f76f24c5f400cbd22dd5eb73d116a9d66ee7d0ddf9054215439710c225b9d",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:21.384Z",
+      "lastSeenAt": "2026-03-07T10:07:22.001Z",
+      "expiresAt": "2026-04-06T10:07:21.384Z",
+      "_id": "95efcd93f0e261238ec226c6"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "4873758bbf92fa280a30ba2a73f0126bb62c5a939f37519fd0137140df6a93e3",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:21.386Z",
+      "lastSeenAt": "2026-03-07T10:07:22.000Z",
+      "expiresAt": "2026-04-06T10:07:21.386Z",
+      "_id": "26c983c8fc273abef4d04778"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "13078de6a06df017ebf9c72d44775e1c256dcc227be35633929186cde56f4848",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:39.099Z",
+      "lastSeenAt": "2026-03-07T10:07:39.208Z",
+      "expiresAt": "2026-04-06T10:07:39.099Z",
+      "_id": "88611c8d17bae830357b4dc4"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "06cc40d91c0305d5bbc56df26e5b51d1dc86d79c273cb9a5ee35c9c1eeb87307",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:39.101Z",
+      "lastSeenAt": "2026-03-07T10:07:39.218Z",
+      "expiresAt": "2026-04-06T10:07:39.101Z",
+      "_id": "fd3c218331b80c7f425ff978"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "b44f4fa683bbd3ac30257f8c96cf636cbfa7db04cdb40028df968ab0b2bca5b2",
+      "role": "admin",
+      "createdAt": "2026-03-07T10:07:39.101Z",
+      "lastSeenAt": "2026-03-07T10:07:39.212Z",
+      "expiresAt": "2026-04-06T10:07:39.101Z",
+      "_id": "5fb584563ec9f61dc5336224"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "6b754d5a3895bad03440999da2c65e9ba0a33e7558f56733273b3c12befdb995",
+      "role": "admin",
+      "createdAt": "2026-03-12T18:00:59.822Z",
+      "lastSeenAt": "2026-03-12T18:00:59.827Z",
+      "expiresAt": "2026-04-11T18:00:59.822Z",
+      "_id": "d44389186fb2c8bdf30dcd6c"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "6a79644c5bba53ec6b0d44f1f9fe317b5e5a4dc2dc7f7078d9a9439913368ad0",
+      "role": "admin",
+      "createdAt": "2026-03-12T18:02:22.737Z",
+      "lastSeenAt": "2026-03-12T18:02:22.751Z",
+      "expiresAt": "2026-04-11T18:02:22.737Z",
+      "_id": "ed0d417784597fe3a95efd3f"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "7d8f10951f0e88eb655317afbf73920ed849b25d5734e77c006bc9050a46f4d5",
+      "role": "admin",
+      "createdAt": "2026-03-13T12:31:16.851Z",
+      "lastSeenAt": "2026-03-13T12:31:20.380Z",
+      "expiresAt": "2026-04-12T12:31:16.851Z",
+      "_id": "e1a1f4b4fe5ffe5d804b91e1"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "e75a610c69bbf56b80927126310b1f389017fd55df241a658d3db982c82dcc6b",
+      "role": "admin",
+      "createdAt": "2026-03-13T12:32:03.645Z",
+      "lastSeenAt": "2026-03-13T12:32:03.655Z",
+      "expiresAt": "2026-04-12T12:32:03.645Z",
+      "_id": "952684eac9148d9463bd1f89"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "cd55a9a2ce7f826308776cbd86fcdecf15de86f3efe18b617d26af34a5c421e0",
+      "role": "admin",
+      "createdAt": "2026-03-13T12:32:36.531Z",
+      "lastSeenAt": "2026-03-13T12:32:39.050Z",
+      "expiresAt": "2026-04-12T12:32:36.531Z",
+      "_id": "a2ad162d1d7f8b3e6a28fe4a"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "0e19b1e1c0d82c355f04e3d4066e03e33e02d2d21ed239d045d8a83ebeddada4",
+      "role": "admin",
+      "createdAt": "2026-03-13T12:34:02.873Z",
+      "lastSeenAt": "2026-03-13T12:34:02.877Z",
+      "expiresAt": "2026-04-12T12:34:02.873Z",
+      "_id": "3af21ce448e53bfa46225ed2"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "9659fd4465317a3750068b27f69e592de70c7cf5d121da9e5a5414d14c1d26a6",
+      "role": "admin",
+      "createdAt": "2026-03-13T15:37:44.899Z",
+      "lastSeenAt": "2026-03-14T06:10:21.480Z",
+      "expiresAt": "2026-04-12T15:37:44.899Z",
+      "_id": "2dc34707ff7cfc893b786f6c"
+    }
+  ],
+  "tasks": [
+    {
+      "type": "production",
+      "customerName": "Samandar Qurilish",
+      "quantity": 1000,
+      "scheduledDate": "2026-03-07",
+      "status": "planned",
+      "notes": "Ertalik quyish partiyasi",
+      "createdBy": "16fdba727da50547403185d8",
+      "progressNotes": [],
+      "createdAt": "2026-03-06T16:57:03.200Z",
+      "updatedAt": "2026-03-06T16:57:03.200Z",
+      "_id": "7b4198ab0d65b86c2bebd44a"
+    },
+    {
+      "type": "production",
+      "customerName": "Nur Invest",
+      "quantity": 350,
+      "scheduledDate": "2026-03-07",
+      "status": "planned",
+      "notes": "Tez tayyorlanadigan partiya",
+      "createdBy": "16fdba727da50547403185d8",
+      "progressNotes": [],
+      "createdAt": "2026-03-06T16:57:03.200Z",
+      "updatedAt": "2026-03-06T16:57:03.200Z",
+      "_id": "3b3fd4ab7c214d7cfb9ebd83"
+    },
+    {
+      "type": "delivery",
+      "customerName": "Obod Uylar",
+      "quantity": 1500,
+      "scheduledDate": "2026-03-06",
+      "status": "in_progress",
+      "notes": "Oldin quyilgan va tayyor partiya",
+      "createdBy": "16fdba727da50547403185d8",
+      "acceptedBy": "911211bf849250c5ee9a8801",
+      "acceptedAt": "2026-03-06T16:57:03.200Z",
+      "progressNotes": [
+        {
+          "note": "Topshiriq qabul qilindi",
+          "status": "accepted",
+          "at": "2026-03-06T16:57:03.200Z",
+          "byRole": "worker"
+        }
+      ],
+      "createdAt": "2026-03-06T16:57:03.200Z",
+      "updatedAt": "2026-03-06T16:57:03.200Z",
+      "_id": "70fc640d24212feb9632b72e"
+    },
+    {
+      "type": "delivery",
+      "customerName": "Mega Stroy",
+      "quantity": 780,
+      "scheduledDate": "2026-03-06",
+      "status": "done",
+      "notes": "Tayyor mahsulot topshirildi",
+      "createdBy": "16fdba727da50547403185d8",
+      "acceptedBy": "911211bf849250c5ee9a8801",
+      "completedBy": "911211bf849250c5ee9a8801",
+      "acceptedAt": "2026-03-06T16:57:03.200Z",
+      "completedAt": "2026-03-06T16:57:03.200Z",
+      "progressNotes": [
+        {
+          "note": "Topshiriq qabul qilindi",
+          "status": "accepted",
+          "at": "2026-03-06T16:57:03.200Z",
+          "byRole": "worker"
+        },
+        {
+          "note": "Topshiriq bajarildi",
+          "status": "done",
+          "at": "2026-03-06T16:57:03.200Z",
+          "byRole": "worker"
+        }
+      ],
+      "createdAt": "2026-03-06T16:57:03.200Z",
+      "updatedAt": "2026-03-06T16:57:03.200Z",
+      "_id": "e1e7634986e33fc6b5fcb48f"
+    }
+  ],
+  "contents": [
+    {
+      "type": "product",
+      "title": "Premium Qurilish G'ishti",
+      "slug": "premium-qurilish-gishti-ecf5b5",
+      "excerpt": "Yuqori bosimga chidamli, fasad va asosiy qurilish ishlari uchun mos partiya.",
+      "body": "Mazkur mahsulot zich pishirilgan xomashyodan tayyorlanadi. Bir xil o'lcham, silliq kesim va yuqori mustahkamlik bilan doimiy partiya nazoratidan o'tadi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fdba74%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a3412%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EPremium%20Qurilish%20Gishti%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "So'rov bo'yicha",
+      "tags": [
+        "Premium",
+        "Fasad",
+        "Mustahkam"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-06T16:57:03.194Z",
+      "updatedAt": "2026-03-06T16:57:03.194Z",
+      "_id": "f288a8ce956320ca90dd162e"
+    },
+    {
+      "type": "product",
+      "title": "Standart Qizil G'isht",
+      "slug": "standart-qizil-gisht-9ea696",
+      "excerpt": "Kundalik obyektlar uchun balansli narx va sifat yechimi.",
+      "body": "Standart liniyada ishlab chiqarilgan ushbu tur yirik va o'rta hajmdagi qurilish buyurtmalari uchun barqaror yetkazib berish grafigi bilan taqdim etiladi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fdba74%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a3412%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EStandart%20Qizil%20Gisht%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "Ulguji narx mavjud",
+      "tags": [
+        "Standart",
+        "Ulguji",
+        "Barqaror"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-06T16:57:03.194Z",
+      "updatedAt": "2026-03-06T16:57:03.194Z",
+      "_id": "6cdc63bfa383909576c34dcb"
+    }
+  ],
+  "settings": [
+    {
+      "key": "finance",
+      "value": {
+        "workRates": {
+          "parmofka": 80,
+          "klidka": 20,
+          "bont": 80,
+          "sotka": 120,
+          "pogruska": 100,
+          "kochigar": 80
+        },
+        "workTypes": [
+          {
+            "key": "parmofka",
+            "label": "Parmofka",
+            "rate": 80
+          },
+          {
+            "key": "klidka",
+            "label": "Klidka",
+            "rate": 20
+          },
+          {
+            "key": "bont",
+            "label": "Bont",
+            "rate": 80
+          },
+          {
+            "key": "sotka",
+            "label": "Sotka",
+            "rate": 120
+          },
+          {
+            "key": "pogruska",
+            "label": "Pogruska",
+            "rate": 100
+          },
+          {
+            "key": "kochigar",
+            "label": "Kochigar",
+            "rate": 80
+          }
+        ],
+        "rawMaterialCostPerBrick": 500,
+        "laborCostPerBrick": 480,
+        "energyCostPerBrick": 50,
+        "transportCostPerBrick": 30,
+        "otherCostPerBrick": 20,
+        "salePricePerBrick": 1800,
+        "nonLaborCostPerBrick": 600,
+        "totalCostPerBrick": 1080,
+        "profitPerBrick": 720
+      },
+      "updatedAt": "2026-03-13T14:40:59.653Z",
+      "updatedBy": "90f385c52188515d6c8ed5a3",
+      "createdAt": "2026-03-07T09:24:51.458Z",
+      "_id": "a0af815aadf7e9339192db8f"
+    },
+    {
+      "key": "cameraSystem",
+      "value": {
+        "monitors": [
+          {
+            "id": "df18be5b86fac5b2",
+            "name": "Test kamera",
+            "areaName": "Test zona",
+            "notes": "",
+            "autoSyncWorkLog": false,
+            "workerIds": [],
+            "countDirection": "both",
+            "createdAt": "2026-03-13T14:27:11.225Z",
+            "updatedAt": "2026-03-13T14:27:11.225Z",
+            "enabled": true,
+            "modelKey": "custom",
+            "modelLabel": "Boshqa IP kamera",
+            "modelDescription": "Snapshot API yoki RTSP manzilini qo'lda kiritish uchun.",
+            "streamMode": "rtsp",
+            "snapshotUrl": "https://httpbin.org/image/jpeg",
+            "streamUrl": "rtsp://184.72.239.149, wowzaec2demo.streamlock.net",
+            "authType": "none",
+            "username": "",
+            "password": "",
+            "apiToken": "",
+            "tokenQueryKey": "token",
+            "ffmpegPath": "D:\\gisht\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+            "rtspTransport": "tcp",
+            "workType": "parmofka",
+            "lineStartX": 0.18,
+            "lineStartY": 0.52,
+            "lineEndX": 0.82,
+            "lineEndY": 0.52,
+            "frameIntervalMs": 900,
+            "motionThreshold": 28,
+            "minBlobArea": 140,
+            "maxBlobArea": 12000,
+            "trackerDistancePx": 60,
+            "snapshotExample": "http://camera-ip/snapshot.jpg",
+            "streamExample": "rtsp://camera-ip:554/stream",
+            "httpExample": "http://camera-ip/mjpeg"
+          },
+          {
+            "id": "b7797e7a19872f5d",
+            "name": "Final test kamera",
+            "areaName": "Final zona",
+            "notes": "",
+            "autoSyncWorkLog": false,
+            "workerIds": [],
+            "countDirection": "both",
+            "createdAt": "2026-03-13T14:27:11.225Z",
+            "updatedAt": "2026-03-13T14:27:11.225Z",
+            "enabled": true,
+            "modelKey": "custom",
+            "modelLabel": "Boshqa IP kamera",
+            "modelDescription": "Snapshot API yoki RTSP manzilini qo'lda kiritish uchun.",
+            "streamMode": "rtsp",
+            "snapshotUrl": "https://httpbin.org/image/jpeg",
+            "streamUrl": "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
+            "authType": "none",
+            "username": "",
+            "password": "",
+            "apiToken": "",
+            "tokenQueryKey": "token",
+            "ffmpegPath": "D:\\gisht\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+            "rtspTransport": "tcp",
+            "workType": "parmofka",
+            "lineStartX": 0.18,
+            "lineStartY": 0.52,
+            "lineEndX": 0.82,
+            "lineEndY": 0.52,
+            "frameIntervalMs": 900,
+            "motionThreshold": 28,
+            "minBlobArea": 140,
+            "maxBlobArea": 12000,
+            "trackerDistancePx": 60,
+            "snapshotExample": "http://camera-ip/snapshot.jpg",
+            "streamExample": "rtsp://camera-ip:554/stream",
+            "httpExample": "http://camera-ip/mjpeg"
+          }
+        ]
+      },
+      "updatedAt": "2026-03-13T14:27:11.225Z",
+      "updatedBy": "90f385c52188515d6c8ed5a3",
+      "createdAt": "2026-03-13T12:31:16.860Z",
+      "_id": "83895866f3e13d142a6685ec"
+    }
+  ],
+  "notifications": [
+    {
+      "userId": {
+        "value": "51a8a32de681785b9d072cf9"
+      },
+      "type": "manual",
+      "title": "Sinov xabar",
+      "body": "Tizim ishlamoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "senderRole": "admin",
+        "targetType": "user",
+        "role": ""
+      },
+      "createdAt": "2026-03-07T09:25:38.507Z",
+      "updatedAt": "2026-03-07T09:25:38.507Z",
+      "readAt": null,
+      "_id": "7b40029f2518af5e1ba5f01e"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "work_log_added",
+      "title": "Ish haqi yozuvi qo'shildi",
+      "body": "Parmofka bo'yicha 10000 ta yozuv qo'shildi.",
+      "link": "/worker.html",
+      "meta": {
+        "date": "2026-03-13",
+        "workType": "parmofka",
+        "shareAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:29.767Z",
+      "updatedAt": "2026-03-13T15:20:29.767Z",
+      "readAt": null,
+      "_id": "54cd82d280f3c02211132d56"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:29.774Z",
+      "updatedAt": "2026-03-13T15:20:29.774Z",
+      "readAt": null,
+      "_id": "21e92cb4a04a7a8d24e7c62c"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:29.776Z",
+      "updatedAt": "2026-03-13T15:20:29.776Z",
+      "readAt": null,
+      "_id": "c326e3ce796c8e81b6576c72"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:29.776Z",
+      "updatedAt": "2026-03-13T15:20:29.776Z",
+      "readAt": null,
+      "_id": "5988649ba1096c4cf7bb25af"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:29.778Z",
+      "updatedAt": "2026-03-13T15:20:29.778Z",
+      "readAt": null,
+      "_id": "a6a92c3437150bc7131bbf2a"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:48.855Z",
+      "updatedAt": "2026-03-13T15:20:48.855Z",
+      "readAt": null,
+      "_id": "b679ca4714b91a13ac7d1404"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:48.861Z",
+      "updatedAt": "2026-03-13T15:20:48.861Z",
+      "readAt": null,
+      "_id": "e752636e1bc916e0f9df022a"
+    },
+    {
+      "userId": {
+        "value": "911211bf849250c5ee9a8801"
+      },
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 800000 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 800000
+      },
+      "createdAt": "2026-03-13T15:20:48.866Z",
+      "updatedAt": "2026-03-13T15:20:48.866Z",
+      "readAt": null,
+      "_id": "068afc74cba15cab2f3d3af9"
+    }
+  ],
+  "payrolls": [],
+  "workLogs": [
+    {
+      "date": "2026-03-13",
+      "workType": "parmofka",
+      "quantity": 10000,
+      "ratePerBrick": 80,
+      "totalAmount": 800000,
+      "shareAmount": 800000,
+      "workerIds": [
+        "911211bf849250c5ee9a8801"
+      ],
+      "notes": "",
+      "createdBy": "90f385c52188515d6c8ed5a3",
+      "createdAt": "2026-03-13T15:20:29.759Z",
+      "updatedAt": "2026-03-13T15:20:29.759Z",
+      "_id": "e95146c136284f9524089339"
+    }
+  ],
+  "workerTransactions": [],
+  "customerPayments": [],
+  "cameraCounts": [
+    {
+      "monitorId": "df18be5b86fac5b2",
+      "monitorName": "Test kamera",
+      "areaName": "Test zona",
+      "workType": "parmofka",
+      "date": "2026-03-13",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "running",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-13T17:29:01.581Z",
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-13T17:29:01.582Z",
+      "createdAt": "2026-03-13T12:31:18.010Z",
+      "_id": "f53fc3cb9c443f68a2f81766"
+    },
+    {
+      "monitorId": "b7797e7a19872f5d",
+      "monitorName": "Final test kamera",
+      "areaName": "Final zona",
+      "workType": "parmofka",
+      "date": "2026-03-13",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "error",
+      "lastError": "RTSP port ulanmayapti (184.72.239.149:554). Stream manzili noto'g'ri yoki port yopiq.",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-13T13:40:02.341Z",
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-13T17:28:59.413Z",
+      "createdAt": "2026-03-13T12:32:37.317Z",
+      "_id": "39e7630179de2fbc451b6572"
+    },
+    {
+      "monitorId": "df18be5b86fac5b2",
+      "monitorName": "Test kamera",
+      "areaName": "Test zona",
+      "workType": "parmofka",
+      "date": "2026-03-14",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "stopped",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-14T06:10:49.009Z",
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-14T06:10:49.922Z",
+      "createdAt": "2026-03-14T06:10:04.870Z",
+      "_id": "f7bb58dfec7c3281150c1669"
+    },
+    {
+      "monitorId": "b7797e7a19872f5d",
+      "monitorName": "Final test kamera",
+      "areaName": "Final zona",
+      "workType": "parmofka",
+      "date": "2026-03-14",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "stopped",
+      "lastError": "RTSP port ulanmayapti (184.72.239.149:554). Stream manzili noto'g'ri yoki port yopiq.",
+      "lastWarning": "",
+      "lastFrameAt": null,
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-14T06:10:49.923Z",
+      "createdAt": "2026-03-14T06:10:05.650Z",
+      "_id": "7223f17651167f30ae41a9e8"
+    }
+  ]
+}

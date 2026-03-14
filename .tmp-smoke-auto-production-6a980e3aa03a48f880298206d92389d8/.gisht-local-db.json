@@ -1,0 +1,585 @@
+{
+  "users": [
+    {
+      "fullName": "Bosh Admin",
+      "username": "admin",
+      "usernameLower": "admin",
+      "passwordHash": "a12dad8efb5fed9a30883a4480e38b58:0d81de5d59240b858a0809be5516c66fcf80f70d76e6ffa2244e8c7242f13b09794088c68798054122db291c246bcbbacab9e5d51c777bdca7ed3c069f7fb3b3",
+      "role": "admin",
+      "positionTitle": "Admin",
+      "phone": "",
+      "bio": "",
+      "avatarUrl": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "assignedWorkType": "",
+      "isActive": true,
+      "createdAt": "2026-03-13T15:25:42.643Z",
+      "updatedAt": "2026-03-13T15:27:44.465Z",
+      "_id": "33d996c159546c3d7c157285",
+      "lastLoginAt": "2026-03-13T15:27:44.465Z"
+    },
+    {
+      "fullName": "Bosh Organizer",
+      "username": "organizer",
+      "usernameLower": "organizer",
+      "passwordHash": "eb3bf9416ddbd33bf475568bd0211e1a:629d1a9b2fceb4513424bda4339552b0f900d9613b487f877a190b2334faa8c6de65d575c0833ad4161fbf31724074e635c5c5410e848ce51300ba5509fd27fe",
+      "role": "organizer",
+      "positionTitle": "Organizer",
+      "phone": "",
+      "bio": "",
+      "avatarUrl": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "assignedWorkType": "",
+      "isActive": true,
+      "createdAt": "2026-03-13T15:25:42.667Z",
+      "updatedAt": "2026-03-13T15:25:42.667Z",
+      "_id": "4896fb3dc36a79ec51f481f8"
+    },
+    {
+      "fullName": "Namuna Ishchi",
+      "username": "worker",
+      "usernameLower": "worker",
+      "passwordHash": "139221fc533808a5433646dd7278474b:27ebeac4b7d8173a29e2d9565fb379fd7d8d7547e17a3f2c09e54cf8391c9ee5241134c861f2ac08f6b7654506bf9f2563338da8301be67f0eeac09db343ad0a",
+      "role": "worker",
+      "positionTitle": "Ishchi",
+      "phone": "",
+      "bio": "",
+      "avatarUrl": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "assignedWorkType": "parmofka",
+      "isActive": true,
+      "createdAt": "2026-03-13T15:25:42.688Z",
+      "updatedAt": "2026-03-13T15:25:42.688Z",
+      "_id": "2a7c6246f6791920d10cdeff"
+    },
+    {
+      "fullName": "Auto Parmofkachi",
+      "username": "autoworker",
+      "usernameLower": "autoworker",
+      "passwordHash": "1105626903d6e048d12e86aec87cbe12:1e0f6e674390faed19559897eff7ecb51b5238b22c06aa8c957a779909d4f701454a38bd498ba7f10ffd94d72cde7f176736734cbb7a5814ce71ef646ce7a5b7",
+      "role": "worker",
+      "positionTitle": "Parmofkachi",
+      "phone": "",
+      "bio": "",
+      "avatarUrl": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "assignedWorkType": "parmofka",
+      "isActive": true,
+      "createdAt": "2026-03-13T15:26:58.313Z",
+      "updatedAt": "2026-03-13T15:26:58.313Z",
+      "_id": "150e8bbd1fa6bbfe02ecbf73"
+    },
+    {
+      "fullName": "Auto Parmofkachi 664426",
+      "username": "autoworker664426",
+      "usernameLower": "autoworker664426",
+      "passwordHash": "9042a075f9e4174949f9cf48f45ddabe:064d88c483572abd769dc586fe55640cfd69bffb66c709a75b003afae5e295002c2a5179a275d8c480bf6c97226cc419dce53d2b27647d4315335a15438115ae",
+      "role": "worker",
+      "positionTitle": "Parmofkachi",
+      "phone": "",
+      "bio": "",
+      "avatarUrl": "",
+      "salaryAmount": 0,
+      "salaryDayOfMonth": 5,
+      "assignedWorkType": "parmofka",
+      "isActive": true,
+      "createdAt": "2026-03-13T15:27:44.486Z",
+      "updatedAt": "2026-03-13T15:28:01.223Z",
+      "_id": "ca787f8f3c2f1e51614ffa35",
+      "lastLoginAt": "2026-03-13T15:28:01.223Z"
+    }
+  ],
+  "sessions": [
+    {
+      "userId": "33d996c159546c3d7c157285",
+      "tokenHash": "28855ad694dab4edd0f3cc62728d5cd736219a82ba22c5272e40339116c7fcb5",
+      "role": "admin",
+      "createdAt": "2026-03-13T15:26:58.296Z",
+      "lastSeenAt": "2026-03-13T15:26:58.344Z",
+      "expiresAt": "2026-04-12T15:26:58.296Z",
+      "_id": "9e2ccd1a0450333998a617f5"
+    },
+    {
+      "userId": "33d996c159546c3d7c157285",
+      "tokenHash": "1ff56940e6da74074aea64d5765ea5b6c1e7ad131bc0edeb7a0ad53d508c449f",
+      "role": "admin",
+      "createdAt": "2026-03-13T15:27:44.464Z",
+      "lastSeenAt": "2026-03-13T15:27:46.552Z",
+      "expiresAt": "2026-04-12T15:27:44.464Z",
+      "_id": "6cde30a581232759be1aa0a1"
+    },
+    {
+      "userId": "ca787f8f3c2f1e51614ffa35",
+      "tokenHash": "a5d227f26ec2c40f93b3e884de70f6aefcb51b37ad9e72401a64a100231889e7",
+      "role": "worker",
+      "createdAt": "2026-03-13T15:28:01.222Z",
+      "lastSeenAt": "2026-03-13T15:28:01.241Z",
+      "expiresAt": "2026-04-12T15:28:01.222Z",
+      "_id": "51f644c23a333b0c464aafc8"
+    }
+  ],
+  "tasks": [
+    {
+      "type": "production",
+      "customerName": "Samandar Qurilish",
+      "quantity": 1000,
+      "scheduledDate": "2026-03-14",
+      "status": "planned",
+      "notes": "Ertalik quyish partiyasi",
+      "createdBy": "4896fb3dc36a79ec51f481f8",
+      "progressNotes": [],
+      "createdAt": "2026-03-13T15:25:42.699Z",
+      "updatedAt": "2026-03-13T15:25:42.699Z",
+      "_id": "7092b50e2e6300011ebcfff7"
+    },
+    {
+      "type": "production",
+      "customerName": "Nur Invest",
+      "quantity": 350,
+      "scheduledDate": "2026-03-14",
+      "status": "planned",
+      "notes": "Tez tayyorlanadigan partiya",
+      "createdBy": "4896fb3dc36a79ec51f481f8",
+      "progressNotes": [],
+      "createdAt": "2026-03-13T15:25:42.699Z",
+      "updatedAt": "2026-03-13T15:25:42.699Z",
+      "_id": "97877694fb38a7b3b641cebb"
+    },
+    {
+      "type": "delivery",
+      "customerName": "Obod Uylar",
+      "quantity": 1500,
+      "scheduledDate": "2026-03-13",
+      "status": "in_progress",
+      "notes": "Oldin quyilgan va tayyor partiya",
+      "createdBy": "4896fb3dc36a79ec51f481f8",
+      "acceptedBy": "2a7c6246f6791920d10cdeff",
+      "acceptedAt": "2026-03-13T15:25:42.699Z",
+      "progressNotes": [
+        {
+          "note": "Topshiriq qabul qilindi",
+          "status": "accepted",
+          "at": "2026-03-13T15:25:42.699Z",
+          "byRole": "worker"
+        }
+      ],
+      "createdAt": "2026-03-13T15:25:42.699Z",
+      "updatedAt": "2026-03-13T15:25:42.699Z",
+      "_id": "344dddc019fa7526fdc6a5a8"
+    },
+    {
+      "type": "delivery",
+      "customerName": "Mega Stroy",
+      "quantity": 780,
+      "scheduledDate": "2026-03-13",
+      "status": "done",
+      "notes": "Tayyor mahsulot topshirildi",
+      "createdBy": "4896fb3dc36a79ec51f481f8",
+      "acceptedBy": "2a7c6246f6791920d10cdeff",
+      "completedBy": "2a7c6246f6791920d10cdeff",
+      "acceptedAt": "2026-03-13T15:25:42.699Z",
+      "completedAt": "2026-03-13T15:25:42.699Z",
+      "progressNotes": [
+        {
+          "note": "Topshiriq qabul qilindi",
+          "status": "accepted",
+          "at": "2026-03-13T15:25:42.699Z",
+          "byRole": "worker"
+        },
+        {
+          "note": "Topshiriq bajarildi",
+          "status": "done",
+          "at": "2026-03-13T15:25:42.699Z",
+          "byRole": "worker"
+        }
+      ],
+      "createdAt": "2026-03-13T15:25:42.699Z",
+      "updatedAt": "2026-03-13T15:25:42.699Z",
+      "_id": "39c596182e9c4221351cb0d2"
+    }
+  ],
+  "contents": [
+    {
+      "type": "product",
+      "title": "Premium Qurilish G'ishti",
+      "slug": "premium-qurilish-gishti-eddbce",
+      "excerpt": "Yuqori bosimga chidamli, fasad va asosiy qurilish ishlari uchun mos partiya.",
+      "body": "Mazkur mahsulot zich pishirilgan xomashyodan tayyorlanadi. Bir xil o'lcham, silliq kesim va yuqori mustahkamlik bilan doimiy partiya nazoratidan o'tadi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fdba74%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a3412%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EPremium%20Qurilish%20Gishti%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "So'rov bo'yicha",
+      "tags": [
+        "Premium",
+        "Fasad",
+        "Mustahkam"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "7c192263979c9ac46eb9220d"
+    },
+    {
+      "type": "product",
+      "title": "Standart Qizil G'isht",
+      "slug": "standart-qizil-gisht-fe8839",
+      "excerpt": "Kundalik obyektlar uchun balansli narx va sifat yechimi.",
+      "body": "Standart liniyada ishlab chiqarilgan ushbu tur yirik va o'rta hajmdagi qurilish buyurtmalari uchun barqaror yetkazib berish grafigi bilan taqdim etiladi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fdba74%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a3412%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EStandart%20Qizil%20Gisht%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "Ulguji narx mavjud",
+      "tags": [
+        "Standart",
+        "Ulguji",
+        "Barqaror"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "3d6911a8ce76711da6e64f61"
+    },
+    {
+      "type": "news",
+      "title": "Yangi Partiya Nazorat Moduli Ishga Tushdi",
+      "slug": "yangi-partiya-nazorat-moduli-ishga-tushdi-24d4c2",
+      "excerpt": "Zavod ichki nazoratida har bir topshiriq status bo'yicha kuzatiladi.",
+      "body": "Yangi platforma yordamida ertalik reja, ishlab chiqarish jarayoni va topshirish holati endi rollar kesimida ko'rinadi. Bu sifat va tezlikni oshiradi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fda4af%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239f1239%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EYangi%20Partiya%20Nazorat%20Moduli%20Ishga%20Tushdi%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "",
+      "tags": [
+        "Platforma",
+        "Nazorat",
+        "Yangilik"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "aeddf5f7caf0bbee138a2ac0"
+    },
+    {
+      "type": "news",
+      "title": "Yetkazib Berish Oqimi Raqamlashtirildi",
+      "slug": "yetkazib-berish-oqimi-raqamlashtirildi-949582",
+      "excerpt": "Topshirilgan g'ishtlar endi buyurtmachi bo'yicha alohida qayd etiladi.",
+      "body": "Har bir zakazchi uchun topshirish soni alohida kartalarda yuritiladi. Organizer va admin panelda kunlik kesim ko'rsatkichlari yangilanadi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fda4af%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239f1239%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EYetkazib%20Berish%20Oqimi%20Raqamlashtirildi%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "",
+      "tags": [
+        "Yetkazib berish",
+        "Hisobot",
+        "Zakazchi"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "9e3cebbef030074427c7cc9b"
+    },
+    {
+      "type": "blog",
+      "title": "Ertalik Rejani To'g'ri Tuzish Bo'yicha 5 Qoida",
+      "slug": "ertalik-rejani-togri-tuzish-boyicha-5-qoida-a00eca",
+      "excerpt": "Quyish va topshirish oqimini bir sahifada boshqarish uchun amaliy tavsiyalar.",
+      "body": "Ertalik reja tuzilganda buyurtmachi nomi, miqdor, tur va muddat aniq kiritilishi kerak. Ishchi topshiriqni qabul qilgach, jarayonni status bilan yangilashi nazoratni yengillashtiradi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2393c5fd%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231d4ed8%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EErtalik%20Rejani%20Togri%20Tuzish%20Boyicha%205%20Qoida%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "",
+      "tags": [
+        "Reja",
+        "Organizer",
+        "Amaliyot"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "2c4f9e9def8a71ef2f5ff8f4"
+    },
+    {
+      "type": "blog",
+      "title": "Ishchi Paneldagi Statuslar Nega Muhim",
+      "slug": "ishchi-paneldagi-statuslar-nega-muhim-daa7f5",
+      "excerpt": "Planned, accepted, in progress va done bosqichlari ma'lumot yo'qolishini kamaytiradi.",
+      "body": "Statuslar oddiy ko'rinsa ham, ular ishlab chiqarishdagi real yuklama va topshirilmagan buyurtmalarni bir qarashda ko'rishga yordam beradi.",
+      "imageUrl": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22800%22%20viewBox%3D%220%200%201200%20800%22%3E%0A%20%20%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2393c5fd%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231d4ed8%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%20%20%3Crect%20width%3D%221200%22%20height%3D%22800%22%20rx%3D%2242%22%20fill%3D%22url(%23bg)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%22190%22%20cy%3D%22180%22%20r%3D%22120%22%20fill%3D%22rgba(255%2C255%2C255%2C0.16)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ccircle%20cx%3D%221020%22%20cy%3D%22120%22%20r%3D%2280%22%20fill%3D%22rgba(255%2C255%2C255%2C0.12)%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%2286%22%20y%3D%22560%22%20width%3D%221028%22%20height%3D%22140%22%20rx%3D%2228%22%20fill%3D%22rgba(13%2C17%2C23%2C0.18)%22%20%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22200%22%20font-family%3D%22Verdana%22%20font-size%3D%2244%22%20fill%3D%22%23fff%22%20opacity%3D%220.86%22%3EG'ISHT%20PLATFORM%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22310%22%20font-family%3D%22Verdana%22%20font-size%3D%2286%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EIshchi%20Paneldagi%20Statuslar%20Nega%20Muhim%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2290%22%20y%3D%22620%22%20font-family%3D%22Verdana%22%20font-size%3D%2236%22%20fill%3D%22%23fff%22%20opacity%3D%220.92%22%3ESifatli%20ishlab%20chiqarish%2C%20nazorat%20va%20topshirish%20boshqaruvi%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E",
+      "priceLabel": "",
+      "tags": [
+        "Status",
+        "Ishchi",
+        "Nazorat"
+      ],
+      "isPublished": true,
+      "createdAt": "2026-03-13T15:25:42.695Z",
+      "updatedAt": "2026-03-13T15:25:42.695Z",
+      "_id": "dc4402944c0e8e3d96057ad3"
+    }
+  ],
+  "settings": [
+    {
+      "key": "finance",
+      "value": {
+        "workRates": {
+          "parmofka": 80,
+          "klidka": 0,
+          "bont": 0,
+          "sotka": 0,
+          "pogruska": 0,
+          "kochigar": 0
+        },
+        "workTypes": [
+          {
+            "key": "parmofka",
+            "label": "Parmofka",
+            "rate": 80
+          },
+          {
+            "key": "klidka",
+            "label": "Klidka",
+            "rate": 0
+          },
+          {
+            "key": "bont",
+            "label": "Bont",
+            "rate": 0
+          },
+          {
+            "key": "sotka",
+            "label": "Sotka",
+            "rate": 0
+          },
+          {
+            "key": "pogruska",
+            "label": "Pogruska",
+            "rate": 0
+          },
+          {
+            "key": "kochigar",
+            "label": "Kochigar",
+            "rate": 0
+          }
+        ],
+        "rawMaterialCostPerBrick": 0,
+        "laborCostPerBrick": 80,
+        "energyCostPerBrick": 0,
+        "transportCostPerBrick": 0,
+        "otherCostPerBrick": 0,
+        "salePricePerBrick": 0,
+        "nonLaborCostPerBrick": 0,
+        "totalCostPerBrick": 80,
+        "profitPerBrick": -80
+      },
+      "updatedAt": "2026-03-13T15:27:44.473Z",
+      "updatedBy": "33d996c159546c3d7c157285",
+      "createdAt": "2026-03-13T15:25:42.689Z",
+      "_id": "14b1b3f98de43f6b61c8af0e"
+    },
+    {
+      "key": "cameraSystem",
+      "value": {
+        "monitors": [
+          {
+            "id": "6bd2732c4af4f956",
+            "name": "Demo Auto Kamera",
+            "areaName": "Parmofka liniyasi",
+            "notes": "",
+            "autoSyncWorkLog": true,
+            "workerIds": [
+              "150e8bbd1fa6bbfe02ecbf73"
+            ],
+            "countDirection": "negative_to_positive",
+            "createdAt": "2026-03-13T15:27:44.522Z",
+            "updatedAt": "2026-03-13T15:27:44.522Z",
+            "enabled": true,
+            "modelKey": "hikvision_ds_2cd2643g2_izs",
+            "modelLabel": "Hikvision DS-2CD2643G2-IZS",
+            "modelDescription": "4 MP bullet IP kamera, ONVIF/ISAPI/RTSP profiliga mos.",
+            "streamMode": "http",
+            "snapshotUrl": "",
+            "streamUrl": "http://127.0.0.1:4031/api/demo/camera.mjpeg",
+            "authType": "none",
+            "username": "",
+            "password": "",
+            "apiToken": "",
+            "tokenQueryKey": "token",
+            "ffmpegPath": "D:\\gisht\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+            "rtspTransport": "tcp",
+            "workType": "parmofka",
+            "lineStartX": 0.5,
+            "lineStartY": 0.1,
+            "lineEndX": 0.5,
+            "lineEndY": 0.9,
+            "frameIntervalMs": 250,
+            "motionThreshold": 20,
+            "minBlobArea": 120,
+            "maxBlobArea": 60000,
+            "trackerDistancePx": 80,
+            "snapshotExample": "http://camera-ip/ISAPI/Streaming/channels/101/picture",
+            "streamExample": "rtsp://camera-ip:554/Streaming/Channels/101",
+            "httpExample": "http://camera-ip/ISAPI/Streaming/channels/101/httpPreview"
+          },
+          {
+            "id": "db9a3d3720d49bad",
+            "name": "Demo Auto Kamera 664426",
+            "areaName": "Parmofka liniyasi 664426",
+            "notes": "",
+            "autoSyncWorkLog": true,
+            "workerIds": [
+              "ca787f8f3c2f1e51614ffa35"
+            ],
+            "countDirection": "negative_to_positive",
+            "createdAt": "2026-03-13T15:27:44.522Z",
+            "updatedAt": "2026-03-13T15:27:44.522Z",
+            "enabled": true,
+            "modelKey": "hikvision_ds_2cd2643g2_izs",
+            "modelLabel": "Hikvision DS-2CD2643G2-IZS",
+            "modelDescription": "4 MP bullet IP kamera, ONVIF/ISAPI/RTSP profiliga mos.",
+            "streamMode": "http",
+            "snapshotUrl": "",
+            "streamUrl": "http://127.0.0.1:4031/api/demo/camera.mjpeg",
+            "authType": "none",
+            "username": "",
+            "password": "",
+            "apiToken": "",
+            "tokenQueryKey": "token",
+            "ffmpegPath": "D:\\gisht\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+            "rtspTransport": "tcp",
+            "workType": "parmofka",
+            "lineStartX": 0.5,
+            "lineStartY": 0.1,
+            "lineEndX": 0.5,
+            "lineEndY": 0.9,
+            "frameIntervalMs": 250,
+            "motionThreshold": 20,
+            "minBlobArea": 120,
+            "maxBlobArea": 60000,
+            "trackerDistancePx": 80,
+            "snapshotExample": "http://camera-ip/ISAPI/Streaming/channels/101/picture",
+            "streamExample": "rtsp://camera-ip:554/Streaming/Channels/101",
+            "httpExample": "http://camera-ip/ISAPI/Streaming/channels/101/httpPreview"
+          }
+        ]
+      },
+      "updatedAt": "2026-03-13T15:27:44.522Z",
+      "updatedBy": "33d996c159546c3d7c157285",
+      "createdAt": "2026-03-13T15:26:58.350Z",
+      "_id": "8f49cb16ca1a60247ff3b5d5"
+    }
+  ],
+  "notifications": [
+    {
+      "userId": "150e8bbd1fa6bbfe02ecbf73",
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 1680 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 1680
+      },
+      "createdAt": "2026-03-13T15:28:01.233Z",
+      "updatedAt": "2026-03-13T15:28:01.233Z",
+      "readAt": null,
+      "_id": "ddee4faa9732d424cf3d1ff9"
+    },
+    {
+      "userId": "ca787f8f3c2f1e51614ffa35",
+      "type": "salary_due",
+      "monthKey": "2026-03",
+      "title": "Hisob-kitob muddati yetdi",
+      "body": "2026-03 uchun 560 so'm to'lov kutilmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payableAmount": 560
+      },
+      "createdAt": "2026-03-13T15:28:01.237Z",
+      "updatedAt": "2026-03-13T15:28:01.237Z",
+      "readAt": null,
+      "_id": "c2cf1e32fd4278be2d2d337f"
+    }
+  ],
+  "payrolls": [],
+  "workLogs": [
+    {
+      "date": "2026-03-13",
+      "workType": "parmofka",
+      "quantity": 21,
+      "ratePerBrick": 80,
+      "totalAmount": 1680,
+      "shareAmount": 1680,
+      "workerIds": [
+        "150e8bbd1fa6bbfe02ecbf73"
+      ],
+      "notes": "Kamera nazorati: Demo Auto Kamera (Parmofka liniyasi)",
+      "source": "camera",
+      "cameraMonitorId": "6bd2732c4af4f956",
+      "cameraMonitorName": "Demo Auto Kamera",
+      "createdBy": null,
+      "updatedAt": "2026-03-13T15:27:45.943Z",
+      "createdAt": "2026-03-13T15:26:59.560Z",
+      "_id": "f80847e26e9a9194e345fd1f"
+    },
+    {
+      "date": "2026-03-13",
+      "workType": "parmofka",
+      "quantity": 10,
+      "ratePerBrick": 80,
+      "totalAmount": 800,
+      "shareAmount": 800,
+      "workerIds": [
+        "ca787f8f3c2f1e51614ffa35"
+      ],
+      "notes": "Kamera nazorati: Demo Auto Kamera 664426 (Parmofka liniyasi 664426)",
+      "source": "camera",
+      "cameraMonitorId": "db9a3d3720d49bad",
+      "cameraMonitorName": "Demo Auto Kamera 664426",
+      "createdBy": null,
+      "updatedAt": "2026-03-13T15:28:06.399Z",
+      "createdAt": "2026-03-13T15:27:46.216Z",
+      "_id": "e1b9b01199e08cc63b080eea"
+    }
+  ],
+  "workerTransactions": [],
+  "customerPayments": [],
+  "cameraCounts": [
+    {
+      "monitorId": "6bd2732c4af4f956",
+      "monitorName": "Demo Auto Kamera",
+      "areaName": "Parmofka liniyasi",
+      "workType": "parmofka",
+      "date": "2026-03-13",
+      "quantity": 21,
+      "workLogId": "f80847e26e9a9194e345fd1f",
+      "status": "running",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-13T15:28:08.254Z",
+      "lastCountAt": "2026-03-13T15:27:45.943Z",
+      "workerIds": [
+        "150e8bbd1fa6bbfe02ecbf73"
+      ],
+      "updatedAt": "2026-03-13T15:28:08.255Z",
+      "createdAt": "2026-03-13T15:26:58.442Z",
+      "_id": "341f43e8bd16d9a207e646c9"
+    },
+    {
+      "monitorId": "db9a3d3720d49bad",
+      "monitorName": "Demo Auto Kamera 664426",
+      "areaName": "Parmofka liniyasi 664426",
+      "workType": "parmofka",
+      "date": "2026-03-13",
+      "quantity": 10,
+      "workLogId": "e1b9b01199e08cc63b080eea",
+      "status": "running",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-13T15:28:08.257Z",
+      "lastCountAt": "2026-03-13T15:28:06.399Z",
+      "workerIds": [
+        "ca787f8f3c2f1e51614ffa35"
+      ],
+      "updatedAt": "2026-03-13T15:28:08.258Z",
+      "createdAt": "2026-03-13T15:27:44.595Z",
+      "_id": "f878d86b507731ed4f22b21c"
+    }
+  ]
+}

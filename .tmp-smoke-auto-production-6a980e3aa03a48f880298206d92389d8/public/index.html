@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #f6ede5;
+      --bg-main: #f3efe9;
+      --bg-bottom: #ebe7e0;
+      --surface: rgba(255, 255, 255, 0.74);
+      --surface-strong: #ffffff;
+      --surface-soft: #f6f1eb;
+      --text-main: #1f1913;
+      --text-strong: #120f0c;
+      --text-soft: #62564b;
+      --line: rgba(31, 25, 19, 0.11);
+      --accent: #a3522b;
+      --accent-strong: #7d3719;
+      --accent-soft: rgba(163, 82, 43, 0.12);
+      --accent-rgb: 163 82 43;
+      --text-rgb: 31 25 19;
+      --shadow-panel: 0 18px 45px rgba(34, 26, 18, 0.08);
+      --shadow-card: 0 8px 24px rgba(34, 26, 18, 0.06);
+      --shadow-hero: 0 28px 70px rgba(34, 26, 18, 0.1);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #171d22;
+      --bg-main: #11171c;
+      --bg-bottom: #0d1317;
+      --surface: rgba(20, 28, 34, 0.8);
+      --surface-strong: #182127;
+      --surface-soft: #1e2830;
+      --text-main: #edf2f7;
+      --text-strong: #ffffff;
+      --text-soft: #b8c2cb;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #dd9161;
+      --accent-strong: #f1b089;
+      --accent-soft: rgba(221, 145, 97, 0.14);
+      --accent-rgb: 221 145 97;
+      --text-rgb: 237 242 247;
+      --shadow-panel: 0 20px 60px rgba(0, 0, 0, 0.34);
+      --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.24);
+      --shadow-hero: 0 34px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(var(--text-rgb), 0.05), transparent 18%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 52%, var(--bg-bottom) 100%);
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-panel);
+      backdrop-filter: blur(18px);
+    }
+
+    .card {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
+    }
+
+    .soft-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+    }
+
+    .text-main {
+      color: var(--text-main);
+    }
+
+    .text-strong {
+      color: var(--text-strong);
+    }
+
+    .text-soft {
+      color: var(--text-soft);
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .accent-bg {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .accent-soft {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .line {
+      border-color: var(--line);
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .theme-button,
+    .btn-main,
+    .btn-outline,
+    .btn-soft {
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-button:hover,
+    .btn-main:hover,
+    .btn-outline:hover,
+    .btn-soft:hover {
+      transform: translateY(-1px);
+    }
+
+    .theme-button {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--text-main);
+      padding: 0.8rem 1rem;
+    }
+
+    .btn-main {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.95rem 1.4rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .btn-main:hover {
+      background: var(--accent-strong);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text-main);
+      padding: 0.95rem 1.4rem;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-soft {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--text-main);
+      padding: 0.85rem 1.2rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.6rem 0.95rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(2.75rem, 6vw, 5.85rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: var(--text-strong);
+    }
+
+    .section-title {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+    }
+
+    .mini-title {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.15rem, 3vw, 1.5rem);
+      line-height: 1.2;
+      color: var(--text-strong);
+    }
+
+    .hero-board {
+      background:
+        linear-gradient(180deg, rgba(var(--text-rgb), 0.08), rgba(var(--text-rgb), 0.02)),
+        linear-gradient(160deg, rgba(var(--accent-rgb), 0.08), transparent 60%);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-hero);
+    }
+
+    .metric-badge {
+      background: rgba(var(--accent-rgb), 0.14);
+      color: var(--accent-strong);
+    }
+
+    .theme-grid {
+      background-image:
+        linear-gradient(rgba(var(--text-rgb), 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--text-rgb), 0.05) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent);
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.6rem;
+      }
+
+      .section-title {
+        font-size: 1.9rem;
+      }
+
+      .eyebrow {
+        padding: 0.55rem 0.8rem;
+        font-size: 0.69rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-[420px] theme-grid"></div>
+
+  <header class="relative z-10">
+    <nav class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+      <a href="/index.html" class="flex min-w-0 items-center gap-3">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl accent-bg font-display text-lg font-extrabold">G</div>
+        <div class="min-w-0">
+          <p class="truncate font-display text-base font-bold text-strong sm:text-lg">G'isht Zavodi</p>
+          <p class="truncate text-xs text-soft sm:text-sm">Rasmiy korporativ platforma</p>
+        </div>
+      </a>
+
+      <div class="order-3 flex w-full items-center justify-between gap-3 md:order-none md:w-auto md:justify-end">
+        <div class="flex flex-wrap items-center gap-4 text-sm font-semibold">
+          <a class="nav-link" href="/blog.html">Blog</a>
+          <a class="nav-link" href="/news.html">Yangiliklar</a>
+          <a class="nav-link" href="/products.html">Mahsulotlar</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" class="theme-button text-sm" onclick="toggleTheme()">
+            <span data-theme-label>Tungi mavzu</span>
+          </button>
+          <a id="dashboardButton" href="/login.html" class="btn-main text-sm">Kirish</a>
+          <button id="logoutButton" class="btn-outline hidden text-sm">Chiqish</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10">
+    <section class="mx-auto grid max-w-7xl gap-8 px-4 pb-14 pt-6 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:pb-20 lg:pt-10">
+      <div class="space-y-6 lg:space-y-8">
+        <span class="eyebrow"><span class="eyebrow-dot"></span>Ishlab chiqarish boshqaruvi</span>
+        <div class="space-y-5">
+          <h1 class="hero-title max-w-4xl">Zavod boshqaruvi, buyurtma oqimi va ichki nazorat uchun rasmiy raqamli maydon.</h1>
+          <p class="max-w-2xl text-base leading-8 text-soft sm:text-lg">
+            Buyurtmalarni rejalashtirish, ishlab chiqarish jarayonini nazorat qilish, tayyor partiyalarni topshirish va xodimlar ishini aniq boshqarish yagona platformada jamlandi.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="/products.html" class="btn-main text-sm sm:text-base">Mahsulotlarni ko'rish</a>
+          <a href="/login.html" class="btn-outline text-sm sm:text-base">Xodimlar kirishi</a>
+        </div>
+        <div id="heroStats" class="grid gap-3 sm:grid-cols-3"></div>
+      </div>
+
+      <div class="panel rounded-[28px] p-4 sm:p-5">
+        <div class="hero-board rounded-[24px] p-5 sm:p-6">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-extrabold uppercase tracking-[0.24em] accent">Kunlik boshqaruv</p>
+              <h2 class="mt-3 font-display text-2xl font-bold text-strong sm:text-3xl">Ertangi reja, topshirish va nazorat bir oynada</h2>
+            </div>
+            <div class="metric-badge rounded-2xl px-4 py-3 text-right text-sm font-semibold">
+              <div>Uzluksiz kuzatuv</div>
+              <div class="mt-1 text-lg font-extrabold">Kun bo'yi</div>
+            </div>
+          </div>
+
+          <div class="mt-6 grid gap-4">
+            <div class="card rounded-[22px] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-sm text-soft">Organizer yo'nalishi</p>
+                  <p class="mt-2 mini-title">Zakazchi bo'yicha ertalik taqsimot</p>
+                  <p class="mt-3 text-sm leading-7 text-soft">Quyish va topshirish alohida ajratiladi, miqdor va muddatlar xodimlarga aniq ko'rsatiladi.</p>
+                </div>
+                <span class="accent-soft rounded-full px-3 py-2 text-xs font-bold uppercase tracking-[0.18em]">Reja</span>
+              </div>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Admin bo'limi</p>
+                <p class="mt-2 mini-title">Xodimlar va materiallar nazorati</p>
+              </div>
+              <div class="card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Ishchi bo'limi</p>
+                <p class="mt-2 mini-title">Qabul qilish va bajarish tartibi</p>
+              </div>
+            </div>
+            <div class="card rounded-[22px] p-5">
+              <div class="grid gap-4 sm:grid-cols-3">
+                <div>
+                  <p class="text-sm text-soft">1-bosqich</p>
+                  <p class="mt-2 font-bold text-strong">Rejalashtirish</p>
+                </div>
+                <div>
+                  <p class="text-sm text-soft">2-bosqich</p>
+                  <p class="mt-2 font-bold text-strong">Jarayon nazorati</p>
+                </div>
+                <div>
+                  <p class="text-sm text-soft">3-bosqich</p>
+                  <p class="mt-2 font-bold text-strong">Topshirish va hisobot</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div class="panel rounded-[28px] p-5 sm:p-7">
+        <div class="grid gap-4 lg:grid-cols-4">
+          <article class="card rounded-[22px] p-5">
+            <p class="text-sm text-soft">Ish tartibi</p>
+            <h3 class="mt-2 mini-title">Buyurtmadan yakungacha</h3>
+            <p class="mt-3 text-sm leading-7 text-soft">Har bir harakat bir xil tartibda qayd qilinadi va nazoratda turadi.</p>
+          </article>
+          <article class="card rounded-[22px] p-5">
+            <p class="text-sm text-soft">Mas'uliyat</p>
+            <h3 class="mt-2 mini-title">Rollar bo'yicha aniq taqsimot</h3>
+            <p class="mt-3 text-sm leading-7 text-soft">Admin, organizer va ishchi uchun alohida sahifa va aniq vazifalar mavjud.</p>
+          </article>
+          <article class="card rounded-[22px] p-5">
+            <p class="text-sm text-soft">Nazorat</p>
+            <h3 class="mt-2 mini-title">Statuslar bo'yicha kuzatuv</h3>
+            <p class="mt-3 text-sm leading-7 text-soft">Qabul qilindi, jarayonda va bajarildi holatlari tez ko'rinadi.</p>
+          </article>
+          <article class="card rounded-[22px] p-5">
+            <p class="text-sm text-soft">Barqarorlik</p>
+            <h3 class="mt-2 mini-title">Doimiy ish ritmi</h3>
+            <p class="mt-3 text-sm leading-7 text-soft">Kunlik reja va topshirish oqimi boshqaruv markazida uzluksiz saqlanadi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <span class="eyebrow"><span class="eyebrow-dot"></span>Asosiy yo'nalishlar</span>
+          <h2 class="section-title mt-4 max-w-3xl">Korxona boshqaruvini bir tizimga birlashtiruvchi bloklar</h2>
+        </div>
+        <p class="max-w-2xl text-sm leading-7 text-soft sm:text-base">Har bir bo'lim rasmiy ko'rinish, tezkor kirish va kundalik ishni yengillashtirish tamoyiliga asoslangan.</p>
+      </div>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <article class="card rounded-[24px] p-6">
+          <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">01</span>
+          <h3 class="mini-title mt-5">Xodimlar boshqaruvi</h3>
+          <p class="mt-3 text-sm leading-7 text-soft">Kirish huquqlari va ish tartibi mas'uliyatga qarab ajratiladi.</p>
+        </article>
+        <article class="card rounded-[24px] p-6">
+          <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">02</span>
+          <h3 class="mini-title mt-5">Kunlik reja</h3>
+          <p class="mt-3 text-sm leading-7 text-soft">Ertangi quyish va topshirish rejasi zakazchi kesimida shakllantiriladi.</p>
+        </article>
+        <article class="card rounded-[24px] p-6">
+          <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">03</span>
+          <h3 class="mini-title mt-5">Jarayon nazorati</h3>
+          <p class="mt-3 text-sm leading-7 text-soft">Ishchi topshiriqni oladi, jarayonni yuritadi va yakun holatini tasdiqlaydi.</p>
+        </article>
+        <article class="card rounded-[24px] p-6">
+          <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">04</span>
+          <h3 class="mini-title mt-5">Axborot maydoni</h3>
+          <p class="mt-3 text-sm leading-7 text-soft">Mahsulotlar, yangiliklar va ichki maqolalar alohida sahifalarda taqdim etiladi.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-[1.04fr_0.96fr]">
+        <div class="panel rounded-[28px] p-6 sm:p-8">
+          <span class="eyebrow"><span class="eyebrow-dot"></span>Ish tartibi</span>
+          <h2 class="section-title mt-4">Buyurtma oqimi to'rt bosqichda boshqariladi</h2>
+          <div class="mt-8 grid gap-4">
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm font-bold accent">01. Buyurtma qabul qilish</p>
+              <p class="mt-2 text-sm leading-7 text-soft">Zakazchi, miqdor va topshirish talabi yagona tartib bilan kiritiladi.</p>
+            </div>
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm font-bold accent">02. Ertalik reja tuzish</p>
+              <p class="mt-2 text-sm leading-7 text-soft">Organizer ishlab chiqarish va topshirish qismlarini alohida rejalashtiradi.</p>
+            </div>
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm font-bold accent">03. Ijro nazorati</p>
+              <p class="mt-2 text-sm leading-7 text-soft">Ishchi topshiriqni qabul qiladi, jarayonni olib boradi va natijani qayd etadi.</p>
+            </div>
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm font-bold accent">04. Yakun va ko'rinish</p>
+              <p class="mt-2 text-sm leading-7 text-soft">Rahbariyat kunlik holatni va bajarilgan topshiriqlar sonini aniq ko'radi.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="panel rounded-[28px] p-6 sm:p-8">
+            <span class="eyebrow"><span class="eyebrow-dot"></span>Rasmiy yondashuv</span>
+            <h2 class="section-title mt-4">Korxona uchun mos rasmiy ko'rinish</h2>
+            <p class="mt-4 text-sm leading-7 text-soft sm:text-base">Tiniq shriftlar, muvozanatli kontrast, kunduzgi va tungi mavzu hamda tartibli bloklar korporativ ruhni saqlaydi.</p>
+          </div>
+          <div class="panel rounded-[28px] p-6 sm:p-8">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="soft-card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Mavzular</p>
+                <p class="mt-2 mini-title">Kunduzgi va tungi</p>
+              </div>
+              <div class="soft-card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Qurilmalar</p>
+                <p class="mt-2 mini-title">Telefon va kompyuter</p>
+              </div>
+              <div class="soft-card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Matn uslubi</p>
+                <p class="mt-2 mini-title">Tiniq va rasmiy</p>
+              </div>
+              <div class="soft-card rounded-[22px] p-5">
+                <p class="text-sm text-soft">Tuzilish</p>
+                <p class="mt-2 mini-title">Ko'p blokli landing</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <span class="eyebrow"><span class="eyebrow-dot"></span>Mahsulotlar</span>
+          <h2 class="section-title mt-4">Taqdim etilayotgan mahsulotlar</h2>
+        </div>
+        <a href="/products.html" class="btn-outline w-fit text-sm">Barcha mahsulotlar</a>
+      </div>
+      <div id="featuredProducts" class="mt-8 grid gap-5 lg:grid-cols-3"></div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="panel rounded-[28px] p-6 sm:p-8">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-dot"></span>Yangiliklar</span>
+              <h2 class="section-title mt-4 text-[clamp(1.7rem,3vw,2.4rem)]">Korxonadagi yangilanishlar</h2>
+            </div>
+            <a href="/news.html" class="btn-soft text-sm">Ko'rish</a>
+          </div>
+          <div id="featuredNews" class="mt-6 space-y-4"></div>
+        </div>
+        <div class="panel rounded-[28px] p-6 sm:p-8">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <span class="eyebrow"><span class="eyebrow-dot"></span>Blog</span>
+              <h2 class="section-title mt-4 text-[clamp(1.7rem,3vw,2.4rem)]">Ichki tajriba va tavsiyalar</h2>
+            </div>
+            <a href="/blog.html" class="btn-soft text-sm">Ko'rish</a>
+          </div>
+          <div id="featuredBlog" class="mt-6 space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="panel rounded-[32px] p-6 sm:p-8 lg:p-10">
+        <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span>Ishga kirish</span>
+            <h2 class="section-title mt-4">Boshqaruv paneliga o'tib, kunlik ish ritmini yagona tartibda yuriting</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-soft sm:text-base">Xodimlar uchun ruxsatlar ajratilgan, topshiriqlar nazoratga olingan va axborot sahifalari jamoa uchun tayyor holatga keltirilgan.</p>
+          </div>
+          <div class="grid gap-4">
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm text-soft">Kirish tartibi</p>
+              <p class="mt-2 mini-title">Har bir rol uchun alohida panel</p>
+            </div>
+            <div class="card rounded-[24px] p-5">
+              <p class="text-sm text-soft">Ishlatish qulayligi</p>
+              <p class="mt-2 mini-title">Qisqa yo'l bilan tezkor boshqaruv</p>
+            </div>
+            <a href="/login.html" class="btn-main text-center text-sm sm:text-base">Tizimga kirish</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-10 pt-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-4 border-t line py-6 text-sm text-soft md:flex-row md:items-center md:justify-between">
+      <p>© 2026 G'isht Zavodi. Barcha huquqlar himoyalangan.</p>
+      <div class="flex flex-wrap gap-5">
+        <a class="nav-link" href="/products.html">Mahsulotlar</a>
+        <a class="nav-link" href="/news.html">Yangiliklar</a>
+        <a class="nav-link" href="/blog.html">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) {
+          localStorage.setItem(key, theme);
+        }
+      }
+
+      const saved = localStorage.getItem(key);
+      applyTheme(saved || (media.matches ? "dark" : "light"), false);
+
+      window.toggleTheme = () => {
+        applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+      };
+    })();
+
+    const heroStats = document.getElementById("heroStats");
+    const featuredProducts = document.getElementById("featuredProducts");
+    const featuredNews = document.getElementById("featuredNews");
+    const featuredBlog = document.getElementById("featuredBlog");
+    const dashboardButton = document.getElementById("dashboardButton");
+    const logoutButton = document.getElementById("logoutButton");
+
+    const statusCards = [
+      { label: "Faol jamoa", key: "teamSize", suffix: "kishi" },
+      { label: "Bajarilgan quyish", key: "completedProduction", suffix: "ta" },
+      { label: "Topshirilgan partiya", key: "completedDelivery", suffix: "ta" }
+    ];
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("uz-UZ", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(new Date(value));
+    }
+
+    function renderStatCards(stats) {
+      heroStats.innerHTML = statusCards.map((item) => `
+        <article class="card rounded-[22px] p-5 sm:p-6">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong sm:text-4xl">${stats[item.key] || 0}</p>
+          <p class="mt-2 text-xs font-bold uppercase tracking-[0.18em] accent">${item.suffix}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderProductCards(items) {
+      featuredProducts.innerHTML = items.map((item) => `
+        <article class="panel overflow-hidden rounded-[26px]">
+          <img src="${item.imageUrl}" alt="${item.title}" class="h-56 w-full object-cover sm:h-64" />
+          <div class="space-y-4 p-5 sm:p-6">
+            <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">Mahsulot</span>
+            <div>
+              <h3 class="mini-title">${item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-soft">${item.excerpt}</p>
+            </div>
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-sm font-bold accent">${item.priceLabel || "So'rov bo'yicha"}</p>
+              <a href="/products.html" class="btn-soft text-sm">Batafsil</a>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderList(container, items, badge) {
+      container.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="accent-soft rounded-full px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em]">${badge}</span>
+              <h3 class="mt-4 mini-title">${item.title}</h3>
+            </div>
+            <p class="text-xs text-soft">${formatDate(item.createdAt)}</p>
+          </div>
+          <p class="mt-3 text-sm leading-7 text-soft">${item.excerpt}</p>
+        </article>
+      `).join("");
+    }
+
+    async function hydrateAuth() {
+      const response = await fetch("/api/auth/me");
+      const data = await response.json();
+      if (data.authenticated) {
+        dashboardButton.href = data.redirectTo;
+        dashboardButton.textContent = "Panelga o'tish";
+        logoutButton.classList.remove("hidden");
+      }
+    }
+
+    async function hydrateHome() {
+      const response = await fetch("/api/site/home");
+      const data = await response.json();
+      renderStatCards(data.stats);
+      renderProductCards(data.featured.products || []);
+      renderList(featuredNews, data.featured.news || [], "Yangilik");
+      renderList(featuredBlog, data.featured.blog || [], "Maqola");
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    Promise.all([hydrateAuth(), hydrateHome()]).catch(() => {
+      heroStats.innerHTML = `<div class="card rounded-[22px] p-5 text-sm text-soft">Ma'lumotlar vaqtincha yuklanmadi.</div>`;
+    });
+  </script>
+</body>
+</html>

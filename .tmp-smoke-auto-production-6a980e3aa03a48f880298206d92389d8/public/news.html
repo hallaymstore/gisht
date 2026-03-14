@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yangiliklar | G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #f8ecee;
+      --bg-main: #f2ece6;
+      --bg-bottom: #eae2da;
+      --surface: rgba(255, 255, 255, 0.76);
+      --surface-strong: #ffffff;
+      --surface-soft: #f8f1f2;
+      --text-main: #20191a;
+      --text-strong: #100d0d;
+      --text-soft: #67595b;
+      --line: rgba(32, 25, 26, 0.11);
+      --accent: #a94e63;
+      --accent-strong: #86374b;
+      --accent-soft: rgba(169, 78, 99, 0.12);
+      --accent-rgb: 169 78 99;
+      --text-rgb: 32 25 26;
+      --shadow-panel: 0 18px 44px rgba(25, 18, 19, 0.08);
+      --shadow-card: 0 8px 22px rgba(25, 18, 19, 0.06);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #1a161b;
+      --bg-main: #131016;
+      --bg-bottom: #0d0a0e;
+      --surface: rgba(30, 21, 27, 0.82);
+      --surface-strong: #20161c;
+      --surface-soft: #291c24;
+      --text-main: #f1edf0;
+      --text-strong: #ffffff;
+      --text-soft: #cabdc2;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #e290a4;
+      --accent-strong: #f0b4c2;
+      --accent-soft: rgba(226, 144, 164, 0.14);
+      --accent-rgb: 226 144 164;
+      --text-rgb: 241 237 240;
+      --shadow-panel: 0 20px 56px rgba(0, 0, 0, 0.36);
+      --shadow-card: 0 10px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.16), transparent 28%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 54%, var(--bg-bottom) 100%);
+    }
+
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-panel); backdrop-filter: blur(18px); }
+    .card { background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+    .soft-card { background: var(--surface-soft); border: 1px solid var(--line); }
+    .text-strong { color: var(--text-strong); }
+    .text-soft { color: var(--text-soft); }
+    .accent { color: var(--accent); }
+    .btn-main, .btn-outline, .theme-button { border-radius: 999px; font-weight: 700; transition: transform .2s ease, color .2s ease, background .2s ease, border-color .2s ease; }
+    .btn-main:hover, .btn-outline:hover, .theme-button:hover { transform: translateY(-1px); }
+    .btn-main { background: var(--accent); color: #fff; }
+    .btn-main:hover { background: var(--accent-strong); }
+    .btn-outline, .theme-button { background: var(--surface-strong); border: 1px solid var(--line); color: var(--text-main); }
+    .btn-outline:hover, .theme-button:hover { border-color: var(--accent); color: var(--accent); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .6rem .95rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: .55rem; height: .55rem; border-radius: 999px; background: var(--accent); }
+    .brand-mark { background: var(--accent); color: #fff; }
+    .chip-accent {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: .55rem .85rem;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .chip-outline {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: .55rem .85rem;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: .4rem .75rem;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      font-size: .75rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <a href="/index.html" class="flex items-center gap-3">
+        <div class="brand-mark flex h-11 w-11 items-center justify-center rounded-2xl font-display text-lg font-extrabold">G</div>
+        <div>
+          <p class="font-display text-base font-bold text-strong sm:text-lg">G'isht Zavodi</p>
+          <p class="text-sm text-soft">Yangiliklar sahifasi</p>
+        </div>
+      </a>
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button type="button" class="theme-button px-4 py-3 text-sm" onclick="toggleTheme()"><span data-theme-label>Tungi mavzu</span></button>
+        <a href="/blog.html" class="btn-outline px-4 py-3 text-sm">Blog</a>
+        <a href="/products.html" class="btn-outline px-4 py-3 text-sm">Mahsulotlar</a>
+        <a id="dashboardLink" href="/login.html" class="btn-main px-5 py-3 text-sm">Kirish</a>
+        <button id="logoutButton" class="btn-outline hidden px-5 py-3 text-sm">Chiqish</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 pb-16 pt-2 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
+      <div class="space-y-5">
+        <span class="eyebrow">Rasmiy axborot</span>
+        <h1 class="font-display text-[clamp(2.3rem,5vw,4.6rem)] font-bold leading-[1.05] tracking-[-0.04em] text-strong">Zavoddagi muhim yangilanish va e'lonlar tartibli lentada.</h1>
+        <p class="max-w-2xl text-base leading-8 text-soft sm:text-lg">Ichki o'zgarishlar, yangi yo'nalishlar, tashkiliy yangiliklar va muhim xabarlar jamoa uchun aniq ko'rinishda jamlanadi.</p>
+      </div>
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <div class="soft-card rounded-[24px] p-6">
+          <p class="text-xs font-extrabold uppercase tracking-[0.24em] accent">Axborot tartibi</p>
+          <h2 class="mt-3 font-display text-2xl font-bold text-strong sm:text-3xl">Yangiliklar korxona ichidagi muhim qaror va o'zgarishlarni bir joyga to'playdi.</h2>
+          <p class="mt-4 text-sm leading-7 text-soft">Sarlavha, qisqa izoh va asosiy mazmun rasmiy uslubda ko'rsatiladi, shu sababli jamoa kerakli ma'lumotni tez topadi.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <span class="eyebrow">Yangiliklar oqimi</span>
+          <h2 class="mt-4 font-display text-[clamp(1.7rem,3vw,2.7rem)] font-bold tracking-[-0.03em] text-strong">So'nggi xabarlar</h2>
+        </div>
+        <div class="card rounded-full px-5 py-3 text-sm text-soft">Rasmiy yangilanishlar ketma-ketligi</div>
+      </div>
+      <div id="newsFeed" class="mt-8 space-y-5"></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) localStorage.setItem(key, theme);
+      }
+      applyTheme(localStorage.getItem(key) || (media.matches ? "dark" : "light"), false);
+      window.toggleTheme = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    })();
+
+    const dashboardLink = document.getElementById("dashboardLink");
+    const logoutButton = document.getElementById("logoutButton");
+    const newsFeed = document.getElementById("newsFeed");
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("uz-UZ", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(new Date(value));
+    }
+
+    function renderNews(items) {
+      newsFeed.innerHTML = items.map((item, index) => `
+        <article class="panel overflow-hidden rounded-[26px]">
+          <div class="grid gap-0 lg:grid-cols-[0.7fr_1.3fr]">
+            <img src="${item.imageUrl}" alt="${item.title}" class="h-64 w-full object-cover lg:h-full" />
+            <div class="space-y-4 p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-4">
+                <span class="${index % 2 === 0 ? "chip-accent" : "chip-outline"}">Yangilik</span>
+                <p class="text-xs text-soft">${formatDate(item.createdAt)}</p>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-strong sm:text-3xl">${item.title}</h3>
+              <p class="text-sm leading-7 text-soft">${item.excerpt}</p>
+              <div class="soft-card rounded-[22px] p-4 sm:p-5 text-sm leading-7 text-soft">${item.body}</div>
+              <div class="flex flex-wrap gap-2">
+                ${(item.tags || []).map((tag) => `<span class="tag-pill">${tag}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    async function hydrateAuth() {
+      const response = await fetch("/api/auth/me");
+      const data = await response.json();
+      if (data.authenticated) {
+        dashboardLink.href = data.redirectTo;
+        dashboardLink.textContent = "Panelga o'tish";
+        logoutButton.classList.remove("hidden");
+      }
+    }
+
+    async function loadNews() {
+      const response = await fetch("/api/content?type=news&limit=50");
+      const data = await response.json();
+      renderNews(data.items || []);
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    Promise.all([hydrateAuth(), loadNews()]).catch(() => {
+      newsFeed.innerHTML = `<div class="card rounded-[22px] p-5 text-sm text-soft">Yangiliklar vaqtincha yuklanmadi.</div>`;
+    });
+  </script>
+</body>
+</html>

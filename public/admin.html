@@ -1,0 +1,2954 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Paneli | G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #f5ede4;
+      --bg-main: #f1ece5;
+      --bg-bottom: #e7e0d8;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: #ffffff;
+      --surface-soft: #f7f1ea;
+      --text-main: #1f1913;
+      --text-strong: #120f0c;
+      --text-soft: #65584d;
+      --line: rgba(31, 25, 19, 0.11);
+      --accent: #a3522b;
+      --accent-strong: #7d3719;
+      --accent-soft: rgba(163, 82, 43, 0.12);
+      --accent-rgb: 163 82 43;
+      --success-soft: rgba(33, 150, 83, 0.12);
+      --success-text: #1f8d56;
+      --warning-soft: rgba(186, 125, 26, 0.14);
+      --warning-text: #a26913;
+      --info-soft: rgba(44, 114, 152, 0.12);
+      --info-text: #2c7298;
+      --danger-soft: rgba(184, 72, 72, 0.12);
+      --danger-text: #b65353;
+      --muted-soft: rgba(31, 25, 19, 0.06);
+      --shadow-panel: 0 18px 44px rgba(34, 26, 18, 0.08);
+      --shadow-card: 0 8px 22px rgba(34, 26, 18, 0.06);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #171d22;
+      --bg-main: #10171c;
+      --bg-bottom: #0c1216;
+      --surface: rgba(20, 28, 34, 0.84);
+      --surface-strong: #182127;
+      --surface-soft: #1f2931;
+      --text-main: #edf2f7;
+      --text-strong: #ffffff;
+      --text-soft: #bac3cb;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #dd9161;
+      --accent-strong: #f1b089;
+      --accent-soft: rgba(221, 145, 97, 0.14);
+      --accent-rgb: 221 145 97;
+      --success-soft: rgba(92, 209, 149, 0.18);
+      --success-text: #90e4b7;
+      --warning-soft: rgba(239, 194, 109, 0.18);
+      --warning-text: #f0cb7d;
+      --info-soft: rgba(114, 192, 236, 0.18);
+      --info-text: #8fd7ff;
+      --danger-soft: rgba(239, 124, 124, 0.18);
+      --danger-text: #ffb3b3;
+      --muted-soft: rgba(255, 255, 255, 0.08);
+      --shadow-panel: 0 20px 56px rgba(0, 0, 0, 0.36);
+      --shadow-card: 0 10px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.15), transparent 28%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 54%, var(--bg-bottom) 100%);
+    }
+
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-panel); backdrop-filter: blur(18px); }
+    .card { background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+    .soft-card { background: var(--surface-soft); border: 1px solid var(--line); }
+    .text-strong { color: var(--text-strong); }
+    .text-soft { color: var(--text-soft); }
+    .accent { color: var(--accent); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .6rem .95rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: .55rem; height: .55rem; border-radius: 999px; background: var(--accent); }
+    .btn-main, .btn-outline, .theme-button {
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .2s ease, color .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn-main:hover, .btn-outline:hover, .theme-button:hover { transform: translateY(-1px); }
+    .btn-main { background: var(--accent); color: #fff; }
+    .btn-main:hover { background: var(--accent-strong); }
+    .btn-outline, .theme-button { background: var(--surface-strong); border: 1px solid var(--line); color: var(--text-main); }
+    .btn-outline:hover, .theme-button:hover { border-color: var(--accent); color: var(--accent); }
+    input, textarea, select {
+      background: var(--surface-strong);
+      color: var(--text-main);
+      border-color: var(--line);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .message-box {
+      border: 1px solid var(--line);
+    }
+    .message-box.success {
+      background: var(--success-soft);
+      color: var(--success-text);
+    }
+    .message-box.error {
+      background: var(--danger-soft);
+      color: var(--danger-text);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: .5rem .8rem;
+      border: 1px solid transparent;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      line-height: 1;
+    }
+    button.status-pill {
+      cursor: pointer;
+    }
+    .status-pill.outline {
+      background: var(--surface-strong);
+      border-color: var(--line);
+      color: var(--text-soft);
+    }
+    .status-pill.accent {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+    .status-pill.success {
+      background: var(--success-soft);
+      color: var(--success-text);
+    }
+    .status-pill.warning {
+      background: var(--warning-soft);
+      color: var(--warning-text);
+    }
+    .status-pill.info {
+      background: var(--info-soft);
+      color: var(--info-text);
+    }
+    .status-pill.danger {
+      background: var(--danger-soft);
+      color: var(--danger-text);
+    }
+    .status-pill.muted {
+      background: var(--muted-soft);
+      color: var(--text-soft);
+    }
+    .form-scroll,
+    .list-scroll,
+    .multi-select-scroll {
+      scrollbar-gutter: stable;
+      overscroll-behavior: contain;
+    }
+    .form-scroll {
+      max-height: 42rem;
+      overflow-y: auto;
+      padding-right: .35rem;
+    }
+    .list-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: .95rem;
+      max-height: 29rem;
+      overflow-y: auto;
+      padding-right: .35rem;
+      scroll-snap-type: y proximity;
+    }
+    .list-scroll.compact { max-height: 22rem; }
+    .list-scroll.tall { max-height: 38rem; }
+    .list-scroll > * {
+      margin-top: 0 !important;
+      scroll-snap-align: start;
+    }
+    .multi-select-scroll {
+      min-height: 10rem;
+      max-height: 15rem;
+      overflow-y: auto;
+    }
+    .form-scroll::-webkit-scrollbar,
+    .list-scroll::-webkit-scrollbar,
+    .multi-select-scroll::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    .form-scroll::-webkit-scrollbar-thumb,
+    .list-scroll::-webkit-scrollbar-thumb,
+    .multi-select-scroll::-webkit-scrollbar-thumb {
+      background: rgba(var(--accent-rgb), 0.28);
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    .form-scroll::-webkit-scrollbar-track,
+    .list-scroll::-webkit-scrollbar-track,
+    .multi-select-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    @media (max-width: 1279px) {
+      .form-scroll,
+      .list-scroll,
+      .list-scroll.compact,
+      .list-scroll.tall {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <span class="eyebrow">Admin paneli</span>
+        <h1 class="mt-4 font-display text-[clamp(2rem,4vw,3.4rem)] font-bold tracking-[-0.04em] text-strong">Korxona boshqaruv markazi</h1>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button type="button" class="theme-button px-4 py-3 text-sm" onclick="toggleTheme()"><span data-theme-label>Tungi mavzu</span></button>
+        <a href="/profile.html" class="btn-outline px-4 py-3 text-sm">Profil</a>
+        <a href="/index.html" class="btn-outline px-4 py-3 text-sm">Saytga qaytish</a>
+        <button id="logoutButton" class="btn-main px-5 py-3 text-sm">Chiqish</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl space-y-7 px-4 pb-16 sm:px-6 lg:px-8">
+    <section id="statsGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-5"></section>
+    <p id="message" class="hidden rounded-[22px] px-5 py-4 text-sm"></p>
+
+    <section class="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Xodim qo'shish</span>
+        <h2 id="userFormTitle" class="mt-4 font-display text-2xl font-bold text-strong">Yangi foydalanuvchi yaratish</h2>
+        <form id="userForm" class="mt-6 space-y-4">
+          <input id="userEditId" type="hidden" />
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">To'liq ism</label>
+              <input name="fullName" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="To'liq ismni kiriting" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Mas'uliyat turi</label>
+              <select name="role" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="worker">Ishchi</option>
+                <option value="organizer">Organizer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Lavozim nomi</label>
+            <select name="positionTitle" class="w-full rounded-[18px] border px-4 py-3 text-sm"></select>
+            <p class="mt-2 text-xs text-soft">Lavozim ro'yxati tanlangan rolga qarab o'zgaradi.</p>
+          </div>
+          <div id="assignedWorkTypeWrap">
+            <label class="mb-2 block text-sm font-semibold text-strong">Asosiy ishlov turi</label>
+            <select name="assignedWorkType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+              <option value="parmofka">Parmofka</option>
+              <option value="klidka">Klidka</option>
+              <option value="bont">Bont</option>
+              <option value="sotka">Sotka</option>
+              <option value="pogruska">Pogruska</option>
+              <option value="kochigar">Kochigar</option>
+            </select>
+            <p class="mt-2 text-xs text-soft">Ishchi faqat bitta asosiy turga biriktiriladi.</p>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div id="usernameWrap">
+              <label class="mb-2 block text-sm font-semibold text-strong">Login</label>
+              <input name="username" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Login" />
+            </div>
+            <div id="passwordWrap">
+              <label class="mb-2 block text-sm font-semibold text-strong">Parol</label>
+              <input name="password" type="password" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Parol" />
+              <p class="mt-2 text-xs text-soft">Tahrirlash rejimida parolni almashtirmasangiz bo'sh qoldiring.</p>
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Telefon</label>
+            <input name="phone" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="+998..." />
+          </div>
+          <div id="salarySettingsWrap" class="space-y-4">
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Oylik miqdori</label>
+                <input name="salaryAmount" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: 3500000" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Oylik olinadigan sana</label>
+                <input name="salaryDayOfMonth" type="number" min="1" max="31" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Har oy 10-sana" />
+              </div>
+            </div>
+          </div>
+          <p id="workerCompHint" class="hidden text-xs text-soft">Ishchi uchun oylik yo'q. Hisob faqat ishlov turi va kiritilgan ish loglari bo'yicha avtomatik bo'linadi.</p>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <button id="userSubmitButton" class="btn-main w-full px-5 py-3 text-sm">Saqlash</button>
+            <button id="userCancelButton" type="button" class="btn-outline hidden w-full px-5 py-3 text-sm">Bekor qilish</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Mazmun bo'limi</span>
+        <h2 id="contentFormTitle" class="mt-4 font-display text-2xl font-bold text-strong">Mahsulot, yangilik va maqola qo'shish</h2>
+        <form id="contentForm" class="mt-6 space-y-4">
+          <input id="contentEditId" type="hidden" />
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Bo'lim</label>
+              <select name="type" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="product">Mahsulot</option>
+                <option value="news">Yangilik</option>
+                <option value="blog">Blog</option>
+              </select>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Qisqa belgi</label>
+              <input name="priceLabel" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: So'rov bo'yicha" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Sarlavha</label>
+            <input name="title" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Sarlavhani kiriting" />
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Qisqa tavsif</label>
+            <textarea name="excerpt" required rows="3" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Qisqa tavsif"></textarea>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Asosiy matn</label>
+            <textarea name="body" required rows="5" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Asosiy matn"></textarea>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Teglar</label>
+              <input name="tags" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Premium, Fasad" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Rasm manzili</label>
+              <input name="imageUrl" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Rasm manzili" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Rasm fayli</label>
+            <input id="imageFile" type="file" accept="image/*" class="w-full rounded-[18px] border border-dashed px-4 py-3 text-sm" />
+          </div>
+          <label class="soft-card flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm text-soft">
+            <input id="publishedCheckbox" type="checkbox" checked class="h-4 w-4" />
+            Darhol ko'rsatishga chiqarish
+          </label>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <button id="contentSubmitButton" class="btn-main w-full px-5 py-3 text-sm">Joylash</button>
+            <button id="contentCancelButton" type="button" class="btn-outline hidden w-full px-5 py-3 text-sm">Bekor qilish</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Xodimlar ro'yxati</span>
+        <div id="usersTable" class="mt-6 space-y-4"></div>
+      </div>
+      <div class="space-y-6">
+        <div class="panel rounded-[28px] p-5 sm:p-6">
+          <span class="eyebrow">Materiallar</span>
+          <div id="contentList" class="mt-6 space-y-4"></div>
+        </div>
+        <div class="panel rounded-[28px] p-5 sm:p-6">
+          <span class="eyebrow">Oxirgi topshiriqlar</span>
+          <div id="taskList" class="mt-6 space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[1fr_1fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Moliya sozlamalari</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-strong">Bir dona g'isht uchun xarajat va narx</h2>
+        <form id="financeForm" class="mt-6 space-y-4">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Xomashyo</label>
+              <input name="rawMaterialCostPerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Sotish narxi</label>
+              <input name="salePricePerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Energiya</label>
+              <input name="energyCostPerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Transport</label>
+              <input name="transportCostPerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Qo'shimcha xarajat</label>
+              <input name="otherCostPerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Jami mehnat qiymati</label>
+              <input name="laborCostPerBrick" readonly class="w-full rounded-[18px] border px-4 py-3 text-sm opacity-80" />
+            </div>
+          </div>
+          <div class="soft-card rounded-[20px] p-4">
+            <h3 class="font-display text-lg font-bold text-strong">Ishlov turi bo'yicha stavkalar</h3>
+            <p class="mt-2 text-sm text-soft">Quyidagi summalar bir dona g'isht uchun belgilanadi va ishchilar o'rtasida avtomatik bo'linadi.</p>
+            <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Parmofka</label>
+                <input name="parmofka" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Klidka</label>
+                <input name="klidka" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Bont</label>
+                <input name="bont" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Sotka</label>
+                <input name="sotka" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Pogruska</label>
+                <input name="pogruska" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Kochigar</label>
+                <input name="kochigar" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+            </div>
+          </div>
+          <button class="btn-main w-full px-5 py-3 text-sm">Moliya sozlamalarini saqlash</button>
+        </form>
+      </div>
+
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Xabarnoma yuborish</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-strong">Jamoaga signal yuborish</h2>
+        <form id="notificationForm" class="mt-6 space-y-4">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Qabul qiluvchi turi</label>
+              <select id="targetType" name="targetType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="all">Barchaga</option>
+                <option value="role">Rol bo'yicha</option>
+                <option value="user">Bitta xodimga</option>
+              </select>
+            </div>
+            <div id="targetRoleWrap" class="hidden">
+              <label class="mb-2 block text-sm font-semibold text-strong">Rol</label>
+              <select name="role" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="worker">Ishchi</option>
+                <option value="organizer">Organizer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </div>
+          <div id="targetUserWrap" class="hidden">
+            <label class="mb-2 block text-sm font-semibold text-strong">Xodim</label>
+            <select id="notificationUserId" name="userId" class="w-full rounded-[18px] border px-4 py-3 text-sm"></select>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Sarlavha</label>
+            <input name="title" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Oylik tasdiqlandi" />
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Matn</label>
+            <textarea name="body" required rows="5" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Xabarnoma matni"></textarea>
+          </div>
+          <button class="btn-main w-full px-5 py-3 text-sm">Xabarnoma yuborish</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel rounded-[28px] p-5 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <span class="eyebrow">Kamera nazorati</span>
+          <h2 class="mt-4 font-display text-2xl font-bold text-strong">24/7 kamera zonalari va uzluksiz brick hisobi</h2>
+          <p class="mt-2 text-sm text-soft">Har bir zona server ichida alohida background monitor sifatida yuradi. Admin panel faqat nazorat, preview va sozlash uchun ishlatiladi.</p>
+        </div>
+        <span id="cameraStatusPill" class="status-pill muted">O'chirilgan</span>
+      </div>
+      <div class="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <div class="soft-card rounded-[24px] p-5">
+          <form id="cameraSettingsForm" class="space-y-4">
+            <input id="cameraEditId" type="hidden" />
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="soft-card flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm text-soft">
+                <input name="enabled" type="checkbox" class="h-4 w-4" />
+                Kamerani yoqish
+              </label>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Kamera modeli</label>
+                <select name="modelKey" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="axis_vapix_generic">Axis VAPIX IP kamera</option>
+                  <option value="hikvision_ds_2cd2643g2_izs">Hikvision DS-2CD2643G2-IZS</option>
+                  <option value="custom">Boshqa IP kamera</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Kamera nomi</label>
+                <input name="name" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Parmofka lenta 1" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Zona nomi</label>
+                <input name="areaName" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Sharqiy lenta" />
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Hisob tegishli turi</label>
+                <select name="workType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="parmofka">Parmofka</option>
+                  <option value="klidka">Klidka</option>
+                  <option value="bont">Bont</option>
+                  <option value="sotka">Sotka</option>
+                  <option value="pogruska">Pogruska</option>
+                  <option value="kochigar">Kochigar</option>
+                </select>
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Oqim rejimi</label>
+                <select name="streamMode" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="snapshot">Snapshot API</option>
+                  <option value="rtsp">RTSP + ffmpeg</option>
+                  <option value="http">HTTP image / MJPEG</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="soft-card flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm text-soft">
+                <input name="autoSyncWorkLog" type="checkbox" checked class="h-4 w-4" />
+                Countni avtomatik work logga yozish
+              </label>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Sanash yo'nalishi</label>
+                <select name="countDirection" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="both">Ikki tomondan</option>
+                  <option value="negative_to_positive">O'ngdan chapga</option>
+                  <option value="positive_to_negative">Chapdan o'ngga</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Biriktirilgan ishchilar</label>
+              <select id="cameraWorkerIds" name="workerIds" multiple size="6" class="w-full rounded-[18px] border px-4 py-3 text-sm"></select>
+              <p class="mt-2 text-xs text-soft">Faqat shu turga biriktirilgan 1-10 ishchini tanlang. Server count oshgani sari shu ishchilarga work logni yangilab boradi.</p>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Snapshot URL</label>
+              <input name="snapshotUrl" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="http://camera-ip/ISAPI/Streaming/channels/101/picture" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">RTSP yoki HTTP stream URL</label>
+              <input name="streamUrl" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="rtsp://camera-ip:554/Streaming/Channels/101" />
+              <div class="mt-2 flex flex-wrap gap-2">
+                <button id="cameraUseDemoButton" type="button" class="btn-outline px-3 py-2 text-xs">Lokal demo oqimni qo'yish</button>
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Autentifikatsiya</label>
+                <select name="authType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="basic">Basic login/parol</option>
+                  <option value="bearer">Bearer token</option>
+                  <option value="query">Query token</option>
+                  <option value="none">Kerak emas</option>
+                </select>
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Token query key</label>
+                <input name="tokenQueryKey" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="token" />
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Username</label>
+                <input name="username" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="admin" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Password yoki API token</label>
+                <input name="password" type="password" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Kamera paroli" />
+              </div>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Bearer/query token</label>
+              <input name="apiToken" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="API token" />
+            </div>
+            <div class="grid gap-4 md:grid-cols-3">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">FFmpeg path</label>
+                <input name="ffmpegPath" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Bo'sh qoldiring - ichki ffmpeg ishlaydi" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">RTSP transport</label>
+                <select name="rtspTransport" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="tcp">TCP</option>
+                  <option value="udp">UDP</option>
+                </select>
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Frame oralig'i (ms)</label>
+                <input name="frameIntervalMs" type="number" min="250" max="5000" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+            </div>
+            <div class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="font-display text-lg font-bold text-strong">Qizil chiziq koordinatalari</h3>
+                <select id="cameraLinePreset" class="rounded-[16px] border px-3 py-2 text-sm">
+                  <option value="vertical_center">Vertikal markaz</option>
+                  <option value="horizontal_center">Gorizontal markaz</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div class="mt-4 grid gap-4 md:grid-cols-4">
+                <div>
+                  <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-soft">Start X</label>
+                  <input name="lineStartX" type="number" min="0" max="1" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-soft">Start Y</label>
+                  <input name="lineStartY" type="number" min="0" max="1" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-soft">End X</label>
+                  <input name="lineEndX" type="number" min="0" max="1" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-soft">End Y</label>
+                  <input name="lineEndY" type="number" min="0" max="1" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+                </div>
+              </div>
+              <p class="mt-3 text-xs text-soft">Lentadan brick chapdan o'ngga yoki o'ngdan chapga o'tsa, odatda vertikal chiziq ishlatiladi.</p>
+            </div>
+            <div class="grid gap-4 md:grid-cols-3">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Motion threshold</label>
+                <input name="motionThreshold" type="number" min="5" max="255" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Min blob area</label>
+                <input name="minBlobArea" type="number" min="10" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Max blob area</label>
+                <input name="maxBlobArea" type="number" min="10" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+              </div>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Tracker masofasi (px)</label>
+              <input name="trackerDistancePx" type="number" min="5" max="500" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Izoh</label>
+              <textarea name="notes" rows="3" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Kamera 4 metr balandlikda, lentaga tik qaragan"></textarea>
+            </div>
+            <div class="card rounded-[20px] p-4 text-sm">
+              <p id="cameraModelNote" class="font-semibold text-strong"></p>
+              <p class="mt-3 text-soft">Snapshot misol: <span id="cameraSnapshotExample" class="font-semibold text-strong"></span></p>
+              <p class="mt-2 text-soft">Stream misol: <span id="cameraStreamExample" class="font-semibold text-strong"></span></p>
+              <p class="mt-2 text-soft">HTTP MJPEG misol: <span id="cameraHttpExample" class="font-semibold text-strong"></span></p>
+            </div>
+            <div class="card rounded-[20px] p-4 text-sm text-soft">
+              <p class="font-semibold text-strong">URL, auth va ffmpeg yordam</p>
+              <p class="mt-3"><code>snapshotUrl</code> odatda kameraning JPG snapshot endpointi bo'ladi. Ko'p Hikvisionlarda <code>http://IP/ISAPI/Streaming/channels/101/picture</code>, ko'p Axislarda <code>http://IP/axis-cgi/jpg/image.cgi</code> ishlaydi.</p>
+              <p class="mt-2"><code>streamUrl</code> RTSP yoki HTTP MJPEG bo'ladi. RTSP ko'p hollarda <code>rtsp://IP:554/...</code>, HTTP MJPEG esa <code>http://IP/.../mjpg</code> yoki <code>.../video.cgi</code> ko'rinishida bo'ladi. Hozir server MJPEGning birinchi JPEG frameini ham o'qiy oladi.</p>
+              <p class="mt-2"><code>basic</code> oddiy login/parol bilan LAN kameralar uchun. <code>bearer</code> ko'proq cloud API yoki VMS gateway uchun. <code>query</code> token URL ichiga qo'shiladigan servislarda ishlatiladi. Oddiy zavod IP kamerada odatda <code>basic</code> yetadi.</p>
+              <p class="mt-2"><code>ffmpegPath</code> bo'sh qolsa ham bo'ladi. Server ichida paket bilan kelgan ffmpeg ishlatiladi; faqat o'zingiz alohida ffmpeg qo'ymoqchi bo'lsangiz yo'l kiriting.</p>
+              <p class="mt-2">URLni topish joyi: kamera web paneli, vendor manuali, <code>ISAPI</code>, <code>VAPIX</code>, <code>RTSP</code>, <code>ONVIF</code>, <code>Live View</code>, <code>Integration</code> bo'limlari.</p>
+            </div>
+            <div class="card rounded-[20px] p-4 text-sm text-soft">
+              <p class="font-semibold text-strong">O'rnatish tavsiyasi</p>
+              <p class="mt-3">Eng yaxshi count uchun kamerani lentaga imkon qadar tikroq, odatda 75°-90° yuqoridan qaratish tavsiya qilinadi.</p>
+              <p class="mt-2">Agar tik joylashtirish imkoni bo'lmasa, 35°-45° qiya burchakdan faqat bitta qatorda, bricklar bir-birini yopmaydigan oqimda ishlating.</p>
+              <p class="mt-2">Kamera chiziq ustidan 2.8-4.5 metr balandlikda, tebranishsiz kronshteynda va soya tushmaydigan bir xil yoritishda bo'lsa aniqlik ancha oshadi.</p>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <button id="cameraSubmitButton" class="btn-main w-full px-5 py-3 text-sm">Kamera saqlash</button>
+              <button id="cameraCancelButton" type="button" class="btn-outline hidden w-full px-5 py-3 text-sm">Bekor qilish</button>
+            </div>
+          </form>
+        </div>
+        <div class="space-y-4">
+          <div class="card rounded-[24px] p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h3 class="font-display text-xl font-bold text-strong">Kamera zonalari</h3>
+              <input id="cameraDateFilter" type="date" class="rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div id="cameraMonitorsList" class="mt-5 space-y-4"></div>
+          </div>
+          <div class="card rounded-[24px] p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h3 class="font-display text-xl font-bold text-strong">Live preview</h3>
+              <span id="cameraStatusText" class="text-sm text-soft">Kamera hali ishga tushmagan</span>
+            </div>
+            <canvas id="cameraPreviewCanvas" class="mt-4 w-full rounded-[20px] border" style="background: rgba(0,0,0,0.18); aspect-ratio: 16 / 9;"></canvas>
+            <canvas id="cameraProcessingCanvas" class="hidden"></canvas>
+          </div>
+          <div class="card rounded-[24px] p-5">
+            <p class="text-sm text-soft">Serverdagi bugungi hisob</p>
+            <p id="cameraCountValue" class="mt-3 font-display text-4xl font-bold text-strong">0 ta</p>
+            <p id="cameraDetectionMeta" class="mt-2 text-sm text-soft">Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.</p>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+              <button id="cameraStartButton" type="button" class="btn-main w-full px-5 py-3 text-sm">Preview boshlash</button>
+              <button id="cameraStopButton" type="button" class="btn-outline w-full px-5 py-3 text-sm">Preview to'xtatish</button>
+              <button id="cameraResetButton" type="button" class="btn-outline w-full px-5 py-3 text-sm">Bugungi countni nollash</button>
+              <button id="cameraApplyButton" type="button" class="btn-outline w-full px-5 py-3 text-sm">Work logni tekshirish</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel rounded-[28px] p-5 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <span class="eyebrow">Avtomatik ishlab chiqarish</span>
+          <h2 class="mt-4 font-display text-2xl font-bold text-strong">Kamera countidan kunlik ish haqi hisobi</h2>
+          <p class="mt-2 text-sm text-soft">Bu turdagi liniyalar uchun admin alohida vazifa bermaydi. Kamera counti kun davomida work log va ishchi ulushiga avtomatik aylanadi.</p>
+        </div>
+        <input id="productionDateFilter" type="date" class="rounded-[18px] border px-4 py-3 text-sm" />
+      </div>
+      <div id="productionTotals" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
+      <div id="productionSummaryList" class="mt-6"></div>
+    </section>
+
+    <section class="panel rounded-[28px] p-5 sm:p-6">
+      <span class="eyebrow">Moliyaviy natijalar</span>
+      <div id="brickMetrics" class="mt-6 grid gap-4 md:grid-cols-3"></div>
+      <div id="periodMetrics" class="mt-6 grid gap-4 xl:grid-cols-4"></div>
+      <div class="mt-6 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+        <div class="card rounded-[24px] p-5 sm:p-6">
+          <h3 class="font-display text-xl font-bold text-strong">Buyurtma bo'yicha foyda</h3>
+          <div id="recentOrders" class="mt-5 space-y-4"></div>
+        </div>
+        <div class="card rounded-[24px] p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-bold text-strong">Oyliklar</h3>
+            <input id="payrollMonth" type="month" class="max-w-[190px] rounded-[18px] border px-4 py-3 text-sm" />
+          </div>
+          <div id="payrollList" class="mt-5 space-y-4"></div>
+        </div>
+      </div>
+      <div class="card mt-6 rounded-[24px] p-5 sm:p-6">
+        <h3 class="font-display text-xl font-bold text-strong">Yuborilgan xabarnomalar</h3>
+        <div id="notificationsList" class="mt-5 space-y-4"></div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Ish haqi logi</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-strong">Ishlov bo'yicha yangi yozuv</h2>
+        <form id="workLogForm" class="mt-6 space-y-4">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Sana</label>
+              <input name="date" type="date" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Ishlov turi</label>
+              <select name="workType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                <option value="parmofka">Parmofka</option>
+                <option value="klidka">Klidka</option>
+                <option value="bont">Bont</option>
+                <option value="sotka">Sotka</option>
+                <option value="pogruska">Pogruska</option>
+                <option value="kochigar">Kochigar</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Miqdor</label>
+              <input name="quantity" type="number" min="1" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: 10000" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Stavka</label>
+              <input name="ratePerBrick" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Bo'sh qoldirilsa admin stavkasi olinadi" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Ishchilar</label>
+            <select id="workLogWorkerIds" name="workerIds" multiple size="6" class="w-full rounded-[18px] border px-4 py-3 text-sm"></select>
+            <p class="mt-2 text-xs text-soft">Bir xil turdagi 1-10 ta ishchini tanlang. Summasi teng bo'linadi.</p>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Izoh</label>
+            <textarea name="notes" rows="4" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: 5 kishi bilan smena yozuvi"></textarea>
+          </div>
+          <button class="btn-main w-full px-5 py-3 text-sm">Ish logini saqlash</button>
+        </form>
+        <div id="workLogList" class="mt-6 space-y-4"></div>
+      </div>
+
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="eyebrow">Ishchi hisoblari</span>
+            <h2 class="mt-4 font-display text-2xl font-bold text-strong">Avans, qarz va to'lanadiganlar</h2>
+          </div>
+          <select id="workerAccountFilter" class="rounded-[18px] border px-4 py-3 text-sm">
+            <option value="all">Barchasi</option>
+            <option value="debtor">Qarzdorlar</option>
+            <option value="payable">To'lanadiganlar</option>
+            <option value="settled">Yopilganlar</option>
+          </select>
+        </div>
+        <div id="workerAccountsList" class="mt-6 space-y-4"></div>
+        <div class="card mt-6 rounded-[24px] p-5">
+          <h3 class="font-display text-xl font-bold text-strong">Oxirgi worker yozuvlari</h3>
+          <div id="workerTransactionsList" class="mt-5 space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="eyebrow">Mijoz hisoblari</span>
+            <h2 class="mt-4 font-display text-2xl font-bold text-strong">Qarzdor va to'langan buyurtmalar</h2>
+          </div>
+          <select id="customerAccountFilter" class="rounded-[18px] border px-4 py-3 text-sm">
+            <option value="all">Barchasi</option>
+            <option value="debtor">Qarzdorlar</option>
+            <option value="partial">Qisman berganlar</option>
+            <option value="paid">To'liq berganlar</option>
+            <option value="unpaid">Umuman bermaganlar</option>
+          </select>
+        </div>
+        <div id="customerAccountsList" class="mt-6 space-y-4"></div>
+      </div>
+
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">To'lovlar oqimi</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-strong">Oxirgi tushumlar</h2>
+        <div id="customerPaymentsList" class="mt-6 space-y-4"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) localStorage.setItem(key, theme);
+      }
+      applyTheme(localStorage.getItem(key) || (media.matches ? "dark" : "light"), false);
+      window.toggleTheme = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    })();
+
+    const logoutButton = document.getElementById("logoutButton");
+    const userForm = document.getElementById("userForm");
+    const userFormTitle = document.getElementById("userFormTitle");
+    const userEditId = document.getElementById("userEditId");
+    const userSubmitButton = document.getElementById("userSubmitButton");
+    const userCancelButton = document.getElementById("userCancelButton");
+    const financeForm = document.getElementById("financeForm");
+    const contentForm = document.getElementById("contentForm");
+    const contentFormTitle = document.getElementById("contentFormTitle");
+    const contentEditId = document.getElementById("contentEditId");
+    const contentSubmitButton = document.getElementById("contentSubmitButton");
+    const contentCancelButton = document.getElementById("contentCancelButton");
+    const notificationForm = document.getElementById("notificationForm");
+    const imageFile = document.getElementById("imageFile");
+    const publishedCheckbox = document.getElementById("publishedCheckbox");
+    const targetType = document.getElementById("targetType");
+    const targetRoleWrap = document.getElementById("targetRoleWrap");
+    const targetUserWrap = document.getElementById("targetUserWrap");
+    const notificationUserId = document.getElementById("notificationUserId");
+    const payrollMonth = document.getElementById("payrollMonth");
+    const message = document.getElementById("message");
+    const statsGrid = document.getElementById("statsGrid");
+    const productionDateFilter = document.getElementById("productionDateFilter");
+    const productionTotals = document.getElementById("productionTotals");
+    const productionSummaryList = document.getElementById("productionSummaryList");
+    const brickMetrics = document.getElementById("brickMetrics");
+    const periodMetrics = document.getElementById("periodMetrics");
+    const recentOrders = document.getElementById("recentOrders");
+    const payrollList = document.getElementById("payrollList");
+    const notificationsList = document.getElementById("notificationsList");
+    const usersTable = document.getElementById("usersTable");
+    const contentList = document.getElementById("contentList");
+    const taskList = document.getElementById("taskList");
+    const assignedWorkTypeWrap = document.getElementById("assignedWorkTypeWrap");
+    const salarySettingsWrap = document.getElementById("salarySettingsWrap");
+    const workerCompHint = document.getElementById("workerCompHint");
+    const workLogForm = document.getElementById("workLogForm");
+    const workLogWorkerIds = document.getElementById("workLogWorkerIds");
+    const workLogList = document.getElementById("workLogList");
+    const workerAccountFilter = document.getElementById("workerAccountFilter");
+    const workerAccountsList = document.getElementById("workerAccountsList");
+    const workerTransactionsList = document.getElementById("workerTransactionsList");
+    const customerAccountFilter = document.getElementById("customerAccountFilter");
+    const customerAccountsList = document.getElementById("customerAccountsList");
+    const customerPaymentsList = document.getElementById("customerPaymentsList");
+    const cameraSettingsForm = document.getElementById("cameraSettingsForm");
+    const cameraEditId = document.getElementById("cameraEditId");
+    const cameraWorkerIds = document.getElementById("cameraWorkerIds");
+    const cameraLinePreset = document.getElementById("cameraLinePreset");
+    const cameraUseDemoButton = document.getElementById("cameraUseDemoButton");
+    const cameraSubmitButton = document.getElementById("cameraSubmitButton");
+    const cameraCancelButton = document.getElementById("cameraCancelButton");
+    const cameraDateFilter = document.getElementById("cameraDateFilter");
+    const cameraMonitorsList = document.getElementById("cameraMonitorsList");
+    const cameraPreviewCanvas = document.getElementById("cameraPreviewCanvas");
+    const cameraProcessingCanvas = document.getElementById("cameraProcessingCanvas");
+    const cameraStatusText = document.getElementById("cameraStatusText");
+    const cameraStatusPill = document.getElementById("cameraStatusPill");
+    const cameraCountValue = document.getElementById("cameraCountValue");
+    const cameraDetectionMeta = document.getElementById("cameraDetectionMeta");
+    const cameraModelNote = document.getElementById("cameraModelNote");
+    const cameraSnapshotExample = document.getElementById("cameraSnapshotExample");
+    const cameraStreamExample = document.getElementById("cameraStreamExample");
+    const cameraHttpExample = document.getElementById("cameraHttpExample");
+    const cameraStartButton = document.getElementById("cameraStartButton");
+    const cameraStopButton = document.getElementById("cameraStopButton");
+    const cameraResetButton = document.getElementById("cameraResetButton");
+    const cameraApplyButton = document.getElementById("cameraApplyButton");
+    const userRoleSelect = userForm.elements.role;
+    const userPositionSelect = userForm.elements.positionTitle;
+    const userUsernameInput = userForm.elements.username;
+    const userPasswordInput = userForm.elements.password;
+    const workTypeOptions = [
+      { value: "parmofka", label: "Parmofka" },
+      { value: "klidka", label: "Klidka" },
+      { value: "bont", label: "Bont" },
+      { value: "sotka", label: "Sotka" },
+      { value: "pogruska", label: "Pogruska" },
+      { value: "kochigar", label: "Kochigar" }
+    ];
+    const cameraModelPresets = {
+      custom: {
+        label: "Boshqa IP kamera",
+        description: "Snapshot API yoki RTSP manzilini qo'lda kiritish uchun.",
+        snapshotExample: "http://camera-ip/snapshot.jpg",
+        streamExample: "rtsp://camera-ip:554/stream",
+        httpExample: "http://camera-ip/mjpeg"
+      },
+      axis_vapix_generic: {
+        label: "Axis VAPIX IP kamera",
+        description: "Axis kameralarida odatda VAPIX snapshot, MJPEG va RTSP yoqilgan bo'ladi.",
+        snapshotExample: "http://camera-ip/axis-cgi/jpg/image.cgi",
+        streamExample: "rtsp://camera-ip/axis-media/media.amp",
+        httpExample: "http://camera-ip/axis-cgi/mjpg/video.cgi"
+      },
+      hikvision_ds_2cd2643g2_izs: {
+        label: "Hikvision DS-2CD2643G2-IZS",
+        description: "4 MP bullet IP kamera, ONVIF/ISAPI/RTSP profiliga mos.",
+        snapshotExample: "http://camera-ip/ISAPI/Streaming/channels/101/picture",
+        streamExample: "rtsp://camera-ip:554/Streaming/Channels/101",
+        httpExample: "http://camera-ip/ISAPI/Streaming/channels/101/httpPreview"
+      }
+    };
+    const cameraLinePresets = {
+      vertical_center: { lineStartX: 0.5, lineStartY: 0.08, lineEndX: 0.5, lineEndY: 0.92 },
+      horizontal_center: { lineStartX: 0.18, lineStartY: 0.52, lineEndX: 0.82, lineEndY: 0.52 }
+    };
+    const positionOptions = {
+      worker: ["Ishchi", "Smena ishchisi", "Quyish ustasi", "Yuklash ishchisi"],
+      organizer: ["Organizer", "Bosh organizer", "Smena organizeri", "Reja nazoratchisi"],
+      admin: ["Admin", "Bosh admin", "Tizim boshqaruvchisi"]
+    };
+    const state = {
+      users: [],
+      items: [],
+      tasks: [],
+      finance: null,
+      productionSummary: { totals: {}, items: [], mine: null },
+      payroll: [],
+      notifications: [],
+      overview: null,
+      workLogs: [],
+      workerAccounts: [],
+      workerTransactions: [],
+      customerAccounts: [],
+      customerPayments: [],
+      cameraMonitors: [],
+      selectedCameraId: ""
+    };
+    const cameraRuntime = {
+      running: false,
+      timer: null,
+      lastFrameAt: null,
+      lastStatsAt: 0
+    };
+
+    function applyScrollableLayouts() {
+      [
+        userForm,
+        contentForm,
+        financeForm,
+        notificationForm,
+        cameraSettingsForm,
+        workLogForm
+      ].forEach((element) => {
+        if (element) {
+          element.classList.add("form-scroll");
+        }
+      });
+
+      [
+        [usersTable, "tall"],
+        [contentList, "compact"],
+        [taskList, "compact"],
+        [recentOrders, "compact"],
+        [payrollList, "compact"],
+        [notificationsList, "compact"],
+        [productionSummaryList, "tall"],
+        [cameraMonitorsList, "compact"],
+        [workLogList, "compact"],
+        [workerAccountsList, "tall"],
+        [workerTransactionsList, "compact"],
+        [customerAccountsList, "tall"],
+        [customerPaymentsList, "compact"]
+      ].forEach(([element, heightClass]) => {
+        if (!element) {
+          return;
+        }
+        element.classList.remove("space-y-4", "space-y-5", "space-y-6");
+        element.classList.add("list-scroll", heightClass);
+      });
+
+      [cameraWorkerIds, workLogWorkerIds].forEach((element) => {
+        if (element) {
+          element.classList.add("multi-select-scroll");
+        }
+      });
+    }
+
+    applyScrollableLayouts();
+
+    function setMessage(text, isError = false) {
+      message.textContent = text;
+      message.className = `message-box ${isError ? "error" : "success"} rounded-[22px] px-5 py-4 text-sm`;
+      message.classList.remove("hidden");
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("uz-UZ", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(new Date(value));
+    }
+
+    function formatMoney(value) {
+      return `${new Intl.NumberFormat("uz-UZ").format(Number(value || 0))} so'm`;
+    }
+
+    function currentMonthKey() {
+      const date = new Date();
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function todayYmd() {
+      const now = new Date();
+      const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0, 10);
+    }
+
+    function settledValue(result, fallback) {
+      return result.status === "fulfilled" ? result.value : fallback;
+    }
+
+    async function request(url, options = {}) {
+      const response = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "So'rov bajarilmadi.");
+      }
+      return data;
+    }
+
+    function roleLabel(role) {
+      return {
+        admin: "Admin",
+        organizer: "Organizer",
+        worker: "Ishchi"
+      }[role] || role;
+    }
+
+    function workTypeLabel(value) {
+      return (workTypeOptions.find((item) => item.value === value) || {}).label || "Biriktirilmagan";
+    }
+
+    function syncPositionOptions(role = userRoleSelect.value, selected = "") {
+      const options = positionOptions[role] || positionOptions.worker;
+      const currentValue = selected || userPositionSelect.value;
+      const finalValue = options.includes(currentValue) ? currentValue : options[0];
+      userPositionSelect.innerHTML = options.map((item) => `
+        <option value="${item}" ${item === finalValue ? "selected" : ""}>${item}</option>
+      `).join("");
+    }
+
+    function syncAssignedWorkType(role = userRoleSelect.value, selected = "") {
+      const isWorker = role === "worker";
+      assignedWorkTypeWrap.classList.toggle("hidden", !isWorker);
+      salarySettingsWrap.classList.toggle("hidden", isWorker);
+      workerCompHint.classList.toggle("hidden", !isWorker);
+      userForm.elements.assignedWorkType.required = isWorker;
+      userForm.elements.salaryAmount.disabled = isWorker;
+      userForm.elements.salaryDayOfMonth.disabled = isWorker;
+      if (selected) {
+        userForm.elements.assignedWorkType.value = selected;
+      } else if (!userForm.elements.assignedWorkType.value) {
+        userForm.elements.assignedWorkType.value = workTypeOptions[0].value;
+      }
+      if (isWorker) {
+        userForm.elements.salaryAmount.value = 0;
+        userForm.elements.salaryDayOfMonth.value = 5;
+      }
+    }
+
+    function currentWorkRate(workType = workLogForm?.elements.workType.value) {
+      return Number(state.finance?.settings?.workRates?.[workType] || 0);
+    }
+
+    function syncWorkLogRate(force = false) {
+      const rateInput = workLogForm.elements.ratePerBrick;
+      const rate = currentWorkRate();
+      rateInput.placeholder = rate > 0 ? `${rate.toFixed(2)} so'm` : "Bo'sh qoldirilsa admin stavkasi olinadi";
+      if (force || !rateInput.value) {
+        rateInput.value = rate > 0 ? rate.toFixed(2) : "";
+      }
+    }
+
+    function syncCameraStatus(text = "", tone = "muted") {
+      cameraStatusText.textContent = text || "Kamera hali ishga tushmagan";
+      cameraStatusPill.textContent = tone === "success"
+        ? "Faol"
+        : tone === "warning"
+          ? "Ogohlantirish"
+          : tone === "danger"
+            ? "Xato"
+            : "O'chirilgan";
+      cameraStatusPill.className = `status-pill ${tone}`;
+    }
+
+    function selectedCamera() {
+      return state.cameraMonitors.find((item) => item.id === state.selectedCameraId) || state.cameraMonitors[0] || null;
+    }
+
+    function updateCameraCountDisplay(item = selectedCamera()) {
+      cameraCountValue.textContent = `${Number(item?.countToday || 0)} ta`;
+    }
+
+    function cameraSettingsFromForm() {
+      return {
+        id: cameraEditId.value || undefined,
+        name: cameraSettingsForm.elements.name.value,
+        areaName: cameraSettingsForm.elements.areaName.value,
+        notes: cameraSettingsForm.elements.notes.value,
+        enabled: cameraSettingsForm.elements.enabled.checked,
+        autoSyncWorkLog: cameraSettingsForm.elements.autoSyncWorkLog.checked,
+        workerIds: [...cameraWorkerIds.selectedOptions].map((option) => option.value).filter(Boolean),
+        countDirection: cameraSettingsForm.elements.countDirection.value,
+        modelKey: cameraSettingsForm.elements.modelKey.value,
+        workType: cameraSettingsForm.elements.workType.value,
+        streamMode: cameraSettingsForm.elements.streamMode.value,
+        snapshotUrl: cameraSettingsForm.elements.snapshotUrl.value,
+        streamUrl: cameraSettingsForm.elements.streamUrl.value,
+        authType: cameraSettingsForm.elements.authType.value,
+        username: cameraSettingsForm.elements.username.value,
+        password: cameraSettingsForm.elements.password.value,
+        apiToken: cameraSettingsForm.elements.apiToken.value,
+        tokenQueryKey: cameraSettingsForm.elements.tokenQueryKey.value,
+        ffmpegPath: cameraSettingsForm.elements.ffmpegPath.value,
+        rtspTransport: cameraSettingsForm.elements.rtspTransport.value,
+        lineStartX: cameraSettingsForm.elements.lineStartX.value,
+        lineStartY: cameraSettingsForm.elements.lineStartY.value,
+        lineEndX: cameraSettingsForm.elements.lineEndX.value,
+        lineEndY: cameraSettingsForm.elements.lineEndY.value,
+        frameIntervalMs: cameraSettingsForm.elements.frameIntervalMs.value,
+        motionThreshold: cameraSettingsForm.elements.motionThreshold.value,
+        minBlobArea: cameraSettingsForm.elements.minBlobArea.value,
+        maxBlobArea: cameraSettingsForm.elements.maxBlobArea.value,
+        trackerDistancePx: cameraSettingsForm.elements.trackerDistancePx.value
+      };
+    }
+
+    function syncCameraHints(settings = selectedCamera() || {}) {
+      const preset = cameraModelPresets[settings.modelKey] || cameraModelPresets.custom;
+      const modelLabel = settings.modelLabel || preset.label;
+      const modelDescription = settings.modelDescription || preset.description;
+      const snapshotExample = settings.snapshotExample || preset.snapshotExample || "http://camera-ip/snapshot.jpg";
+      const streamExample = settings.streamExample || preset.streamExample || "rtsp://camera-ip:554/stream";
+      const httpExample = settings.httpExample || preset.httpExample || "http://camera-ip/mjpeg";
+      cameraModelNote.textContent = modelLabel
+        ? `${modelLabel} - ${modelDescription || ""}`.trim()
+        : "Kamera modeli tanlanmagan";
+      cameraSnapshotExample.textContent = snapshotExample;
+      cameraStreamExample.textContent = streamExample;
+      cameraHttpExample.textContent = httpExample;
+      cameraSettingsForm.elements.snapshotUrl.placeholder = snapshotExample;
+      cameraSettingsForm.elements.streamUrl.placeholder = streamExample;
+      cameraSettingsForm.elements.ffmpegPath.placeholder = "Bo'sh qoldiring - ichki ffmpeg ishlaydi";
+    }
+
+    function detectCameraLinePreset(settings = cameraSettingsFromForm()) {
+      const x1 = Number(settings.lineStartX ?? 0);
+      const y1 = Number(settings.lineStartY ?? 0);
+      const x2 = Number(settings.lineEndX ?? 0);
+      const y2 = Number(settings.lineEndY ?? 0);
+      const near = (left, right) => Math.abs(left - right) < 0.03;
+      if (near(x1, 0.5) && near(y1, 0.08) && near(x2, 0.5) && near(y2, 0.92)) {
+        return "vertical_center";
+      }
+      if (near(x1, 0.18) && near(y1, 0.52) && near(x2, 0.82) && near(y2, 0.52)) {
+        return "horizontal_center";
+      }
+      return "custom";
+    }
+
+    function applyCameraLinePreset(presetKey) {
+      const preset = cameraLinePresets[presetKey];
+      if (!preset) {
+        return;
+      }
+      cameraSettingsForm.elements.lineStartX.value = preset.lineStartX.toFixed(2);
+      cameraSettingsForm.elements.lineStartY.value = preset.lineStartY.toFixed(2);
+      cameraSettingsForm.elements.lineEndX.value = preset.lineEndX.toFixed(2);
+      cameraSettingsForm.elements.lineEndY.value = preset.lineEndY.toFixed(2);
+    }
+
+    function cameraLineIsVertical(settings = cameraSettingsFromForm()) {
+      const dx = Math.abs(Number(settings.lineEndX ?? 0) - Number(settings.lineStartX ?? 0));
+      const dy = Math.abs(Number(settings.lineEndY ?? 0) - Number(settings.lineStartY ?? 0));
+      return dy >= dx;
+    }
+
+    function syncCountDirectionLabels(settings = cameraSettingsFromForm()) {
+      const isVertical = cameraLineIsVertical(settings);
+      const options = [...cameraSettingsForm.elements.countDirection.options];
+      const negativeToPositive = options.find((option) => option.value === "negative_to_positive");
+      const positiveToNegative = options.find((option) => option.value === "positive_to_negative");
+      if (negativeToPositive) {
+        negativeToPositive.textContent = isVertical ? "O'ngdan chapga" : "Tepadan pastga";
+      }
+      if (positiveToNegative) {
+        positiveToNegative.textContent = isVertical ? "Chapdan o'ngga" : "Pastdan tepaga";
+      }
+    }
+
+    function populateCameraWorkers(selectedIds = []) {
+      const workType = cameraSettingsForm.elements.workType.value;
+      const workers = state.users.filter((user) => user.role === "worker" && user.assignedWorkType === workType);
+      cameraWorkerIds.innerHTML = workers.length
+        ? workers.map((user) => `
+            <option value="${user.id}" ${selectedIds.includes(user.id) ? "selected" : ""}>${user.fullName} • ${user.assignedWorkTypeLabel || ""}</option>
+          `).join("")
+        : `<option value="">Bu tur uchun mos ishchi topilmadi</option>`;
+    }
+
+    function syncCameraForm(settings = {}) {
+      cameraEditId.value = settings.id || "";
+      cameraSettingsForm.elements.enabled.checked = Boolean(settings.enabled);
+      cameraSettingsForm.elements.name.value = settings.name || "";
+      cameraSettingsForm.elements.areaName.value = settings.areaName || "";
+      cameraSettingsForm.elements.notes.value = settings.notes || "";
+      cameraSettingsForm.elements.autoSyncWorkLog.checked = typeof settings.autoSyncWorkLog === "boolean" ? settings.autoSyncWorkLog : true;
+      cameraSettingsForm.elements.countDirection.value = settings.countDirection || "negative_to_positive";
+      cameraSettingsForm.elements.modelKey.value = settings.modelKey || "hikvision_ds_2cd2643g2_izs";
+      cameraSettingsForm.elements.workType.value = settings.workType || workTypeOptions[0].value;
+      populateCameraWorkers(settings.workerIds || []);
+      cameraSettingsForm.elements.streamMode.value = settings.streamMode || "snapshot";
+      cameraSettingsForm.elements.snapshotUrl.value = settings.snapshotUrl || "";
+      cameraSettingsForm.elements.streamUrl.value = settings.streamUrl || "";
+      cameraSettingsForm.elements.authType.value = settings.authType || "basic";
+      cameraSettingsForm.elements.username.value = settings.username || "";
+      cameraSettingsForm.elements.password.value = settings.password || "";
+      cameraSettingsForm.elements.apiToken.value = settings.apiToken || "";
+      cameraSettingsForm.elements.tokenQueryKey.value = settings.tokenQueryKey || "token";
+      cameraSettingsForm.elements.ffmpegPath.value = settings.ffmpegPath || "";
+      cameraSettingsForm.elements.rtspTransport.value = settings.rtspTransport || "tcp";
+      cameraSettingsForm.elements.lineStartX.value = Number(settings.lineStartX ?? 0.5).toFixed(2);
+      cameraSettingsForm.elements.lineStartY.value = Number(settings.lineStartY ?? 0.08).toFixed(2);
+      cameraSettingsForm.elements.lineEndX.value = Number(settings.lineEndX ?? 0.5).toFixed(2);
+      cameraSettingsForm.elements.lineEndY.value = Number(settings.lineEndY ?? 0.92).toFixed(2);
+      cameraSettingsForm.elements.frameIntervalMs.value = settings.frameIntervalMs || 900;
+      cameraSettingsForm.elements.motionThreshold.value = settings.motionThreshold || 28;
+      cameraSettingsForm.elements.minBlobArea.value = settings.minBlobArea || 140;
+      cameraSettingsForm.elements.maxBlobArea.value = settings.maxBlobArea || 12000;
+      cameraSettingsForm.elements.trackerDistancePx.value = settings.trackerDistancePx || 60;
+      cameraLinePreset.value = detectCameraLinePreset({
+        lineStartX: cameraSettingsForm.elements.lineStartX.value,
+        lineStartY: cameraSettingsForm.elements.lineStartY.value,
+        lineEndX: cameraSettingsForm.elements.lineEndX.value,
+        lineEndY: cameraSettingsForm.elements.lineEndY.value
+      });
+      syncCountDirectionLabels({
+        lineStartX: cameraSettingsForm.elements.lineStartX.value,
+        lineStartY: cameraSettingsForm.elements.lineStartY.value,
+        lineEndX: cameraSettingsForm.elements.lineEndX.value,
+        lineEndY: cameraSettingsForm.elements.lineEndY.value
+      });
+      cameraSubmitButton.textContent = settings.id ? "Kamerani yangilash" : "Kamera saqlash";
+      cameraCancelButton.classList.toggle("hidden", !settings.id);
+      syncCameraHints(settings);
+      syncCameraStatus(
+        settings.status === "running"
+          ? "Server monitor ishlayapti"
+          : settings.enabled
+            ? "Kamera yoqilgan, server tomonidan kuzatiladi"
+            : "Kamera o'chirilgan",
+        settings.status === "running" ? "success" : settings.enabled ? "warning" : "muted"
+      );
+    }
+
+    function resetCameraCounterState() {
+      cameraRuntime.lastFrameAt = null;
+      cameraRuntime.lastStatsAt = 0;
+      stopCameraCounter("Preview to'xtatildi", "muted");
+      updateCameraCountDisplay();
+      const context = cameraPreviewCanvas.getContext("2d");
+      context.clearRect(0, 0, cameraPreviewCanvas.width || cameraPreviewCanvas.clientWidth || 640, cameraPreviewCanvas.height || cameraPreviewCanvas.clientHeight || 360);
+      cameraDetectionMeta.textContent = "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.";
+    }
+
+    function stopCameraCounter(reason = "Preview to'xtatildi", tone = "muted") {
+      if (cameraRuntime.timer) {
+        clearTimeout(cameraRuntime.timer);
+        cameraRuntime.timer = null;
+      }
+      cameraRuntime.running = false;
+      syncCameraStatus(reason, tone);
+    }
+
+    function linePointsFor(width, height, settings = selectedCamera() || cameraSettingsFromForm()) {
+      return {
+        x1: Number(settings.lineStartX || 0) * width,
+        y1: Number(settings.lineStartY || 0) * height,
+        x2: Number(settings.lineEndX || 1) * width,
+        y2: Number(settings.lineEndY || 0) * height
+      };
+    }
+
+    function decodeBlobAsImage(blob) {
+      if ("createImageBitmap" in window) {
+        return createImageBitmap(blob);
+      }
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(blob);
+        const image = new Image();
+        image.onload = () => {
+          URL.revokeObjectURL(url);
+          resolve(image);
+        };
+        image.onerror = () => {
+          URL.revokeObjectURL(url);
+          reject(new Error("Frame rasmi ochilmadi."));
+        };
+        image.src = url;
+      });
+    }
+
+    function drawCameraPreview(image, item = selectedCamera()) {
+      const context = cameraPreviewCanvas.getContext("2d");
+      const width = image.width || image.videoWidth || cameraPreviewCanvas.clientWidth || 960;
+      const height = image.height || image.videoHeight || Math.round(width * 9 / 16);
+      if (cameraPreviewCanvas.width !== width || cameraPreviewCanvas.height !== height) {
+        cameraPreviewCanvas.width = width;
+        cameraPreviewCanvas.height = height;
+      }
+      context.clearRect(0, 0, width, height);
+      context.drawImage(image, 0, 0, width, height);
+
+      const previewLine = linePointsFor(width, height, item || cameraSettingsFromForm());
+
+      context.strokeStyle = "#dc2626";
+      context.lineWidth = Math.max(2, Math.round(width / 260));
+      context.beginPath();
+      context.moveTo(previewLine.x1, previewLine.y1);
+      context.lineTo(previewLine.x2, previewLine.y2);
+      context.stroke();
+
+      context.font = `700 ${Math.max(18, Math.round(width / 28))}px Manrope`;
+      context.fillStyle = "#dc2626";
+      context.fillText(`${Number(item?.countToday || 0)} ta`, 18, 36);
+    }
+
+    async function runCameraFrame() {
+      if (!cameraRuntime.running) {
+        return;
+      }
+
+      try {
+        const item = selectedCamera();
+        if (!item?.id) {
+          throw new Error("Avval kamera tanlang.");
+        }
+        const response = await fetch(`/api/camera/frame?monitorId=${encodeURIComponent(item.id)}&ts=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) {
+          const payload = await response.json().catch(() => ({}));
+          throw new Error(payload.error || "Kamera frame olinmadi.");
+        }
+        const blob = await response.blob();
+        const image = await decodeBlobAsImage(blob);
+        drawCameraPreview(image, item);
+        if ("close" in image && typeof image.close === "function") {
+          image.close();
+        }
+        cameraDetectionMeta.textContent = item.lastWarning || item.lastError || "Preview ochiq. Hisob serverning o'zida davom etmoqda.";
+        syncCameraStatus("Preview ishlayapti, server countni davom ettirayapti", "success");
+        if (Date.now() - cameraRuntime.lastStatsAt > 5000) {
+          cameraRuntime.lastStatsAt = Date.now();
+          refreshCameraMonitors(false).catch(() => {});
+        }
+      } catch (error) {
+        stopCameraCounter(error.message, "danger");
+        return;
+      }
+
+      const interval = Number(selectedCamera()?.frameIntervalMs || cameraSettingsForm.elements.frameIntervalMs.value || 900);
+      cameraRuntime.timer = setTimeout(runCameraFrame, interval);
+    }
+
+    function startCameraCounter() {
+      if (cameraRuntime.running) {
+        return;
+      }
+      const item = selectedCamera();
+      if (!item?.enabled) {
+        setMessage("Avval faol kamera tanlang yoki yoqing.", true);
+        return;
+      }
+      cameraRuntime.running = true;
+      syncCameraStatus("Preview ulanmoqda...", "warning");
+      runCameraFrame().catch((error) => {
+        stopCameraCounter(error.message, "danger");
+      });
+    }
+
+    function applyCameraCountToWorkLog() {
+      const item = selectedCamera();
+      if (!item) {
+        setMessage("Avval kamera tanlang.", true);
+        return;
+      }
+      const workType = item.workType || cameraSettingsForm.elements.workType.value || workTypeOptions[0].value;
+      workLogForm.elements.workType.value = workType;
+      workLogForm.elements.quantity.value = Number(item.countToday || 0);
+      populateWorkLogWorkers();
+      syncWorkLogRate(true);
+      workLogForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      setMessage(item.workLogId
+        ? `Server work logni allaqachon sync qilmoqda. Bugungi count: ${Number(item.countToday || 0)} ta.`
+        : `Bugungi server count ish log shakliga qo'yildi: ${Number(item.countToday || 0)} ta.`);
+    }
+
+    function renderCameraMonitors() {
+      const items = state.cameraMonitors || [];
+      cameraMonitorsList.innerHTML = items.length
+        ? items.map((item) => `
+            <article class="soft-card rounded-[20px] p-4 ${item.id === state.selectedCameraId ? "ring-2 ring-[rgba(163,82,43,0.35)]" : ""}">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h4 class="font-display text-lg font-bold text-strong">${item.name}</h4>
+                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Ishlayapti" : item.status === "error" ? "Xato" : item.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
+                    <span class="status-pill outline">${workTypeLabel(item.workType)}</span>
+                  </div>
+                  <p class="mt-2 text-sm text-soft">${item.areaName}</p>
+                  <p class="mt-2 text-sm text-soft">Bugun: <span class="font-semibold text-strong">${Number(item.countToday || 0)} ta</span> • Work log: <span class="font-semibold text-strong">${item.workLogId ? "sync qilingan" : "hali yo'q"}</span></p>
+                  <p class="mt-2 text-sm text-soft">Ishchilar: <span class="font-semibold text-strong">${(item.workers || []).map((worker) => worker.fullName).join(", ") || "biriktirilmagan"}</span></p>
+                  ${item.lastWarning ? `<p class="mt-2 text-sm text-soft">Ogohlantirish: <span class="font-semibold text-strong">${item.lastWarning}</span></p>` : ""}
+                  ${item.lastError ? `<p class="mt-2 text-sm text-soft">Xato: <span class="font-semibold text-strong">${item.lastError}</span></p>` : ""}
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button data-camera-id="${item.id}" data-camera-action="select" class="btn-outline px-4 py-2 text-xs">Tanlash</button>
+                  <button data-camera-id="${item.id}" data-camera-action="edit" class="btn-outline px-4 py-2 text-xs">Tahrirlash</button>
+                  <button data-camera-id="${item.id}" data-camera-action="reset" class="btn-outline px-4 py-2 text-xs">Nollash</button>
+                  <button data-camera-id="${item.id}" data-camera-action="delete" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
+                </div>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Hozircha kamera zonalari qo'shilmagan.</div>`;
+
+      const item = selectedCamera();
+      updateCameraCountDisplay(item);
+      if (item) {
+        syncCameraStatus(
+          item.status === "running"
+            ? "Server monitor ishlayapti"
+            : item.status === "error"
+              ? item.lastError || "Kamera xatolik berdi"
+              : item.enabled
+                ? "Kamera yoqilgan, navbatdagi frame kutilmoqda"
+                : "Kamera o'chirilgan",
+          item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"
+        );
+        cameraDetectionMeta.textContent = item.lastWarning || item.lastError || "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.";
+      } else {
+        syncCameraStatus("Kamera hali tanlanmagan", "muted");
+        cameraDetectionMeta.textContent = "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.";
+      }
+    }
+
+    function startCameraEdit(item) {
+      state.selectedCameraId = item.id;
+      syncCameraForm(item);
+      renderCameraMonitors();
+    }
+
+    async function refreshCameraMonitors(showError = false) {
+      try {
+        const result = await request(`/api/cameras?date=${encodeURIComponent(cameraDateFilter.value || todayYmd())}`);
+        state.cameraMonitors = result.items || [];
+        if (!state.cameraMonitors.find((item) => item.id === state.selectedCameraId)) {
+          state.selectedCameraId = state.cameraMonitors[0]?.id || "";
+        }
+        if (state.selectedCameraId && (!cameraEditId.value || cameraEditId.value === state.selectedCameraId)) {
+          syncCameraForm(selectedCamera() || {});
+        }
+        renderCameraMonitors();
+      } catch (error) {
+        if (showError) {
+          setMessage(error.message, true);
+        }
+      }
+    }
+
+    function populateWorkLogWorkers(selectedIds = []) {
+      const workType = workLogForm?.elements.workType.value || "";
+      const workers = state.users.filter((user) => user.role === "worker" && user.assignedWorkType === workType);
+      workLogWorkerIds.innerHTML = workers.length
+        ? workers.map((user) => `
+            <option value="${user.id}" ${selectedIds.includes(user.id) ? "selected" : ""}>${user.fullName} • ${user.assignedWorkTypeLabel || ""}</option>
+          `).join("")
+        : `<option value="">Bu tur uchun mos ishchi topilmadi</option>`;
+    }
+
+    function resetUserForm() {
+      userEditId.value = "";
+      userForm.reset();
+      userFormTitle.textContent = "Yangi foydalanuvchi yaratish";
+      userSubmitButton.textContent = "Saqlash";
+      userCancelButton.classList.add("hidden");
+      userUsernameInput.disabled = false;
+      userUsernameInput.required = true;
+      userPasswordInput.required = true;
+      userPasswordInput.placeholder = "Parol";
+      userRoleSelect.value = "worker";
+      syncPositionOptions("worker");
+      userForm.elements.assignedWorkType.value = workTypeOptions[0].value;
+      syncAssignedWorkType("worker", workTypeOptions[0].value);
+    }
+
+    function startUserEdit(user) {
+      userEditId.value = user.id;
+      userFormTitle.textContent = "Foydalanuvchini tahrirlash";
+      userSubmitButton.textContent = "Yangilash";
+      userCancelButton.classList.remove("hidden");
+      userForm.fullName.value = user.fullName || "";
+      userRoleSelect.value = user.role || "worker";
+      syncPositionOptions(user.role, user.positionTitle);
+      userUsernameInput.value = user.username || "";
+      userUsernameInput.disabled = false;
+      userUsernameInput.required = true;
+      userPasswordInput.value = "";
+      userPasswordInput.required = false;
+      userPasswordInput.placeholder = "Parolni almashtirmasangiz bo'sh qoldiring";
+      userForm.phone.value = user.phone || "";
+      userForm.salaryAmount.value = user.salaryAmount || 0;
+      userForm.salaryDayOfMonth.value = user.salaryDayOfMonth || 5;
+      userForm.assignedWorkType.value = user.assignedWorkType || workTypeOptions[0].value;
+      syncAssignedWorkType(user.role, user.assignedWorkType || workTypeOptions[0].value);
+      userForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetContentForm() {
+      contentEditId.value = "";
+      contentForm.reset();
+      imageFile.value = "";
+      publishedCheckbox.checked = true;
+      contentFormTitle.textContent = "Mahsulot, yangilik va maqola qo'shish";
+      contentSubmitButton.textContent = "Joylash";
+      contentCancelButton.classList.add("hidden");
+      contentForm.type.disabled = false;
+    }
+
+    function startContentEdit(item) {
+      contentEditId.value = item.id;
+      contentFormTitle.textContent = "Materialni tahrirlash";
+      contentSubmitButton.textContent = "Yangilash";
+      contentCancelButton.classList.remove("hidden");
+      contentForm.type.value = item.type || "product";
+      contentForm.priceLabel.value = item.priceLabel || "";
+      contentForm.title.value = item.title || "";
+      contentForm.excerpt.value = item.excerpt || "";
+      contentForm.body.value = item.body || "";
+      contentForm.tags.value = (item.tags || []).join(", ");
+      contentForm.imageUrl.value = item.imageUrl || "";
+      publishedCheckbox.checked = Boolean(item.isPublished);
+      imageFile.value = "";
+      contentForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function contentTypeLabel(type) {
+      return {
+        product: "Mahsulot",
+        news: "Yangilik",
+        blog: "Blog"
+      }[type] || type;
+    }
+
+    function taskTypeMeta(type) {
+      if (type === "production") {
+        return { label: "Quyish", tone: "warning" };
+      }
+      return { label: "Topshirish", tone: "info" };
+    }
+
+    function taskStatusMeta(status) {
+      return {
+        planned: { label: "Rejada", tone: "muted" },
+        accepted: { label: "Qabul qilingan", tone: "warning" },
+        in_progress: { label: "Jarayonda", tone: "info" },
+        done: { label: "Yakunlangan", tone: "success" }
+      }[status] || { label: status, tone: "outline" };
+    }
+
+    function payrollStatusMeta(status) {
+      return status === "paid"
+        ? { label: "To'langan", tone: "success" }
+        : { label: "Kutilmoqda", tone: "warning" };
+    }
+
+    function updateNotificationTargets() {
+      targetRoleWrap.classList.toggle("hidden", targetType.value !== "role");
+      targetUserWrap.classList.toggle("hidden", targetType.value !== "user");
+    }
+
+    function populateUserOptions() {
+      notificationUserId.innerHTML = state.users.length
+        ? state.users.map((user) => `
+            <option value="${user.id}">${user.fullName} (${roleLabel(user.role)})</option>
+          `).join("")
+        : `<option value="">Xodim topilmadi</option>`;
+    }
+
+    function renderStats(overview) {
+      const finance = state.finance?.settings || {};
+      const items = [
+        { label: "Faol foydalanuvchilar", value: overview.activeUsersCount, note: "Jamoa" },
+        { label: "Materiallar", value: overview.contentsCount, note: "Sayt" },
+        { label: "Topshiriqlar", value: overview.taskCount, note: "Jarayon" },
+        { label: "Bugun yakunlangan", value: overview.doneTodayCount, note: "Kunlik" },
+        { label: "Bir dona sof foyda", value: formatMoney(finance.profitPerBrick || 0), note: "1 g'isht" }
+      ];
+      statsGrid.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong sm:text-4xl">${item.value || 0}</p>
+          <p class="mt-2 text-xs font-bold uppercase tracking-[0.16em] accent">${item.note}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderFinance() {
+      const finance = state.finance || { settings: {}, periods: {}, recentOrders: [] };
+      const settings = finance.settings || {};
+      const periods = Object.values(finance.periods || {});
+
+      brickMetrics.innerHTML = [
+        { label: "Sotish narxi", value: formatMoney(settings.salePricePerBrick || 0) },
+        { label: "Jami xarajat", value: formatMoney(settings.totalCostPerBrick || 0) },
+        { label: "Bir dona foyda", value: formatMoney(settings.profitPerBrick || 0) }
+      ].map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong">${item.value}</p>
+        </article>
+      `).join("");
+
+      periodMetrics.innerHTML = periods.map((period) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-bold text-strong">${period.label}</h3>
+            <span class="status-pill accent">${period.ordersCount || 0} buyurtma</span>
+          </div>
+          <div class="mt-4 space-y-2 text-sm">
+            <p class="text-soft">Daromad: <span class="font-semibold text-strong">${formatMoney(period.revenue)}</span></p>
+            <p class="text-soft">Xarajat: <span class="font-semibold text-strong">${formatMoney(period.totalExpense)}</span></p>
+            <p class="text-soft">Ish haqi: <span class="font-semibold text-strong">${formatMoney(period.payrollExpense)}</span></p>
+            <p class="text-soft">Sof foyda: <span class="font-semibold accent">${formatMoney(period.netProfit)}</span></p>
+          </div>
+        </article>
+      `).join("");
+
+      recentOrders.innerHTML = finance.recentOrders?.length
+        ? finance.recentOrders.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.customerName}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.quantity} ta • ${item.date}</p>
+                </div>
+                <span class="status-pill info">${formatMoney(item.profit)}</span>
+              </div>
+              <div class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+                <p class="text-soft">Daromad: <span class="font-semibold text-strong">${formatMoney(item.revenue)}</span></p>
+                <p class="text-soft">Xarajat: <span class="font-semibold text-strong">${formatMoney(item.brickExpense)}</span></p>
+                <p class="text-soft">Foyda: <span class="font-semibold accent">${formatMoney(item.profit)}</span></p>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Hozircha yakunlangan topshirish buyurtmalari topilmadi.</div>`;
+    }
+
+    function renderPayroll() {
+      payrollList.innerHTML = state.payroll.length
+        ? state.payroll.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.user?.fullName || "Xodim"}</h4>
+                  <p class="mt-1 text-sm text-soft">${formatMoney(item.amount)} • ${item.dueDate}</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="status-pill ${payrollStatusMeta(item.status).tone}">${payrollStatusMeta(item.status).label}</span>
+                  ${item.status !== "paid" ? `<button data-payroll-id="${item.id}" class="btn-main px-4 py-2 text-xs">To'landi</button>` : ""}
+                </div>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Tanlangan oy uchun oylik yozuvlari topilmadi.</div>`;
+    }
+
+    function renderNotifications() {
+      notificationsList.innerHTML = state.notifications.length
+        ? state.notifications.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <h4 class="font-display text-lg font-bold text-strong">${item.title}</h4>
+                <span class="status-pill ${item.isRead ? "muted" : "info"}">${item.recipient?.fullName || "Jamoa"}</span>
+              </div>
+              <p class="mt-3 text-sm leading-7 text-soft">${item.body}</p>
+              <p class="mt-3 text-xs text-soft">${formatDate(item.createdAt)}</p>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Xabarnomalar hali yuborilmagan.</div>`;
+    }
+
+    function renderUsers(users) {
+      usersTable.innerHTML = users.map((user) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-xl font-bold text-strong">${user.fullName}</h3>
+                <span class="status-pill ${user.isActive ? "success" : "danger"}">${user.isActive ? "Faol" : "Nofaol"}</span>
+                <span class="status-pill outline">${roleLabel(user.role)}</span>
+              </div>
+              <p class="mt-2 text-sm text-soft">@${user.username} • ${user.positionTitle || "Lavozim ko'rsatilmagan"}</p>
+              ${user.role === "worker"
+                ? `<p class="mt-2 text-sm text-soft">Hisob: <span class="font-semibold text-strong">dona hisobidan</span> • Asosiy turi: <span class="font-semibold text-strong">${user.assignedWorkTypeLabel || "Biriktirilmagan"}</span></p>`
+                : `<p class="mt-2 text-sm text-soft">${formatMoney(user.salaryAmount || 0)} • har oy ${user.salaryDayOfMonth}-sana</p>`}
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-id="${user.id}" data-action="edit" class="btn-outline px-4 py-2 text-xs">Tahrirlash</button>
+              <button data-id="${user.id}" data-action="toggle" data-active="${user.isActive}" class="btn-outline px-4 py-2 text-xs">${user.isActive ? "Holatini yopish" : "Faollashtirish"}</button>
+              <button data-id="${user.id}" data-action="password" class="btn-main px-4 py-2 text-xs">Parolni yangilash</button>
+              <button data-id="${user.id}" data-action="delete" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderContent(items) {
+      contentList.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="status-pill accent">${contentTypeLabel(item.type)}</span>
+              <h3 class="mt-4 font-display text-xl font-bold text-strong">${item.title}</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-content-id="${item.id}" data-action="edit" class="btn-outline px-3 py-2 text-xs">Tahrirlash</button>
+              <button data-content-id="${item.id}" data-published="${item.isPublished}" class="status-pill ${item.isPublished ? "success" : "warning"}">${item.isPublished ? "Ko'rinmoqda" : "Yashirin"}</button>
+              <button data-content-id="${item.id}" data-action="delete" class="btn-outline px-3 py-2 text-xs">O'chirish</button>
+            </div>
+          </div>
+          <p class="mt-3 text-sm leading-7 text-soft">${item.excerpt}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderTasks(tasks) {
+      taskList.innerHTML = tasks.slice(0, 12).map((task) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="status-pill ${taskTypeMeta(task.type).tone}">${taskTypeMeta(task.type).label}</span>
+              <h3 class="mt-4 font-display text-lg font-bold text-strong">${task.customerName}</h3>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="status-pill ${taskStatusMeta(task.status).tone}">${taskStatusMeta(task.status).label}</span>
+              <button data-task-id="${task.id}" data-action="edit" class="btn-outline px-3 py-2 text-xs">Tahrirlash</button>
+              <button data-task-id="${task.id}" data-action="delete" class="btn-outline px-3 py-2 text-xs">O'chirish</button>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-soft">${task.quantity} ta • ${task.scheduledDate}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderFinance() {
+      const finance = state.finance || { settings: {}, periods: {}, recentOrders: [] };
+      const settings = finance.settings || {};
+      const periods = Object.values(finance.periods || {});
+
+      brickMetrics.innerHTML = [
+        { label: "Sotish narxi", value: formatMoney(settings.salePricePerBrick || 0) },
+        { label: "Mehnat jami", value: formatMoney(settings.laborCostPerBrick || 0) },
+        { label: "Mehnatsiz xarajat", value: formatMoney(settings.nonLaborCostPerBrick || 0) },
+        { label: "Bir dona foyda", value: formatMoney(settings.profitPerBrick || 0) }
+      ].map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong">${item.value}</p>
+        </article>
+      `).join("");
+
+      periodMetrics.innerHTML = periods.map((period) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-bold text-strong">${period.label}</h3>
+            <span class="status-pill accent">${period.ordersCount || 0} buyurtma</span>
+          </div>
+          <div class="mt-4 space-y-2 text-sm">
+            <p class="text-soft">Daromad: <span class="font-semibold text-strong">${formatMoney(period.revenue)}</span></p>
+            <p class="text-soft">Naqd tushum: <span class="font-semibold text-strong">${formatMoney(period.collectedCash)}</span></p>
+            <p class="text-soft">Debitor qarz: <span class="font-semibold text-strong">${formatMoney(period.receivableAmount)}</span></p>
+            <p class="text-soft">Ishchi mehnati: <span class="font-semibold text-strong">${formatMoney(period.pieceworkExpense)}</span></p>
+            <p class="text-soft">Tashqi xarajat: <span class="font-semibold text-strong">${formatMoney(period.nonLaborExpense)}</span></p>
+            <p class="text-soft">Shtat oyligi: <span class="font-semibold text-strong">${formatMoney(period.payrollExpense)}</span></p>
+            <p class="text-soft">Jami xarajat: <span class="font-semibold text-strong">${formatMoney(period.totalExpense)}</span></p>
+            <p class="text-soft">Sof foyda: <span class="font-semibold accent">${formatMoney(period.netProfit)}</span></p>
+          </div>
+        </article>
+      `).join("");
+
+      recentOrders.innerHTML = finance.recentOrders?.length
+        ? finance.recentOrders.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.customerName}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.quantity} ta • ${item.date}</p>
+                </div>
+                <span class="status-pill ${item.paymentStatus === "paid" ? "success" : item.paymentStatus === "partial" ? "warning" : "danger"}">
+                  ${item.paymentStatus === "paid" ? "To'langan" : item.paymentStatus === "partial" ? "Qisman" : "Qarz"}
+                </span>
+              </div>
+              <div class="mt-3 grid gap-2 text-sm sm:grid-cols-4">
+                <p class="text-soft">Daromad: <span class="font-semibold text-strong">${formatMoney(item.revenue)}</span></p>
+                <p class="text-soft">Tushgan: <span class="font-semibold text-strong">${formatMoney(item.paidAmount)}</span></p>
+                <p class="text-soft">Qolgan: <span class="font-semibold text-strong">${formatMoney(item.remainingAmount)}</span></p>
+                <p class="text-soft">Foyda: <span class="font-semibold accent">${formatMoney(item.profit)}</span></p>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Hozircha yakunlangan topshirish buyurtmalari topilmadi.</div>`;
+    }
+
+    function renderPayroll() {
+      payrollList.innerHTML = state.payroll.length
+        ? state.payroll.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.user?.fullName || "Xodim"}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.monthKey} • ${item.dueDate}</p>
+                  <p class="mt-2 text-sm text-soft">Ishlab topilgan: <span class="font-semibold text-strong">${formatMoney(item.accruedAmount)}</span></p>
+                  <p class="mt-2 text-sm text-soft">Avans va chiqim: <span class="font-semibold text-strong">${formatMoney(item.advanceAmount)}</span></p>
+                  <p class="mt-2 text-sm text-soft">To'langan: <span class="font-semibold text-strong">${formatMoney(item.paidAmount)}</span></p>
+                  ${item.payableAmount > 0 ? `<p class="mt-2 text-sm text-soft">To'lanishi kerak: <span class="font-semibold text-strong">${formatMoney(item.payableAmount)}</span></p>` : ""}
+                  ${item.debtAmount > 0 ? `<p class="mt-2 text-sm text-soft">Qarz balansi: <span class="font-semibold text-strong">${formatMoney(item.debtAmount)}</span></p>` : ""}
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="status-pill ${
+                    item.status === "debt"
+                      ? "danger"
+                      : item.status === "partial"
+                        ? "warning"
+                        : payrollStatusMeta(item.status).tone
+                  }">
+                    ${item.status === "debt" ? "Qarzdor" : item.status === "partial" ? "Qisman" : payrollStatusMeta(item.status).label}
+                  </span>
+                  ${item.payableAmount > 0 ? `<button data-payroll-id="${item.id}" class="btn-main px-4 py-2 text-xs">To'landi</button>` : ""}
+                </div>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Tanlangan oy uchun oylik yozuvlari topilmadi.</div>`;
+    }
+
+    function renderUsers(users) {
+      usersTable.innerHTML = users.map((user) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="font-display text-xl font-bold text-strong">${user.fullName}</h3>
+                <span class="status-pill ${user.isActive ? "success" : "danger"}">${user.isActive ? "Faol" : "Nofaol"}</span>
+                <span class="status-pill outline">${roleLabel(user.role)}</span>
+              </div>
+              <p class="mt-2 text-sm text-soft">@${user.username} • ${user.positionTitle || "Lavozim ko'rsatilmagan"}</p>
+              ${user.role === "worker"
+                ? `<p class="mt-2 text-sm text-soft">Hisob: <span class="font-semibold text-strong">dona hisobidan</span> • Asosiy turi: <span class="font-semibold text-strong">${user.assignedWorkTypeLabel || "Biriktirilmagan"}</span></p>`
+                : `<p class="mt-2 text-sm text-soft">${formatMoney(user.salaryAmount || 0)} • har oy ${user.salaryDayOfMonth}-sana</p>`}
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-id="${user.id}" data-action="edit" class="btn-outline px-4 py-2 text-xs">Tahrirlash</button>
+              <button data-id="${user.id}" data-action="toggle" data-active="${user.isActive}" class="btn-outline px-4 py-2 text-xs">${user.isActive ? "Holatini yopish" : "Faollashtirish"}</button>
+              <button data-id="${user.id}" data-action="password" class="btn-main px-4 py-2 text-xs">Parolni yangilash</button>
+              <button data-id="${user.id}" data-action="delete" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderTasks(tasks) {
+      taskList.innerHTML = tasks.slice(0, 12).map((task) => `
+        <article class="card rounded-[22px] p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <span class="status-pill ${taskTypeMeta(task.type).tone}">${taskTypeMeta(task.type).label}</span>
+              <h3 class="mt-4 font-display text-lg font-bold text-strong">${task.customerName}</h3>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="status-pill ${taskStatusMeta(task.status).tone}">${taskStatusMeta(task.status).label}</span>
+              ${task.type === "delivery" ? `<span class="status-pill ${task.paymentStatus === "paid" ? "success" : task.paymentStatus === "partial" ? "warning" : "danger"}">${task.paymentStatus === "paid" ? "To'langan" : task.paymentStatus === "partial" ? "Qisman" : "Qarz"}</span>` : ""}
+              <button data-task-id="${task.id}" data-action="edit" class="btn-outline px-3 py-2 text-xs">Tahrirlash</button>
+              <button data-task-id="${task.id}" data-action="delete" class="btn-outline px-3 py-2 text-xs">O'chirish</button>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-soft">${task.quantity} ta • ${task.scheduledDate}</p>
+          ${task.type === "delivery" ? `<p class="mt-2 text-sm text-soft">Buyurtma: <span class="font-semibold text-strong">${formatMoney(task.orderTotal)}</span> • Tushgan: <span class="font-semibold text-strong">${formatMoney(task.paidAmount)}</span></p>` : ""}
+        </article>
+      `).join("");
+    }
+
+    function renderWorkLogs() {
+      workLogList.innerHTML = state.workLogs.length
+        ? state.workLogs.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.workTypeLabel}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.quantity} ta • ${item.date}</p>
+                </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="status-pill info">${formatMoney(item.shareAmount)} / ishchi</span>
+                ${item.source === "camera" ? `<span class="status-pill accent">Kamera</span>` : ""}
+                <button data-work-log-id="${item.id}" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
+              </div>
+            </div>
+              <p class="mt-3 text-sm text-soft">Jami: <span class="font-semibold text-strong">${formatMoney(item.totalAmount)}</span> • Stavka: <span class="font-semibold text-strong">${formatMoney(item.ratePerBrick)}</span></p>
+              ${item.cameraMonitorName ? `<p class="mt-3 text-sm text-soft">Monitor: <span class="font-semibold text-strong">${item.cameraMonitorName}</span></p>` : ""}
+              <p class="mt-3 text-sm text-soft">${(item.workers || []).map((worker) => worker.fullName).join(", ") || "Ishchilar tanlanmagan"}</p>
+              ${item.notes ? `<p class="mt-3 text-sm leading-7 text-soft">${item.notes}</p>` : ""}
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Ish loglari hali kiritilmagan.</div>`;
+    }
+
+    function renderWorkerAccounts() {
+      workerAccountsList.innerHTML = state.workerAccounts.length
+        ? state.workerAccounts.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.user?.fullName || "Ishchi"}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.user?.assignedWorkTypeLabel || "Biriktirilmagan"} • ${item.monthKey}</p>
+                  <p class="mt-2 text-sm text-soft">Partiya soni: <span class="font-semibold text-strong">${item.workLogCount || 0}</span> • Hajm: <span class="font-semibold text-strong">${item.processedQuantity || 0} ta</span></p>
+                  <p class="mt-2 text-sm text-soft">Topilgan: <span class="font-semibold text-strong">${formatMoney(item.accruedAmount)}</span> • Avans: <span class="font-semibold text-strong">${formatMoney(item.advanceAmount)}</span></p>
+                  ${item.payableAmount > 0 ? `<p class="mt-2 text-sm text-soft">To'lanishi kerak: <span class="font-semibold text-strong">${formatMoney(item.payableAmount)}</span></p>` : ""}
+                  ${item.debtAmount > 0 ? `<p class="mt-2 text-sm text-soft">Qarz balansi: <span class="font-semibold text-strong">${formatMoney(item.debtAmount)}</span></p>` : ""}
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button data-worker-id="${item.user?.id}" data-worker-action="advance" class="btn-outline px-4 py-2 text-xs">Avans yozish</button>
+                  <button data-worker-id="${item.user?.id}" data-worker-action="bonus" class="btn-outline px-4 py-2 text-xs">Bonus yozish</button>
+                  <button data-worker-id="${item.user?.id}" data-worker-action="deduction" class="btn-outline px-4 py-2 text-xs">Ushlab qolish</button>
+                </div>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Tanlangan filter uchun ishchi hisoblari topilmadi.</div>`;
+
+      workerTransactionsList.innerHTML = state.workerTransactions.length
+        ? state.workerTransactions.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.worker?.fullName || "Ishchi"}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.typeLabel} • ${item.date}</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="status-pill ${item.effect === "credit" ? "success" : "warning"}">${formatMoney(item.amount)}</span>
+                  <button data-worker-transaction-id="${item.id}" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
+                </div>
+              </div>
+              ${item.note ? `<p class="mt-3 text-sm leading-7 text-soft">${item.note}</p>` : ""}
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Worker yozuvlari hali yo'q.</div>`;
+    }
+
+    function renderCustomerAccounts() {
+      customerAccountsList.innerHTML = state.customerAccounts.length
+        ? state.customerAccounts.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.customerName}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.totalOrders} ta buyurtma • oxirgisi ${item.lastOrderDate}</p>
+                  <p class="mt-2 text-sm text-soft">Jami: <span class="font-semibold text-strong">${formatMoney(item.totalAmount)}</span> • Tushgan: <span class="font-semibold text-strong">${formatMoney(item.paidAmount)}</span> • Qolgan: <span class="font-semibold text-strong">${formatMoney(item.remainingAmount)}</span></p>
+                </div>
+                <span class="status-pill ${item.paymentStatus === "paid" ? "success" : item.paymentStatus === "partial" ? "warning" : "danger"}">
+                  ${item.paymentStatus === "paid" ? "To'liq yopilgan" : item.paymentStatus === "partial" ? "Qisman" : "Qarzdor"}
+                </span>
+              </div>
+              <div class="mt-4 space-y-3">
+                ${(item.orders || []).map((order) => `
+                  <div class="card rounded-[18px] p-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                      <p class="text-sm text-soft">${order.date} • ${order.quantity} ta</p>
+                      <button data-order-id="${order.taskId}" data-order-remaining="${order.remainingAmount}" class="btn-outline px-4 py-2 text-xs">To'lov yozish</button>
+                    </div>
+                    <p class="mt-2 text-sm text-soft">Buyurtma: <span class="font-semibold text-strong">${formatMoney(order.revenue)}</span> • Tushgan: <span class="font-semibold text-strong">${formatMoney(order.paidAmount)}</span> • Qolgan: <span class="font-semibold text-strong">${formatMoney(order.remainingAmount)}</span></p>
+                  </div>
+                `).join("")}
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Tanlangan filter uchun mijoz hisoblari topilmadi.</div>`;
+
+      customerPaymentsList.innerHTML = state.customerPayments.length
+        ? state.customerPayments.map((item) => `
+            <article class="soft-card rounded-[20px] p-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-display text-lg font-bold text-strong">${item.customerName}</h4>
+                  <p class="mt-1 text-sm text-soft">${item.date}</p>
+                </div>
+                <span class="status-pill success">${formatMoney(item.amount)}</span>
+              </div>
+              ${item.note ? `<p class="mt-3 text-sm leading-7 text-soft">${item.note}</p>` : ""}
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Mijoz to'lovlari hali qayd etilmagan.</div>`;
+    }
+
+    async function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function loadDashboard() {
+      const monthKey = payrollMonth.value || currentMonthKey();
+      const [overviewResult, usersResult, contentResult, taskResult, financeResult, payrollResult, notificationsResult] = await Promise.allSettled([
+        request("/api/overview"),
+        request("/api/users"),
+        request("/api/content?includeDrafts=true&limit=30"),
+        request("/api/tasks"),
+        request("/api/finance/dashboard"),
+        request(`/api/payroll?monthKey=${encodeURIComponent(monthKey)}`),
+        request("/api/notifications?scope=all&limit=12")
+      ]);
+      state.overview = settledValue(overviewResult, { overview: {} }).overview || {};
+      state.users = settledValue(usersResult, { users: [] }).users || [];
+      state.items = settledValue(contentResult, { items: [] }).items || [];
+      state.tasks = settledValue(taskResult, { tasks: [] }).tasks || [];
+      state.finance = settledValue(financeResult, { finance: null }).finance || null;
+      state.payroll = settledValue(payrollResult, { items: [] }).items || [];
+      state.notifications = settledValue(notificationsResult, { notifications: [] }).notifications || [];
+
+      populateUserOptions();
+      renderStats(state.overview);
+      renderFinance();
+      renderUsers(state.users);
+      renderContent(state.items);
+      renderTasks(state.tasks);
+      renderPayroll();
+      renderNotifications();
+
+      const settings = state.finance?.settings || {};
+      Object.keys(settings).forEach((key) => {
+        if (financeForm.elements[key]) {
+          financeForm.elements[key].value = settings[key];
+        }
+      });
+
+      const failedCount = [overviewResult, usersResult, contentResult, taskResult, financeResult, payrollResult, notificationsResult]
+        .filter((item) => item.status === "rejected")
+        .length;
+
+      if (failedCount) {
+        setMessage("Ba'zi bo'limlar qisman yuklandi, lekin panel ishlashda davom etadi.", true);
+      }
+    }
+
+    function renderStats(overview) {
+      const finance = state.finance?.settings || {};
+      const workerDebtors = state.workerAccounts.filter((item) => item.debtAmount > 0).length;
+      const customerDebtors = state.customerAccounts.filter((item) => item.remainingAmount > 0).length;
+      const items = [
+        { label: "Faol foydalanuvchilar", value: overview.activeUsersCount || 0, note: "Jamoa" },
+        { label: "Ishchi qarzdorlar", value: workerDebtors, note: "Avans" },
+        { label: "Mijoz qarzdorlar", value: customerDebtors, note: "Debitor" },
+        { label: "Bugungi avtomatik count", value: state.productionSummary?.totals?.loggedQuantity || 0, note: "Dona" },
+        { label: "Bir dona sof foyda", value: formatMoney(finance.profitPerBrick || 0), note: "1 g'isht" }
+      ];
+      statsGrid.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong sm:text-4xl">${item.value}</p>
+          <p class="mt-2 text-xs font-bold uppercase tracking-[0.16em] accent">${item.note}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderProductionSummary() {
+      const totals = state.productionSummary?.totals || {};
+      const items = state.productionSummary?.items || [];
+
+      productionTotals.innerHTML = [
+        { label: "Faol turlar", value: totals.workTypeCount || 0, note: "Kamera bilan" },
+        { label: "Bugungi dona", value: totals.loggedQuantity || 0, note: "Hisobga kirgan" },
+        { label: "Bugungi summa", value: formatMoney(totals.totalAmount || 0), note: "Ish haqi" },
+        { label: "Ishchilar", value: totals.workerCount || 0, note: "Liniyada" }
+      ].map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-3xl font-bold text-strong">${item.value}</p>
+          <p class="mt-2 text-xs font-bold uppercase tracking-[0.16em] accent">${item.note}</p>
+        </article>
+      `).join("");
+
+      productionSummaryList.innerHTML = items.length
+        ? items.map((item) => `
+            <article class="card rounded-[24px] p-5">
+              <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="font-display text-xl font-bold text-strong">${item.workTypeLabel}</h3>
+                    <span class="status-pill ${item.automated ? "success" : "warning"}">${item.automated ? "Avtomatik" : "Manual/kutilmoqda"}</span>
+                    <span class="status-pill outline">${formatMoney(item.ratePerBrick)} / dona</span>
+                  </div>
+                  <p class="mt-2 text-sm text-soft">${item.note}</p>
+                  <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                    <div class="soft-card rounded-[18px] p-4">
+                      <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Kamera counti</p>
+                      <p class="mt-2 font-display text-2xl font-bold text-strong">${item.cameraQuantity} ta</p>
+                    </div>
+                    <div class="soft-card rounded-[18px] p-4">
+                      <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Hisobga kirgan</p>
+                      <p class="mt-2 font-display text-2xl font-bold text-strong">${item.loggedQuantity} ta</p>
+                    </div>
+                    <div class="soft-card rounded-[18px] p-4">
+                      <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Jami summa</p>
+                      <p class="mt-2 font-display text-2xl font-bold text-strong">${formatMoney(item.totalAmount)}</p>
+                    </div>
+                    <div class="soft-card rounded-[18px] p-4">
+                      <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Ishchilar</p>
+                      <p class="mt-2 font-display text-2xl font-bold text-strong">${item.workerCount}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full max-w-[26rem] space-y-3">
+                  <div class="soft-card rounded-[18px] p-4">
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Biriktirilgan kameralar</p>
+                    <div class="mt-3 space-y-3">
+                      ${item.monitors.length ? item.monitors.map((monitor) => `
+                        <div class="card rounded-[16px] p-3">
+                          <div class="flex flex-wrap items-center justify-between gap-2">
+                            <p class="font-semibold text-strong">${monitor.name}</p>
+                            <span class="status-pill ${monitor.status === "running" ? "success" : monitor.status === "error" ? "danger" : monitor.enabled ? "warning" : "muted"}">${monitor.status === "running" ? "Ishlayapti" : monitor.status === "error" ? "Xato" : monitor.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
+                          </div>
+                          <p class="mt-2 text-sm text-soft">${monitor.areaName || "Zona ko'rsatilmagan"} • ${monitor.countToday || 0} ta</p>
+                          ${monitor.lastWarning ? `<p class="mt-2 text-xs text-soft">Ogohlantirish: ${monitor.lastWarning}</p>` : ""}
+                          ${monitor.lastError ? `<p class="mt-2 text-xs text-soft">Xato: ${monitor.lastError}</p>` : ""}
+                        </div>
+                      `).join("") : `<p class="text-sm text-soft">Bu tur uchun kamera hali biriktirilmagan.</p>`}
+                    </div>
+                  </div>
+                  <div class="soft-card rounded-[18px] p-4">
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-soft">Ishchi ulushi</p>
+                    <div class="mt-3 space-y-2">
+                      ${item.workers.length ? item.workers.map((worker) => `
+                        <div class="flex items-center justify-between gap-3 rounded-[16px] bg-[rgba(255,255,255,0.35)] px-3 py-3">
+                          <div class="min-w-0">
+                            <p class="truncate font-semibold text-strong">${worker.fullName}</p>
+                            <p class="text-xs text-soft">${worker.todayQuantity || 0} ta jamoaviy hajm • ${worker.workLogCount || 0} yozuv</p>
+                          </div>
+                          <span class="status-pill info">${formatMoney(worker.todayAmount || 0)}</span>
+                        </div>
+                      `).join("") : `<p class="text-sm text-soft">Ishchilar hali biriktirilmagan.</p>`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Tanlangan sana uchun avtomatik ishlab chiqarish yozuvlari topilmadi.</div>`;
+    }
+
+    function syncFinanceDerived() {
+      const laborCost = workTypeOptions.reduce((sum, item) => sum + Number(financeForm.elements[item.value].value || 0), 0);
+      financeForm.elements.laborCostPerBrick.value = Number.isFinite(laborCost) ? laborCost.toFixed(2) : "0.00";
+    }
+
+    function syncFinanceForm(settings = {}) {
+      financeForm.rawMaterialCostPerBrick.value = settings.rawMaterialCostPerBrick || 0;
+      financeForm.energyCostPerBrick.value = settings.energyCostPerBrick || 0;
+      financeForm.transportCostPerBrick.value = settings.transportCostPerBrick || 0;
+      financeForm.otherCostPerBrick.value = settings.otherCostPerBrick || 0;
+      financeForm.salePricePerBrick.value = settings.salePricePerBrick || 0;
+      workTypeOptions.forEach((item) => {
+        financeForm.elements[item.value].value = settings.workRates?.[item.value] || 0;
+      });
+      syncFinanceDerived();
+    }
+
+    function resetWorkLogForm() {
+      workLogForm.reset();
+      workLogForm.elements.date.value = todayYmd();
+      workLogForm.elements.workType.value = workTypeOptions[0].value;
+      populateWorkLogWorkers();
+      syncWorkLogRate(true);
+    }
+
+    async function loadDashboard() {
+      const monthKey = payrollMonth.value || currentMonthKey();
+      const workerStatus = workerAccountFilter.value || "all";
+      const customerStatus = customerAccountFilter.value || "all";
+      const cameraDate = cameraDateFilter.value || todayYmd();
+      const productionDate = productionDateFilter.value || todayYmd();
+      const [overviewResult, usersResult, contentResult, taskResult, financeResult, payrollResult, notificationsResult, workLogsResult, workerAccountsResult, customerAccountsResult, cameraResult, productionResult] = await Promise.allSettled([
+        request("/api/overview"),
+        request("/api/users"),
+        request("/api/content?includeDrafts=true&limit=30"),
+        request("/api/tasks"),
+        request("/api/finance/dashboard"),
+        request(`/api/payroll?monthKey=${encodeURIComponent(monthKey)}`),
+        request("/api/notifications?scope=all&limit=12"),
+        request(`/api/work-logs?monthKey=${encodeURIComponent(monthKey)}`),
+        request(`/api/worker-accounts?monthKey=${encodeURIComponent(monthKey)}&status=${encodeURIComponent(workerStatus)}`),
+        request(`/api/customer-accounts?status=${encodeURIComponent(customerStatus)}`),
+        request(`/api/cameras?date=${encodeURIComponent(cameraDate)}`),
+        request(`/api/production-summary?date=${encodeURIComponent(productionDate)}`)
+      ]);
+
+      state.overview = settledValue(overviewResult, { overview: {} }).overview || {};
+      state.users = settledValue(usersResult, { users: [] }).users || [];
+      state.items = settledValue(contentResult, { items: [] }).items || [];
+      state.tasks = settledValue(taskResult, { tasks: [] }).tasks || [];
+      state.finance = settledValue(financeResult, { finance: null }).finance || null;
+      state.payroll = settledValue(payrollResult, { items: [] }).items || [];
+      state.notifications = settledValue(notificationsResult, { notifications: [] }).notifications || [];
+      state.workLogs = settledValue(workLogsResult, { items: [] }).items || [];
+      state.workerAccounts = settledValue(workerAccountsResult, { items: [] }).items || [];
+      state.workerTransactions = settledValue(workerAccountsResult, { recentTransactions: [] }).recentTransactions || [];
+      state.customerAccounts = settledValue(customerAccountsResult, { accounts: [] }).accounts || [];
+      state.customerPayments = settledValue(customerAccountsResult, { recentPayments: [] }).recentPayments || [];
+      state.cameraMonitors = settledValue(cameraResult, { items: [] }).items || [];
+      state.productionSummary = settledValue(productionResult, { totals: {}, items: [], mine: null });
+      if (!state.cameraMonitors.find((item) => item.id === state.selectedCameraId)) {
+        state.selectedCameraId = state.cameraMonitors[0]?.id || "";
+      }
+
+      populateUserOptions();
+      populateWorkLogWorkers();
+      renderStats(state.overview);
+      renderProductionSummary();
+      renderFinance();
+      renderUsers(state.users);
+      renderContent(state.items);
+      renderTasks(state.tasks);
+      renderPayroll();
+      renderNotifications();
+      renderWorkLogs();
+      renderWorkerAccounts();
+      renderCustomerAccounts();
+      syncFinanceForm(state.finance?.settings || {});
+      if (state.selectedCameraId) {
+        syncCameraForm(selectedCamera() || {});
+      } else {
+        syncCameraForm({});
+      }
+      renderCameraMonitors();
+      syncWorkLogRate();
+
+      const failedCount = [overviewResult, usersResult, contentResult, taskResult, financeResult, payrollResult, notificationsResult, workLogsResult, workerAccountsResult, customerAccountsResult, cameraResult, productionResult]
+        .filter((item) => item.status === "rejected")
+        .length;
+
+      if (failedCount) {
+        setMessage("Ba'zi bo'limlar qisman yuklandi, lekin panel ishlashda davom etadi.", true);
+      }
+    }
+
+    async function ensureAdmin() {
+      const data = await request("/api/auth/me");
+      if (!data.authenticated || data.user.role !== "admin") {
+        window.location.href = data.redirectTo || "/login.html";
+      }
+    }
+
+    userForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        const isWorker = userForm.role.value === "worker";
+        const payload = {
+          fullName: userForm.fullName.value,
+          positionTitle: userForm.positionTitle.value,
+          username: userForm.username.value,
+          password: userForm.password.value,
+          role: userForm.role.value,
+          phone: userForm.phone.value,
+          salaryAmount: isWorker ? 0 : userForm.salaryAmount.value,
+          salaryDayOfMonth: isWorker ? 5 : userForm.salaryDayOfMonth.value,
+          assignedWorkType: userForm.assignedWorkType.value
+        };
+        const editingId = userEditId.value;
+        await request(editingId ? `/api/users/${editingId}` : "/api/users", {
+          method: editingId ? "PATCH" : "POST",
+          body: JSON.stringify({
+            ...payload,
+            password: payload.password || undefined
+          })
+        });
+        resetUserForm();
+        setMessage(editingId ? "Foydalanuvchi yangilandi." : "Yangi foydalanuvchi yaratildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    financeForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await request("/api/finance/settings", {
+          method: "PATCH",
+          body: JSON.stringify({
+            rawMaterialCostPerBrick: financeForm.rawMaterialCostPerBrick.value,
+            energyCostPerBrick: financeForm.energyCostPerBrick.value,
+            transportCostPerBrick: financeForm.transportCostPerBrick.value,
+            otherCostPerBrick: financeForm.otherCostPerBrick.value,
+            salePricePerBrick: financeForm.salePricePerBrick.value,
+            parmofka: financeForm.parmofka.value,
+            klidka: financeForm.klidka.value,
+            bont: financeForm.bont.value,
+            sotka: financeForm.sotka.value,
+            pogruska: financeForm.pogruska.value,
+            kochigar: financeForm.kochigar.value
+          })
+        });
+        setMessage("Moliya sozlamalari saqlandi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    workLogForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        const workerIds = [...workLogWorkerIds.selectedOptions].map((option) => option.value).filter(Boolean);
+        await request("/api/work-logs", {
+          method: "POST",
+          body: JSON.stringify({
+            date: workLogForm.date.value,
+            workType: workLogForm.workType.value,
+            quantity: workLogForm.quantity.value,
+            ratePerBrick: workLogForm.ratePerBrick.value || undefined,
+            workerIds,
+            notes: workLogForm.notes.value
+          })
+        });
+        resetWorkLogForm();
+        setMessage("Ish logi saqlandi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    contentForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        let imageBase64 = "";
+        if (imageFile.files[0]) {
+          imageBase64 = await fileToDataUrl(imageFile.files[0]);
+        }
+
+        const editingId = contentEditId.value;
+        await request(editingId ? `/api/content/${editingId}` : "/api/content", {
+          method: editingId ? "PATCH" : "POST",
+          body: JSON.stringify({
+            type: contentForm.type.value,
+            title: contentForm.title.value,
+            excerpt: contentForm.excerpt.value,
+            body: contentForm.body.value,
+            priceLabel: contentForm.priceLabel.value,
+            tags: contentForm.tags.value,
+            imageUrl: contentForm.imageUrl.value,
+            imageBase64,
+            isPublished: publishedCheckbox.checked
+          })
+        });
+
+        resetContentForm();
+        setMessage(editingId ? "Material yangilandi." : "Material saqlandi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    notificationForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await request("/api/notifications", {
+          method: "POST",
+          body: JSON.stringify({
+            targetType: notificationForm.targetType.value,
+            role: notificationForm.role.value,
+            userId: notificationForm.userId.value,
+            title: notificationForm.title.value,
+            body: notificationForm.body.value
+          })
+        });
+        notificationForm.reset();
+        targetType.value = "all";
+        updateNotificationTargets();
+        setMessage("Xabarnoma yuborildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    usersTable.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-id]");
+      if (!button) return;
+      const id = button.dataset.id;
+      const action = button.dataset.action;
+      const user = state.users.find((item) => item.id === id);
+
+      try {
+        if (action === "toggle") {
+          await request(`/api/users/${id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ isActive: button.dataset.active !== "true" })
+          });
+          setMessage("Xodim holati yangilandi.");
+        }
+
+        if (action === "password") {
+          const password = prompt("Yangi parolni kiriting:");
+          if (!password) return;
+          await request(`/api/users/${id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ password })
+          });
+          setMessage("Parol yangilandi.");
+        }
+
+        if (action === "edit") {
+          if (!user) return;
+          startUserEdit(user);
+          return;
+        }
+
+        if (action === "delete") {
+          if (!confirm("Haqiqatan ham foydalanuvchini o'chirmoqchimisiz?")) return;
+          await request(`/api/users/${id}`, { method: "DELETE" });
+          setMessage("Foydalanuvchi o'chirildi.");
+        }
+
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    contentList.addEventListener("click", async (event) => {
+      const statusButton = event.target.closest("button[data-content-id][data-published]");
+      const editButton = event.target.closest("button[data-content-id][data-action='edit']");
+      const deleteButton = event.target.closest("button[data-content-id][data-action='delete']");
+
+      try {
+        if (editButton) {
+          const item = state.items.find((entry) => entry.id === editButton.dataset.contentId);
+          if (!item) return;
+          startContentEdit(item);
+          return;
+        }
+
+        if (statusButton) {
+          await request(`/api/content/${statusButton.dataset.contentId}`, {
+            method: "PATCH",
+            body: JSON.stringify({ isPublished: statusButton.dataset.published !== "true" })
+          });
+          setMessage("Material holati yangilandi.");
+        }
+
+        if (deleteButton) {
+          if (!confirm("Materialni o'chirishni tasdiqlaysizmi?")) return;
+          await request(`/api/content/${deleteButton.dataset.contentId}`, { method: "DELETE" });
+          setMessage("Material o'chirildi.");
+        }
+
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    taskList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-task-id]");
+      if (!button) return;
+      const task = state.tasks.find((item) => item.id === button.dataset.taskId);
+
+      try {
+        if (button.dataset.action === "edit") {
+          if (!task) return;
+          const customerName = prompt("Zakazchi nomi", task.customerName);
+          if (!customerName) return;
+          const quantity = prompt("Miqdor", task.quantity);
+          if (!quantity) return;
+          const scheduledDate = prompt("Sana (YYYY-MM-DD)", task.scheduledDate);
+          if (!scheduledDate) return;
+          const notes = prompt("Izoh", task.notes || "") || "";
+          const unitPrice = task.type === "delivery"
+            ? (prompt("1 dona sotuv narxi", task.unitPrice || 0) || task.unitPrice || 0)
+            : task.unitPrice || 0;
+          await request(`/api/tasks/${button.dataset.taskId}`, {
+            method: "PATCH",
+            body: JSON.stringify({ customerName, quantity, scheduledDate, notes, type: task.type, workType: task.workType || "", unitPrice })
+          });
+          setMessage("Topshiriq yangilandi.");
+          await loadDashboard();
+          return;
+        }
+
+        if (!confirm("Topshiriqni o'chirishni tasdiqlaysizmi?")) return;
+        await request(`/api/tasks/${button.dataset.taskId}`, { method: "DELETE" });
+        setMessage("Topshiriq o'chirildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    payrollList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-payroll-id]");
+      if (!button) return;
+
+      try {
+        await request(`/api/payroll/${button.dataset.payrollId}/pay`, {
+          method: "PATCH",
+          body: JSON.stringify({})
+        });
+        setMessage("Oylik to'landi deb belgilandi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    workLogList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-work-log-id]");
+      if (!button) return;
+      try {
+        if (!confirm("Ish logini o'chirishni tasdiqlaysizmi?")) return;
+        await request(`/api/work-logs/${button.dataset.workLogId}`, { method: "DELETE" });
+        setMessage("Ish logi o'chirildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    workerAccountsList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-worker-id][data-worker-action]");
+      if (!button) return;
+
+      try {
+        const amount = prompt("Summani kiriting:");
+        if (!amount) return;
+        const note = prompt("Izoh", "") || "";
+        await request("/api/worker-transactions", {
+          method: "POST",
+          body: JSON.stringify({
+            workerId: button.dataset.workerId,
+            type: button.dataset.workerAction,
+            amount,
+            note,
+            date: todayYmd()
+          })
+        });
+        setMessage("Worker yozuvi saqlandi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    workerTransactionsList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-worker-transaction-id]");
+      if (!button) return;
+      try {
+        if (!confirm("Worker yozuvini o'chirishni tasdiqlaysizmi?")) return;
+        await request(`/api/worker-transactions/${button.dataset.workerTransactionId}`, { method: "DELETE" });
+        setMessage("Worker yozuvi o'chirildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    customerAccountsList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-order-id]");
+      if (!button) return;
+      try {
+        const amount = prompt("Kiritiladigan to'lov summasi", button.dataset.orderRemaining || "");
+        if (!amount) return;
+        const note = prompt("Izoh", "") || "";
+        await request("/api/customer-payments", {
+          method: "POST",
+          body: JSON.stringify({
+            taskId: button.dataset.orderId,
+            amount,
+            note,
+            date: todayYmd()
+          })
+        });
+        setMessage("Mijoz to'lovi yozildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    cameraSettingsForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        const payload = cameraSettingsFromForm();
+        await request(payload.id ? `/api/cameras/${payload.id}` : "/api/cameras", {
+          method: payload.id ? "PATCH" : "POST",
+          body: JSON.stringify(payload)
+        });
+        syncCameraForm({});
+        setMessage(payload.id ? "Kamera yangilandi." : "Yangi kamera qo'shildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    cameraSettingsForm.elements.workType.addEventListener("change", () => {
+      populateCameraWorkers();
+      syncCameraHints(cameraSettingsFromForm());
+    });
+
+    cameraSettingsForm.elements.modelKey.addEventListener("change", () => {
+      syncCameraHints(cameraSettingsFromForm());
+    });
+
+    cameraSettingsForm.elements.streamUrl.addEventListener("input", () => {
+      const value = cameraSettingsForm.elements.streamUrl.value.trim().toLowerCase();
+      if (value.startsWith("rtsp://")) {
+        cameraSettingsForm.elements.streamMode.value = "rtsp";
+      } else if (value.startsWith("http://") || value.startsWith("https://")) {
+        cameraSettingsForm.elements.streamMode.value = "http";
+      }
+    });
+
+    cameraSettingsForm.elements.snapshotUrl.addEventListener("input", () => {
+      const value = cameraSettingsForm.elements.snapshotUrl.value.trim().toLowerCase();
+      if (value.startsWith("http://") || value.startsWith("https://")) {
+        cameraSettingsForm.elements.streamMode.value = "snapshot";
+      }
+    });
+
+    cameraUseDemoButton.addEventListener("click", () => {
+      cameraSettingsForm.elements.enabled.checked = true;
+      cameraSettingsForm.elements.modelKey.value = "custom";
+      cameraSettingsForm.elements.streamMode.value = "http";
+      cameraSettingsForm.elements.authType.value = "none";
+      cameraSettingsForm.elements.snapshotUrl.value = "";
+      cameraSettingsForm.elements.streamUrl.value = `${location.origin}/api/demo/camera.mjpeg`;
+      cameraSettingsForm.elements.countDirection.value = "negative_to_positive";
+      cameraSettingsForm.elements.frameIntervalMs.value = cameraSettingsForm.elements.frameIntervalMs.value || 350;
+      if (!cameraSettingsForm.elements.name.value.trim()) {
+        cameraSettingsForm.elements.name.value = "Demo kamera";
+      }
+      if (!cameraSettingsForm.elements.areaName.value.trim()) {
+        cameraSettingsForm.elements.areaName.value = "Lokal test oqimi";
+      }
+      cameraLinePreset.value = "vertical_center";
+      applyCameraLinePreset("vertical_center");
+      syncCountDirectionLabels();
+      syncCameraHints(cameraSettingsFromForm());
+      setMessage("Lokal demo oqim qo'yildi. Endi kamerani saqlab preview boshlashingiz mumkin.");
+    });
+
+    cameraLinePreset.addEventListener("change", () => {
+      applyCameraLinePreset(cameraLinePreset.value);
+      syncCountDirectionLabels();
+    });
+
+    ["lineStartX", "lineStartY", "lineEndX", "lineEndY"].forEach((fieldName) => {
+      cameraSettingsForm.elements[fieldName].addEventListener("input", () => {
+        cameraLinePreset.value = detectCameraLinePreset();
+        syncCountDirectionLabels();
+      });
+    });
+
+    cameraStartButton.addEventListener("click", () => {
+      startCameraCounter();
+    });
+
+    cameraStopButton.addEventListener("click", () => {
+      stopCameraCounter("Preview to'xtatildi", "muted");
+    });
+
+    cameraResetButton.addEventListener("click", async () => {
+      const item = selectedCamera();
+      if (!item?.id) {
+        setMessage("Avval kamera tanlang.", true);
+        return;
+      }
+      try {
+        await request(`/api/cameras/${item.id}/reset?date=${encodeURIComponent(cameraDateFilter.value || todayYmd())}`, {
+          method: "POST",
+          body: JSON.stringify({})
+        });
+        resetCameraCounterState();
+        setMessage("Bugungi kamera sanog'i nolga tushirildi.");
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    cameraApplyButton.addEventListener("click", () => {
+      applyCameraCountToWorkLog();
+    });
+
+    cameraCancelButton.addEventListener("click", () => {
+      syncCameraForm({});
+    });
+
+    cameraDateFilter.addEventListener("change", () => {
+      loadDashboard().catch((error) => setMessage(error.message, true));
+    });
+    productionDateFilter.addEventListener("change", () => {
+      loadDashboard().catch((error) => setMessage(error.message, true));
+    });
+
+    cameraMonitorsList.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-camera-id][data-camera-action]");
+      if (!button) return;
+      const item = state.cameraMonitors.find((entry) => entry.id === button.dataset.cameraId);
+      if (!item) return;
+
+      try {
+        if (button.dataset.cameraAction === "select") {
+          state.selectedCameraId = item.id;
+          syncCameraForm(item);
+          renderCameraMonitors();
+          if (cameraRuntime.running) {
+            stopCameraCounter("Preview qayta ulanmoqda...", "warning");
+            startCameraCounter();
+          }
+          return;
+        }
+
+        if (button.dataset.cameraAction === "edit") {
+          startCameraEdit(item);
+          return;
+        }
+
+        if (button.dataset.cameraAction === "reset") {
+          await request(`/api/cameras/${item.id}/reset?date=${encodeURIComponent(cameraDateFilter.value || todayYmd())}`, {
+            method: "POST",
+            body: JSON.stringify({})
+          });
+          setMessage("Kamera counti nolga tushirildi.");
+          await loadDashboard();
+          return;
+        }
+
+        if (button.dataset.cameraAction === "delete") {
+          if (!confirm("Kamerani o'chirishni tasdiqlaysizmi?")) return;
+          await request(`/api/cameras/${item.id}`, { method: "DELETE" });
+          if (state.selectedCameraId === item.id) {
+            stopCameraCounter("Tanlangan kamera o'chirildi", "muted");
+            state.selectedCameraId = "";
+            syncCameraForm({});
+          }
+          setMessage("Kamera o'chirildi.");
+          await loadDashboard();
+        }
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    userRoleSelect.addEventListener("change", () => {
+      syncPositionOptions(userRoleSelect.value);
+      syncAssignedWorkType(userRoleSelect.value);
+    });
+
+    workLogForm.elements.workType.addEventListener("change", () => {
+      populateWorkLogWorkers();
+      syncWorkLogRate();
+    });
+
+    workTypeOptions.forEach((item) => {
+      financeForm.elements[item.value].addEventListener("input", syncFinanceDerived);
+    });
+
+    userCancelButton.addEventListener("click", () => {
+      resetUserForm();
+    });
+
+    contentCancelButton.addEventListener("click", () => {
+      resetContentForm();
+    });
+
+    targetType.addEventListener("change", updateNotificationTargets);
+    payrollMonth.addEventListener("change", () => {
+      loadDashboard().catch((error) => setMessage(error.message, true));
+    });
+    workerAccountFilter.addEventListener("change", () => {
+      loadDashboard().catch((error) => setMessage(error.message, true));
+    });
+    customerAccountFilter.addEventListener("change", () => {
+      loadDashboard().catch((error) => setMessage(error.message, true));
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      stopCameraCounter("Sessiya yopildi", "muted");
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    window.addEventListener("beforeunload", () => {
+      stopCameraCounter("Sahifa yopildi", "muted");
+    });
+
+    (async () => {
+      try {
+        payrollMonth.value = currentMonthKey();
+        cameraDateFilter.value = todayYmd();
+        productionDateFilter.value = todayYmd();
+        resetUserForm();
+        resetContentForm();
+        resetWorkLogForm();
+        resetCameraCounterState();
+        updateNotificationTargets();
+        await ensureAdmin();
+        await loadDashboard();
+      } catch (error) {
+        setMessage(error.message || "Panel yuklanmadi.", true);
+      }
+    })();
+  </script>
+</body>
+</html>
