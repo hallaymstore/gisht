@@ -213,9 +213,24 @@
               <video id="mobileCameraVideo" class="hidden" autoplay muted playsinline></video>
               <canvas id="mobileCameraCaptureCanvas" class="hidden"></canvas>
             </div>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-strong">Sanash yo'nalishi</label>
+                <select id="mobileCameraDirectionSelect" class="w-full rounded-[18px] border px-4 py-3 text-sm">
+                  <option value="negative_to_positive">O'ngdan chapga</option>
+                  <option value="positive_to_negative">Chapdan o'ngga</option>
+                </select>
+              </div>
+              <div class="soft-card rounded-[18px] px-4 py-3 text-sm text-soft">
+                Kamera preview alohida ishlaydi.
+                <span class="font-semibold text-strong">Sanash faqat pastdagi tugma bosilgandan keyin boshlanadi.</span>
+              </div>
+            </div>
             <div class="mt-4 flex flex-wrap gap-3">
               <button id="mobileCameraStartButton" type="button" class="btn-main px-5 py-3 text-sm">Orqa kamerani yoqish</button>
-              <button id="mobileCameraStopButton" type="button" class="btn-outline px-5 py-3 text-sm">To'xtatish</button>
+              <button id="mobileCameraCountStartButton" type="button" class="btn-outline px-5 py-3 text-sm">Sanashni boshlash</button>
+              <button id="mobileCameraCountStopButton" type="button" class="btn-outline px-5 py-3 text-sm">Sanashni to'xtatish</button>
+              <button id="mobileCameraStopButton" type="button" class="btn-outline px-5 py-3 text-sm">Kamerani yopish</button>
             </div>
             <p id="mobileCameraMeta" class="mt-4 text-sm text-soft">Telefon browser kamerasi hali ulanmagan.</p>
           </div>
@@ -312,7 +327,10 @@
     const mobileCameraStatusPill = document.getElementById("mobileCameraStatusPill");
     const mobileCameraCountValue = document.getElementById("mobileCameraCountValue");
     const mobileCameraMeta = document.getElementById("mobileCameraMeta");
+    const mobileCameraDirectionSelect = document.getElementById("mobileCameraDirectionSelect");
     const mobileCameraStartButton = document.getElementById("mobileCameraStartButton");
+    const mobileCameraCountStartButton = document.getElementById("mobileCameraCountStartButton");
+    const mobileCameraCountStopButton = document.getElementById("mobileCameraCountStopButton");
     const mobileCameraStopButton = document.getElementById("mobileCameraStopButton");
     const productionCard = document.getElementById("productionCard");
     const filterDate = document.getElementById("filterDate");
@@ -333,7 +351,9 @@
       uploadTimer: null,
       overlayFrame: 0,
       syncTimer: null,
-      uploadInFlight: false
+      uploadInFlight: false,
+      countingActive: false,
+      countDirection: "negative_to_positive"
     };
 
     function setMessage(text, isError = false) {
@@ -443,6 +463,9 @@
       if (item.status === "running") {
         return { text: "Telefon kamerasi online, count serverga yozilyapti.", tone: "success" };
       }
+      if (item.status === "previewing_mobile") {
+        return { text: "Telefon preview ishlayapti, sanash hali boshlanmagan.", tone: "info" };
+      }
       if (item.status === "error") {
         return { text: item.lastError || "Kamera uzatishda xato bor.", tone: "danger" };
       }
@@ -458,9 +481,14 @@
     function updateMobileCameraButtons() {
       mobileCameraStartButton.disabled = mobileCameraState.running;
       mobileCameraStopButton.disabled = !mobileCameraState.running;
+      mobileCameraCountStartButton.disabled = !mobileCameraState.running || mobileCameraState.countingActive;
+      mobileCameraCountStopButton.disabled = !mobileCameraState.running || !mobileCameraState.countingActive;
       mobileCameraStartButton.classList.toggle("opacity-60", mobileCameraStartButton.disabled);
       mobileCameraStopButton.classList.toggle("opacity-60", mobileCameraStopButton.disabled);
+      mobileCameraCountStartButton.classList.toggle("opacity-60", mobileCameraCountStartButton.disabled);
+      mobileCameraCountStopButton.classList.toggle("opacity-60", mobileCameraCountStopButton.disabled);
       mobileCameraSelect.disabled = !mobileCameraState.monitors.length;
+      mobileCameraDirectionSelect.disabled = mobileCameraState.countingActive;
     }
 
     function mobileCameraLinePoints(width, height, monitor = selectedMobileMonitor()) {
@@ -516,6 +544,10 @@
       if (!selected && mobileCameraState.running) {
         stopMobileCamera("Mobil zona topilmadi.", "warning");
       }
+      if (selected && !mobileCameraState.countingActive) {
+        mobileCameraState.countDirection = selected.effectiveCountDirection || selected.countDirection || "negative_to_positive";
+      }
+      mobileCameraDirectionSelect.value = mobileCameraState.countDirection;
       mobileCameraSelect.innerHTML = mobileCameraState.monitors.length
         ? mobileCameraState.monitors.map((item) => `
             <option value="${item.id}" ${item.id === selected?.id ? "selected" : ""}>${item.name} • ${item.countToday || 0} ta</option>
@@ -529,10 +561,11 @@
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
                     <h3 class="font-display text-lg font-bold text-strong">${item.name}</h3>
-                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Ishlayapti" : item.status === "error" ? "Xato" : item.status === "waiting_mobile" ? "Kutilmoqda" : item.enabled ? "Tayyor" : "O'chirilgan"}</span>
+                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "previewing_mobile" ? "info" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Sanayapti" : item.status === "previewing_mobile" ? "Preview" : item.status === "error" ? "Xato" : item.status === "waiting_mobile" ? "Kutilmoqda" : item.enabled ? "Tayyor" : "O'chirilgan"}</span>
                   </div>
                   <p class="mt-2 text-sm text-soft">${item.areaName || "Zona"}</p>
                   <p class="mt-2 text-sm text-soft">Bugun: <span class="font-semibold text-strong">${Number(item.countToday || 0)} ta</span></p>
+                  <p class="mt-2 text-sm text-soft">Yo'nalish: <span class="font-semibold text-strong">${(item.effectiveCountDirection || item.countDirection) === "positive_to_negative" ? "Chapdan o'ngga" : "O'ngdan chapga"}</span></p>
                   ${item.mobileSession?.fullName ? `<p class="mt-2 text-sm text-soft">Ulangan telefon: <span class="font-semibold text-strong">${item.mobileSession.fullName}</span></p>` : ""}
                 </div>
                 <button type="button" data-mobile-monitor-id="${item.id}" class="btn-outline px-4 py-2 text-xs">Tanlash</button>
@@ -547,7 +580,9 @@
         setMobileCameraStatus(statusMeta.text, statusMeta.tone);
       }
       mobileCameraMeta.textContent = selected
-        ? (selected.lastWarning || selected.lastError || "Qizil chiziqdan o'tgan g'ishtlar avtomatik server hisobiga yoziladi.")
+        ? (selected.lastWarning || selected.lastError || (selected.status === "previewing_mobile"
+          ? "Preview ochiq. Yo'nalishni tanlab, sanashni alohida boshlang."
+          : "Qizil chiziqdan o'tgan g'ishtlar avtomatik server hisobiga yoziladi."))
         : "Admin panelda sizga mobil zona biriktirilmagan.";
       updateMobileCameraButtons();
 
@@ -627,7 +662,7 @@
         return "";
       }
 
-      const maxWidth = 540;
+      const maxWidth = 420;
       const targetWidth = Math.min(maxWidth, width);
       const targetHeight = Math.max(1, Math.round(targetWidth * height / width));
       if (mobileCameraCaptureCanvas.width !== targetWidth || mobileCameraCaptureCanvas.height !== targetHeight) {
@@ -636,7 +671,7 @@
       }
       const context = mobileCameraCaptureCanvas.getContext("2d");
       context.drawImage(mobileCameraVideo, 0, 0, targetWidth, targetHeight);
-      return mobileCameraCaptureCanvas.toDataURL("image/jpeg", 0.62);
+      return mobileCameraCaptureCanvas.toDataURL("image/jpeg", 0.52);
     }
 
     function scheduleMobileCameraUpload(delay = null) {
@@ -646,7 +681,7 @@
       if (mobileCameraState.uploadTimer) {
         clearTimeout(mobileCameraState.uploadTimer);
       }
-      const interval = Number(selectedMobileMonitor()?.frameIntervalMs || 900);
+      const interval = Math.max(250, Math.min(Number(selectedMobileMonitor()?.frameIntervalMs || 350), 450));
       mobileCameraState.uploadTimer = setTimeout(() => {
         uploadMobileCameraFrame().catch(() => {});
       }, delay ?? interval);
@@ -668,7 +703,11 @@
         const response = await fetch(`/api/cameras/${monitor.id}/mobile-frame`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ imageBase64: captureMobileCameraFrame() })
+          body: JSON.stringify({
+            imageBase64: captureMobileCameraFrame(),
+            countingActive: mobileCameraState.countingActive,
+            countDirection: mobileCameraState.countDirection
+          })
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
@@ -687,8 +726,15 @@
           renderMobileCameraMonitors();
         }
 
-        setMobileCameraStatus("Telefon kamerasi ishlayapti, server countni yangilayapti.", "success");
-        mobileCameraMeta.textContent = "Frame serverga uzatildi. Qizil chiziqdan o'tgan g'ishtlar avtomatik sanalmoqda.";
+        setMobileCameraStatus(
+          mobileCameraState.countingActive
+            ? "Telefon kamerasi ishlayapti, server countni yangilayapti."
+            : "Telefon preview ishlayapti, sanash hali yoqilmagan.",
+          mobileCameraState.countingActive ? "success" : "info"
+        );
+        mobileCameraMeta.textContent = mobileCameraState.countingActive
+          ? "Frame serverga uzatildi. Qizil chiziqdan o'tgan g'ishtlar tanlangan yo'nalish bo'yicha sanalmoqda."
+          : "Preview uzatilmoqda. Yo'nalishni tanlab, sanashni alohida boshlang.";
       } catch (error) {
         if (error.status === 403 || error.status === 409) {
           stopMobileCamera(error.message, "danger");
@@ -748,17 +794,38 @@
       await mobileCameraVideo.play();
       mobileCameraState.stream = stream;
       mobileCameraState.running = true;
+      mobileCameraState.countingActive = false;
+      mobileCameraState.countDirection = mobileCameraDirectionSelect.value || mobileCameraState.countDirection || "negative_to_positive";
       setMobileCameraStatus("Telefon kamerasi ulanmoqda...", "info");
-      mobileCameraMeta.textContent = `${monitor.name} uchun orqa kamera ishga tushdi. Frame'lar serverga yuborilmoqda.`;
+      mobileCameraMeta.textContent = `${monitor.name} uchun orqa kamera ishga tushdi. Avval yo'nalishni tanlang, keyin sanashni boshlang.`;
       updateMobileCameraButtons();
       drawMobileCameraPreview();
       startMobileCameraSyncTimer();
       scheduleMobileCameraUpload(80);
     }
 
+    function setMobileCountingActive(nextValue) {
+      mobileCameraState.countingActive = Boolean(nextValue);
+      updateMobileCameraButtons();
+      if (!mobileCameraState.running) {
+        return;
+      }
+      setMobileCameraStatus(
+        mobileCameraState.countingActive
+          ? "Sanash yoqildi. Server tanlangan yo'nalish bo'yicha sanaydi."
+          : "Preview ochiq. Sanash vaqtincha to'xtatildi.",
+        mobileCameraState.countingActive ? "success" : "info"
+      );
+      mobileCameraMeta.textContent = mobileCameraState.countingActive
+        ? "Sanash boshlandi. Qizil chiziqdan tanlangan yo'nalish bo'yicha o'tgan obyektlar hisoblanadi."
+        : "Sanash to'xtadi. Kamera preview ishlashda davom etadi.";
+      uploadMobileCameraFrame().catch(() => {});
+    }
+
     function stopMobileCamera(reason = "Telefon kamerasi to'xtatildi.", tone = "muted") {
       mobileCameraState.running = false;
       mobileCameraState.uploadInFlight = false;
+      mobileCameraState.countingActive = false;
       if (mobileCameraState.uploadTimer) {
         clearTimeout(mobileCameraState.uploadTimer);
         mobileCameraState.uploadTimer = null;
@@ -1118,6 +1185,32 @@
         setMessage(error.message, true);
         stopMobileCamera(error.message, "danger");
       }
+    });
+
+    mobileCameraDirectionSelect.addEventListener("change", () => {
+      mobileCameraState.countDirection = mobileCameraDirectionSelect.value || "negative_to_positive";
+      if (mobileCameraState.countingActive) {
+        setMobileCountingActive(false);
+        setMessage("Yo'nalish o'zgardi. Sanash xavfsizligi uchun to'xtatildi, qayta boshlang.");
+      }
+      renderMobileCameraMonitors();
+    });
+
+    mobileCameraCountStartButton.addEventListener("click", async () => {
+      try {
+        if (!mobileCameraState.running) {
+          await startMobileCamera();
+        }
+        mobileCameraState.countDirection = mobileCameraDirectionSelect.value || "negative_to_positive";
+        setMobileCountingActive(true);
+      } catch (error) {
+        setMessage(error.message, true);
+        stopMobileCamera(error.message, "danger");
+      }
+    });
+
+    mobileCameraCountStopButton.addEventListener("click", () => {
+      setMobileCountingActive(false);
     });
 
     mobileCameraStopButton.addEventListener("click", () => {

@@ -1352,6 +1352,12 @@
           tone: "success"
         };
       }
+      if (item.status === "previewing_mobile") {
+        return {
+          text: "Telefon preview ishlayapti, sanash hali yoqilmagan",
+          tone: "info"
+        };
+      }
       if (item.status === "error") {
         return { text: item.lastError || "Kamera xatolik berdi", tone: "danger" };
       }
@@ -1377,6 +1383,8 @@
           ? "Ogohlantirish"
           : tone === "danger"
             ? "Xato"
+            : tone === "info"
+              ? "Preview"
             : "O'chirilgan";
       cameraStatusPill.className = `status-pill ${tone}`;
     }
@@ -1629,6 +1637,14 @@
       context.fillText(`${Number(item?.countToday || 0)} ta`, 18, 36);
     }
 
+    function cameraPreviewInterval(item = selectedCamera()) {
+      const base = Number(item?.frameIntervalMs || cameraSettingsForm.elements.frameIntervalMs.value || 900);
+      if (isMobileCameraSource(item)) {
+        return Math.max(250, Math.min(base || 350, 450));
+      }
+      return Math.max(250, base || 900);
+    }
+
     async function runCameraFrame() {
       if (!cameraRuntime.running) {
         return;
@@ -1645,7 +1661,7 @@
           if (isMobileCameraSource(item) && response.status === 404) {
             cameraDetectionMeta.textContent = payload.error || "Telefon kamerasi hali frame yubormagan.";
             syncCameraStatus("Telefon frame kutilmoqda...", "warning");
-            const interval = Number(item.frameIntervalMs || cameraSettingsForm.elements.frameIntervalMs.value || 900);
+            const interval = cameraPreviewInterval(item);
             cameraRuntime.timer = setTimeout(runCameraFrame, interval);
             return;
           }
@@ -1660,15 +1676,19 @@
         cameraDetectionMeta.textContent = item.lastWarning
           || item.lastError
           || (isMobileCameraSource(item)
-            ? "Preview worker telefonidan kelgan oxirgi frame bilan yangilanmoqda."
+            ? item.status === "previewing_mobile"
+              ? "Preview worker telefonidan kelgan oxirgi frame bilan yangilanmoqda. Sanash ishchi panelida alohida yoqiladi."
+              : "Preview worker telefonidan kelgan oxirgi frame bilan yangilanmoqda. Count serverga tushmoqda."
             : "Preview ochiq. Hisob serverning o'zida davom etmoqda.");
         syncCameraStatus(
           isMobileCameraSource(item)
-            ? "Telefon preview ishlayapti, count serverga tushmoqda"
+            ? item.status === "previewing_mobile"
+              ? "Telefon preview ishlayapti, sanash hali yoqilmagan"
+              : "Telefon preview ishlayapti, count serverga tushmoqda"
             : "Preview ishlayapti, server countni davom ettirayapti",
-          "success"
+          isMobileCameraSource(item) && item.status === "previewing_mobile" ? "info" : "success"
         );
-        if (Date.now() - cameraRuntime.lastStatsAt > 5000) {
+        if (Date.now() - cameraRuntime.lastStatsAt > (isMobileCameraSource(item) ? 2000 : 5000)) {
           cameraRuntime.lastStatsAt = Date.now();
           refreshCameraMonitors(false).catch(() => {});
         }
@@ -1677,7 +1697,7 @@
         return;
       }
 
-      const interval = Number(selectedCamera()?.frameIntervalMs || cameraSettingsForm.elements.frameIntervalMs.value || 900);
+      const interval = cameraPreviewInterval(selectedCamera());
       cameraRuntime.timer = setTimeout(runCameraFrame, interval);
     }
 
@@ -1723,11 +1743,13 @@
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
                     <h4 class="font-display text-lg font-bold text-strong">${item.name}</h4>
-                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Ishlayapti" : item.status === "error" ? "Xato" : item.status === "waiting_mobile" ? "Telefon kutilmoqda" : item.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
+                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "previewing_mobile" ? "info" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Sanayapti" : item.status === "previewing_mobile" ? "Preview" : item.status === "error" ? "Xato" : item.status === "waiting_mobile" ? "Telefon kutilmoqda" : item.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
                     <span class="status-pill outline">${workTypeLabel(item.workType)}</span>
                     <span class="status-pill outline">${cameraSourceLabel(item)}</span>
                   </div>
                   <p class="mt-2 text-sm text-soft">${item.areaName}</p>
+                  ${isMobileCameraSource(item) ? `<p class="mt-2 text-sm text-soft">Sanash holati: <span class="font-semibold text-strong">${item.status === "running" ? "Ishchi panelida yoqilgan" : item.status === "previewing_mobile" ? "Faqat preview ochiq" : "Hali boshlanmagan"}</span></p>` : ""}
+                  ${isMobileCameraSource(item) ? `<p class="mt-2 text-sm text-soft">Yo'nalish: <span class="font-semibold text-strong">${item.effectiveCountDirection === "positive_to_negative" ? "Chapdan o'ngga" : "O'ngdan chapga"}</span></p>` : ""}
                   <p class="mt-2 text-sm text-soft">Bugun: <span class="font-semibold text-strong">${Number(item.countToday || 0)} ta</span> • Work log: <span class="font-semibold text-strong">${item.workLogId ? "sync qilingan" : "hali yo'q"}</span></p>
                   <p class="mt-2 text-sm text-soft">Ishchilar: <span class="font-semibold text-strong">${(item.workers || []).map((worker) => worker.fullName).join(", ") || "biriktirilmagan"}</span></p>
                   ${item.mobileSession?.fullName ? `<p class="mt-2 text-sm text-soft">Ulangan telefon: <span class="font-semibold text-strong">${item.mobileSession.fullName}</span></p>` : ""}
@@ -1753,7 +1775,9 @@
         cameraDetectionMeta.textContent = item.lastWarning
           || item.lastError
           || (isMobileCameraSource(item)
-            ? "Preview worker telefonidan kelgan oxirgi frame'ni ko'rsatadi, count esa shu zonaning server hisobiga yoziladi."
+            ? item.status === "previewing_mobile"
+              ? "Preview worker telefonidan kelgan oxirgi frame'ni ko'rsatadi. Sanash ishchi panelida alohida yoqiladi."
+              : "Preview worker telefonidan kelgan oxirgi frame'ni ko'rsatadi, count esa shu zonaning server hisobiga yoziladi."
             : "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.");
       } else {
         syncCameraStatus("Kamera hali tanlanmagan", "muted");

@@ -1657,16 +1657,16 @@ function buildWorkerMobileCameraDraft(worker, existingMonitor = null, monitorInd
     password: "",
     apiToken: "",
     workerIds: [normalizeIdString(worker._id || worker.id)],
-    countDirection: existingMonitor?.countDirection || "negative_to_positive",
-    lineStartX: typeof existingMonitor?.lineStartX === "number" ? existingMonitor.lineStartX : 0.5,
-    lineStartY: typeof existingMonitor?.lineStartY === "number" ? existingMonitor.lineStartY : 0.08,
-    lineEndX: typeof existingMonitor?.lineEndX === "number" ? existingMonitor.lineEndX : 0.5,
-    lineEndY: typeof existingMonitor?.lineEndY === "number" ? existingMonitor.lineEndY : 0.92,
-    frameIntervalMs: Number(existingMonitor?.frameIntervalMs || 900),
-    motionThreshold: Number(existingMonitor?.motionThreshold || 28),
-    minBlobArea: Number(existingMonitor?.minBlobArea || 140),
-    maxBlobArea: Number(existingMonitor?.maxBlobArea || 12000),
-    trackerDistancePx: Number(existingMonitor?.trackerDistancePx || 60),
+      countDirection: existingMonitor?.countDirection || "negative_to_positive",
+      lineStartX: typeof existingMonitor?.lineStartX === "number" ? existingMonitor.lineStartX : 0.5,
+      lineStartY: typeof existingMonitor?.lineStartY === "number" ? existingMonitor.lineStartY : 0.08,
+      lineEndX: typeof existingMonitor?.lineEndX === "number" ? existingMonitor.lineEndX : 0.5,
+      lineEndY: typeof existingMonitor?.lineEndY === "number" ? existingMonitor.lineEndY : 0.92,
+      frameIntervalMs: Number(existingMonitor?.frameIntervalMs || 350),
+      motionThreshold: Number(existingMonitor?.motionThreshold || 28),
+      minBlobArea: Number(existingMonitor?.minBlobArea || 140),
+      maxBlobArea: Number(existingMonitor?.maxBlobArea || 12000),
+      trackerDistancePx: Number(existingMonitor?.trackerDistancePx || 60),
   };
 }
 
@@ -2471,6 +2471,11 @@ function activeCameraMobileSession(runtime, now = Date.now()) {
   return {
     workerId: normalizeIdString(runtime.mobileSession.workerId),
     fullName: runtime.mobileSession.fullName || "",
+    countingActive: Boolean(runtime.mobileSession.countingActive),
+    countDirection: normalizeCameraCountDirection(
+      runtime.mobileSession.countDirection,
+      runtime.monitor?.countDirection || "negative_to_positive",
+    ),
     lastSeenAt: runtime.mobileSession.lastSeenAt,
   };
 }
@@ -2491,7 +2496,35 @@ async function ingestCameraFrame(runtime, frame, options = {}) {
     runtime.mobileSession = {
       workerId: normalizeIdString(options.mobileSession.workerId),
       fullName: options.mobileSession.fullName || "",
+      countingActive: Boolean(options.mobileSession.countingActive),
+      countDirection: normalizeCameraCountDirection(
+        options.mobileSession.countDirection,
+        runtime.monitor?.countDirection || "negative_to_positive",
+      ),
       lastSeenAt: runtime.lastFrameAt,
+    };
+  }
+
+  if (options.resetTracking) {
+    runtime.previousGray = null;
+    runtime.tracks = [];
+    runtime.nextTrackId = 1;
+  }
+
+  const countingActive = !isMobileCameraMonitor(runtime.monitor)
+    || Boolean(runtime.mobileSession?.countingActive);
+
+  if (!countingActive) {
+    runtime.previousGray = processed.gray;
+    runtime.tracks = [];
+    runtime.nextTrackId = 1;
+    runtime.status = isMobileCameraMonitor(runtime.monitor) ? "previewing_mobile" : runtime.status || "idle";
+    runtime.lastWarning = "";
+    await persistCameraRuntime(runtime);
+    return {
+      increment: 0,
+      count: runtime.count,
+      workLogId: runtime.workLogId || "",
     };
   }
 
@@ -2502,7 +2535,10 @@ async function ingestCameraFrame(runtime, frame, options = {}) {
       runtime.previousGray,
       processed.width,
       processed.height,
-      runtime.monitor,
+      {
+        ...runtime.monitor,
+        countDirection: runtime.mobileSession?.countDirection || runtime.monitor.countDirection,
+      },
     );
     increment = updateCameraTracks(runtime, detectionState.detections, detectionState.line);
   } else {
@@ -2761,20 +2797,23 @@ async function buildCameraMonitorsPayload(date = getYmd()) {
     const lastCountAt = runtime?.lastCountAt || counter?.lastCountAt || null;
     let status = runtime?.status || counter?.status || (monitor.enabled ? "idle" : "disabled");
     let lastWarning = runtime?.lastWarning || counter?.lastWarning || "";
-    const mobileSession = activeCameraMobileSession(runtime, now);
+      const mobileSession = activeCameraMobileSession(runtime, now);
 
-    if (monitor.enabled && isMobileCameraMonitor(monitor)) {
-      const staleAfterMs = cameraMobileStaleAfterMs(monitor);
-      const lastFrameMs = cameraDateMs(lastFrameAt);
-      if (!lastFrameMs || now - lastFrameMs > staleAfterMs) {
-        status = "waiting_mobile";
-        if (!lastWarning) {
-          lastWarning = "Telefon kamerasi kutilmoqda.";
+      if (monitor.enabled && isMobileCameraMonitor(monitor)) {
+        const staleAfterMs = cameraMobileStaleAfterMs(monitor);
+        const lastFrameMs = cameraDateMs(lastFrameAt);
+        if (!lastFrameMs || now - lastFrameMs > staleAfterMs) {
+          status = "waiting_mobile";
+          if (!lastWarning) {
+            lastWarning = "Telefon kamerasi kutilmoqda.";
+          }
+        } else if (mobileSession && !mobileSession.countingActive) {
+          status = "previewing_mobile";
+          lastWarning = "";
+        } else {
+          status = "running";
         }
-      } else {
-        status = "running";
       }
-    }
 
     return {
       ...monitor,
@@ -2789,6 +2828,7 @@ async function buildCameraMonitorsPayload(date = getYmd()) {
       frameWidth: runtime?.frameWidth || 0,
       frameHeight: runtime?.frameHeight || 0,
       mobileSession,
+      effectiveCountDirection: mobileSession?.countDirection || monitor.countDirection || "negative_to_positive",
     };
   });
 }
@@ -5775,6 +5815,11 @@ async function handleCameraMobileFrameUpload(request, response, id) {
   try {
     const body = await readBody(request);
     const frame = decodeBase64ImagePayload(body.imageBase64 || body.frame || body.imageData);
+    const countingActive = parseBoolean(body.countingActive, false);
+    const countDirection = normalizeCameraCountDirection(
+      body.countDirection,
+      monitor.countDirection || "negative_to_positive",
+    );
     let runtime = cameraMonitorService.runtimes.get(monitor.id);
 
     if (!runtime) {
@@ -5801,13 +5846,24 @@ async function handleCameraMobileFrameUpload(request, response, id) {
       });
     }
 
+    const previousCountingActive = Boolean(runtime.mobileSession?.countingActive);
+    const previousDirection = normalizeCameraCountDirection(
+      runtime.mobileSession?.countDirection,
+      monitor.countDirection || "negative_to_positive",
+    );
+    const resetTracking = (!previousCountingActive && countingActive)
+      || (countingActive && previousDirection !== countDirection);
+
     runtime.status = "capturing";
     const result = await ingestCameraFrame(runtime, frame, {
       previewBuffer: frame.buffer,
       previewContentType: frame.contentType,
+      resetTracking,
       mobileSession: {
         workerId: viewerId,
         fullName: auth.user.fullName || auth.user.username || "Ishchi",
+        countingActive,
+        countDirection,
       },
     });
 
