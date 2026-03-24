@@ -1626,6 +1626,69 @@ async function createCameraMonitor(input, userId) {
   return normalized;
 }
 
+function findWorkerMobileCameraMonitor(monitors = [], workerId = "") {
+  const normalizedWorkerId = normalizeIdString(workerId);
+  if (!normalizedWorkerId) {
+    return null;
+  }
+  return monitors.find((item) => (
+    isMobileCameraMonitor(item)
+      && (item.workerIds || []).some((candidate) => normalizeIdString(candidate) === normalizedWorkerId)
+  )) || null;
+}
+
+function buildWorkerMobileCameraDraft(worker, existingMonitor = null, monitorIndex = 1) {
+  const workType = normalizeWorkType(worker.assignedWorkType, "");
+  return {
+    ...(existingMonitor || defaultCameraMonitor(monitorIndex)),
+    id: existingMonitor?.id,
+    name: existingMonitor?.name || `${worker.fullName || "Ishchi"} telefoni`,
+    areaName: existingMonitor?.areaName || `${workTypeLabel(workType) || "Ish"} mobil zona`,
+    notes: existingMonitor?.notes || "Worker panel orqali mobil kamera monitori",
+    enabled: true,
+    autoSyncWorkLog: true,
+    modelKey: "custom",
+    workType,
+    streamMode: "mobile",
+    snapshotUrl: "",
+    streamUrl: "",
+    authType: "none",
+    username: "",
+    password: "",
+    apiToken: "",
+    workerIds: [normalizeIdString(worker._id || worker.id)],
+    countDirection: existingMonitor?.countDirection || "negative_to_positive",
+    lineStartX: typeof existingMonitor?.lineStartX === "number" ? existingMonitor.lineStartX : 0.5,
+    lineStartY: typeof existingMonitor?.lineStartY === "number" ? existingMonitor.lineStartY : 0.08,
+    lineEndX: typeof existingMonitor?.lineEndX === "number" ? existingMonitor.lineEndX : 0.5,
+    lineEndY: typeof existingMonitor?.lineEndY === "number" ? existingMonitor.lineEndY : 0.92,
+    frameIntervalMs: Number(existingMonitor?.frameIntervalMs || 900),
+    motionThreshold: Number(existingMonitor?.motionThreshold || 28),
+    minBlobArea: Number(existingMonitor?.minBlobArea || 140),
+    maxBlobArea: Number(existingMonitor?.maxBlobArea || 12000),
+    trackerDistancePx: Number(existingMonitor?.trackerDistancePx || 60),
+  };
+}
+
+async function ensureWorkerMobileCameraMonitor(worker, actorId = null) {
+  if (!worker || normalizeRole(worker.role, "worker") !== "worker") {
+    throw new Error("Mobil kamera faqat ishchi foydalanuvchi uchun yaratiladi.");
+  }
+  if (!normalizeWorkType(worker.assignedWorkType, "")) {
+    throw new Error("Ishchiga asosiy ishlov turi biriktirilmagan.");
+  }
+
+  const system = await getCameraSystemSettings();
+  const existing = findWorkerMobileCameraMonitor(system.monitors, worker._id || worker.id);
+  const draft = buildWorkerMobileCameraDraft(worker, existing, system.monitors.length + 1);
+
+  if (existing) {
+    return updateCameraMonitor(existing.id, draft, actorId || worker._id || null);
+  }
+
+  return createCameraMonitor(draft, actorId || worker._id || null);
+}
+
 async function updateCameraMonitor(id, input, userId) {
   const system = await getCameraSystemSettings();
   const current = system.monitors.find((item) => item.id === id);
@@ -5571,6 +5634,41 @@ async function handleCameraMonitorCreate(request, response) {
   }
 }
 
+async function handleWorkerMobileCameraEnsure(request, response) {
+  const auth = await requireAuth(request, response, ["worker", "admin"]);
+  if (!auth) {
+    return;
+  }
+
+  try {
+    let targetWorker = auth.user;
+    if (auth.user.role === "admin") {
+      const body = await readBody(request);
+      if (!ObjectId.isValid(body.workerId)) {
+        return sendJson(response, 400, { error: "Worker ID noto'g'ri." });
+      }
+      targetWorker = await collections.users.findOne({
+        _id: new ObjectId(body.workerId),
+        role: "worker",
+        isActive: true,
+      });
+      if (!targetWorker) {
+        return sendJson(response, 404, { error: "Ishchi topilmadi." });
+      }
+    }
+
+    const item = await ensureWorkerMobileCameraMonitor(targetWorker, auth.user._id);
+    await reloadCameraMonitorService();
+    const items = await buildCameraMonitorsPayload(getYmd());
+    sendJson(response, 200, {
+      ok: true,
+      item: items.find((entry) => entry.id === item.id) || item,
+    });
+  } catch (error) {
+    sendJson(response, 400, { error: error.message || "Mobil kamera zonasi tayyorlanmadi." });
+  }
+}
+
 async function handleCameraMonitorUpdate(request, response, id) {
   const auth = await requireAuth(request, response, ["admin"]);
   if (!auth) {
@@ -6322,6 +6420,10 @@ async function handleApi(request, response, urlObject) {
 
   if (pathname === "/api/cameras" && request.method === "POST") {
     return handleCameraMonitorCreate(request, response);
+  }
+
+  if (pathname === "/api/cameras/mobile/ensure" && request.method === "POST") {
+    return handleWorkerMobileCameraEnsure(request, response);
   }
 
   if (pathname.startsWith("/api/cameras/") && pathname.endsWith("/mobile-frame") && request.method === "POST") {

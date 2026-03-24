@@ -31,13 +31,13 @@
       "role": "worker",
       "isActive": true,
       "createdAt": "2026-03-06T16:57:03.191Z",
-      "updatedAt": "2026-03-24T09:59:08.174Z",
+      "updatedAt": "2026-03-24T10:17:30.297Z",
       "_id": "911211bf849250c5ee9a8801",
       "positionTitle": "Ishchi",
       "phone": "",
       "salaryAmount": 0,
       "salaryDayOfMonth": 5,
-      "lastLoginAt": "2026-03-24T09:59:08.174Z",
+      "lastLoginAt": "2026-03-24T10:17:30.297Z",
       "assignedWorkType": "parmofka"
     }
   ],
@@ -194,6 +194,24 @@
       "lastSeenAt": "2026-03-24T09:59:08.353Z",
       "expiresAt": "2026-04-23T09:59:08.174Z",
       "_id": "4e3c8232030d61b364f9ab96"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "tokenHash": "759572457c794c826135c2f2734c1071d9f1b67dace952b56d3832699c66a30a",
+      "role": "worker",
+      "createdAt": "2026-03-24T10:17:19.178Z",
+      "lastSeenAt": "2026-03-24T10:17:19.199Z",
+      "expiresAt": "2026-04-23T10:17:19.178Z",
+      "_id": "70109f4d995ac88e7df4f140"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "tokenHash": "d655a2d93e59d26f62b7cee0e6fe23fa63e642fc50a6d19b0795eb94b19dba98",
+      "role": "worker",
+      "createdAt": "2026-03-24T10:17:30.296Z",
+      "lastSeenAt": "2026-03-24T10:17:30.513Z",
+      "expiresAt": "2026-04-23T10:17:30.296Z",
+      "_id": "53f22e783299caaae7604b5a"
     }
   ],
   "tasks": [
@@ -393,8 +411,8 @@
             "autoSyncWorkLog": false,
             "workerIds": [],
             "countDirection": "both",
-            "createdAt": "2026-03-24T09:59:08.359Z",
-            "updatedAt": "2026-03-24T09:59:08.359Z",
+            "createdAt": "2026-03-24T10:17:30.304Z",
+            "updatedAt": "2026-03-24T10:17:30.304Z",
             "enabled": true,
             "modelKey": "custom",
             "modelLabel": "Boshqa IP kamera",
@@ -431,8 +449,8 @@
             "autoSyncWorkLog": false,
             "workerIds": [],
             "countDirection": "both",
-            "createdAt": "2026-03-24T09:59:08.359Z",
-            "updatedAt": "2026-03-24T09:59:08.359Z",
+            "createdAt": "2026-03-24T10:17:30.304Z",
+            "updatedAt": "2026-03-24T10:17:30.304Z",
             "enabled": true,
             "modelKey": "custom",
             "modelLabel": "Boshqa IP kamera",
@@ -460,11 +478,51 @@
             "snapshotExample": "http://camera-ip/snapshot.jpg",
             "streamExample": "rtsp://camera-ip:554/stream",
             "httpExample": "http://camera-ip/mjpeg"
+          },
+          {
+            "id": "8c4ff0326e80bd68",
+            "name": "Namuna Ishchi telefoni",
+            "areaName": "Parmofka mobil zona",
+            "notes": "Worker panel orqali mobil kamera monitori",
+            "autoSyncWorkLog": true,
+            "workerIds": [
+              "911211bf849250c5ee9a8801"
+            ],
+            "countDirection": "negative_to_positive",
+            "createdAt": "2026-03-24T10:17:30.304Z",
+            "updatedAt": "2026-03-24T10:17:30.304Z",
+            "enabled": true,
+            "modelKey": "custom",
+            "modelLabel": "Boshqa IP kamera",
+            "modelDescription": "Snapshot API yoki RTSP manzilini qo'lda kiritish uchun.",
+            "streamMode": "mobile",
+            "snapshotUrl": "",
+            "streamUrl": "",
+            "authType": "none",
+            "username": "",
+            "password": "",
+            "apiToken": "",
+            "tokenQueryKey": "token",
+            "ffmpegPath": "D:\\gisht\\node_modules\\ffmpeg-static\\ffmpeg.exe",
+            "rtspTransport": "tcp",
+            "workType": "parmofka",
+            "lineStartX": 0.5,
+            "lineStartY": 0.08,
+            "lineEndX": 0.5,
+            "lineEndY": 0.92,
+            "frameIntervalMs": 900,
+            "motionThreshold": 28,
+            "minBlobArea": 140,
+            "maxBlobArea": 12000,
+            "trackerDistancePx": 60,
+            "snapshotExample": "http://camera-ip/snapshot.jpg",
+            "streamExample": "rtsp://camera-ip:554/stream",
+            "httpExample": "http://camera-ip/mjpeg"
           }
         ]
       },
-      "updatedAt": "2026-03-24T09:59:08.359Z",
-      "updatedBy": "90f385c52188515d6c8ed5a3",
+      "updatedAt": "2026-03-24T10:17:30.304Z",
+      "updatedBy": "911211bf849250c5ee9a8801",
       "createdAt": "2026-03-13T12:31:16.860Z",
       "_id": "83895866f3e13d142a6685ec"
     }
@@ -726,6 +784,25 @@
       "createdAt": "2026-03-13T15:20:29.759Z",
       "updatedAt": "2026-03-13T15:20:29.759Z",
       "_id": "e95146c136284f9524089339"
+    },
+    {
+      "date": "2026-03-24",
+      "workType": "parmofka",
+      "quantity": 1,
+      "ratePerBrick": 80,
+      "totalAmount": 80,
+      "shareAmount": 80,
+      "workerIds": [
+        "911211bf849250c5ee9a8801"
+      ],
+      "notes": "Worker panel orqali mobil kamera monitori",
+      "source": "camera",
+      "cameraMonitorId": "8c4ff0326e80bd68",
+      "cameraMonitorName": "Namuna Ishchi telefoni",
+      "createdBy": null,
+      "updatedAt": "2026-03-24T10:17:30.443Z",
+      "createdAt": "2026-03-24T10:17:30.443Z",
+      "_id": "a3dd83c52699ffda211045e1"
     }
   ],
   "workerTransactions": [],
@@ -827,10 +904,10 @@
       "status": "running",
       "lastError": "",
       "lastWarning": "",
-      "lastFrameAt": "2026-03-24T10:04:15.145Z",
+      "lastFrameAt": "2026-03-24T10:18:31.644Z",
       "lastCountAt": null,
       "workerIds": [],
-      "updatedAt": "2026-03-24T10:04:15.145Z",
+      "updatedAt": "2026-03-24T10:18:31.644Z",
       "createdAt": "2026-03-24T09:41:56.296Z",
       "_id": "1fa15cfb8e28404c22bc3cbf"
     },
@@ -848,7 +925,7 @@
       "lastFrameAt": null,
       "lastCountAt": null,
       "workerIds": [],
-      "updatedAt": "2026-03-24T10:04:13.688Z",
+      "updatedAt": "2026-03-24T10:18:30.703Z",
       "createdAt": "2026-03-24T09:41:57.663Z",
       "_id": "b9e145feb1f029e86eadcf66"
     },
@@ -871,6 +948,26 @@
       "updatedAt": "2026-03-24T09:59:08.363Z",
       "createdAt": "2026-03-24T09:59:08.144Z",
       "_id": "71baed555b8ad0ef10b39152"
+    },
+    {
+      "monitorId": "8c4ff0326e80bd68",
+      "monitorName": "Namuna Ishchi telefoni",
+      "areaName": "Parmofka mobil zona",
+      "workType": "parmofka",
+      "date": "2026-03-24",
+      "quantity": 1,
+      "workLogId": "a3dd83c52699ffda211045e1",
+      "status": "running",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-24T10:17:30.510Z",
+      "lastCountAt": "2026-03-24T10:17:30.443Z",
+      "workerIds": [
+        "911211bf849250c5ee9a8801"
+      ],
+      "updatedAt": "2026-03-24T10:17:30.511Z",
+      "createdAt": "2026-03-24T10:17:19.190Z",
+      "_id": "6c8ba7af100d0ab3ef2b0e5c"
     }
   ]
 }

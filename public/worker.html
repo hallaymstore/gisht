@@ -456,11 +456,11 @@
     }
 
     function updateMobileCameraButtons() {
-      const hasMonitor = Boolean(selectedMobileMonitor());
-      mobileCameraStartButton.disabled = !hasMonitor || mobileCameraState.running;
+      mobileCameraStartButton.disabled = mobileCameraState.running;
       mobileCameraStopButton.disabled = !mobileCameraState.running;
       mobileCameraStartButton.classList.toggle("opacity-60", mobileCameraStartButton.disabled);
       mobileCameraStopButton.classList.toggle("opacity-60", mobileCameraStopButton.disabled);
+      mobileCameraSelect.disabled = !mobileCameraState.monitors.length;
     }
 
     function mobileCameraLinePoints(width, height, monitor = selectedMobileMonitor()) {
@@ -571,6 +571,27 @@
         currentProductionData = productionData;
         renderProduction(productionData, currentProfileData);
       }
+    }
+
+    async function ensureMobileCameraMonitor() {
+      const result = await request("/api/cameras/mobile/ensure", {
+        method: "POST",
+        body: JSON.stringify({})
+      });
+      const ensured = result.item || null;
+      if (!ensured) {
+        return null;
+      }
+      const index = mobileCameraState.monitors.findIndex((item) => item.id === ensured.id);
+      if (index >= 0) {
+        mobileCameraState.monitors[index] = ensured;
+      } else {
+        mobileCameraState.monitors.unshift(ensured);
+      }
+      if (!mobileCameraState.selectedId) {
+        mobileCameraState.selectedId = ensured.id;
+      }
+      return ensured;
     }
 
     function startMobileCameraSyncTimer() {
@@ -688,7 +709,12 @@
         return;
       }
 
-      const monitor = selectedMobileMonitor();
+      let monitor = selectedMobileMonitor();
+      if (!monitor) {
+        await ensureMobileCameraMonitor();
+        renderMobileCameraMonitors();
+        monitor = selectedMobileMonitor();
+      }
       if (!monitor?.id) {
         throw new Error("Mobil kamera zonasi topilmadi.");
       }
@@ -974,6 +1000,7 @@
     }
 
     async function loadBoard() {
+      await ensureMobileCameraMonitor().catch(() => null);
       const [summaryData, tasksData, profileData, notificationsData, payrollData, productionData, mobileCameraData] = await Promise.all([
         request(`/api/tasks/summary?scheduledDate=${encodeURIComponent(filterDate.value)}`),
         request(`/api/tasks?scheduledDate=${encodeURIComponent(filterDate.value)}`),
