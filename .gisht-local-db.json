@@ -8,9 +8,9 @@
       "role": "admin",
       "isActive": true,
       "createdAt": "2026-03-06T16:57:02.874Z",
-      "updatedAt": "2026-03-13T15:37:44.900Z",
+      "updatedAt": "2026-03-24T09:59:08.128Z",
       "_id": "90f385c52188515d6c8ed5a3",
-      "lastLoginAt": "2026-03-13T15:37:44.900Z"
+      "lastLoginAt": "2026-03-24T09:59:08.128Z"
     },
     {
       "fullName": "Bosh Organizer",
@@ -31,13 +31,13 @@
       "role": "worker",
       "isActive": true,
       "createdAt": "2026-03-06T16:57:03.191Z",
-      "updatedAt": "2026-03-13T15:20:48.780Z",
+      "updatedAt": "2026-03-24T09:59:08.174Z",
       "_id": "911211bf849250c5ee9a8801",
       "positionTitle": "Ishchi",
       "phone": "",
       "salaryAmount": 0,
       "salaryDayOfMonth": 5,
-      "lastLoginAt": "2026-03-13T15:20:48.780Z",
+      "lastLoginAt": "2026-03-24T09:59:08.174Z",
       "assignedWorkType": "parmofka"
     }
   ],
@@ -173,9 +173,27 @@
       "tokenHash": "9659fd4465317a3750068b27f69e592de70c7cf5d121da9e5a5414d14c1d26a6",
       "role": "admin",
       "createdAt": "2026-03-13T15:37:44.899Z",
-      "lastSeenAt": "2026-03-14T06:10:21.480Z",
+      "lastSeenAt": "2026-03-24T09:57:24.850Z",
       "expiresAt": "2026-04-12T15:37:44.899Z",
       "_id": "2dc34707ff7cfc893b786f6c"
+    },
+    {
+      "userId": "90f385c52188515d6c8ed5a3",
+      "tokenHash": "0a655c37bf4b35e48d40e0e407acb17d06786f131c9ccf06c78d357f26d8b19b",
+      "role": "admin",
+      "createdAt": "2026-03-24T09:59:08.127Z",
+      "lastSeenAt": "2026-03-24T09:59:08.357Z",
+      "expiresAt": "2026-04-23T09:59:08.127Z",
+      "_id": "9a8846c802f988914d49bd98"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "tokenHash": "b43cff7b56e1971ff7b3db76eaf03b51cb254d5ef146137f838397edf2611778",
+      "role": "worker",
+      "createdAt": "2026-03-24T09:59:08.174Z",
+      "lastSeenAt": "2026-03-24T09:59:08.353Z",
+      "expiresAt": "2026-04-23T09:59:08.174Z",
+      "_id": "4e3c8232030d61b364f9ab96"
     }
   ],
   "tasks": [
@@ -221,11 +239,19 @@
           "status": "accepted",
           "at": "2026-03-06T16:57:03.200Z",
           "byRole": "worker"
+        },
+        {
+          "note": "Topshiriq ma'lumotlari tahrirlandi",
+          "status": "in_progress",
+          "at": "2026-03-14T06:34:59.902Z",
+          "byRole": "admin"
         }
       ],
       "createdAt": "2026-03-06T16:57:03.200Z",
-      "updatedAt": "2026-03-06T16:57:03.200Z",
-      "_id": "70fc640d24212feb9632b72e"
+      "updatedAt": "2026-03-14T06:34:59.902Z",
+      "_id": "70fc640d24212feb9632b72e",
+      "workType": "",
+      "unitPrice": 1800
     },
     {
       "type": "delivery",
@@ -367,8 +393,8 @@
             "autoSyncWorkLog": false,
             "workerIds": [],
             "countDirection": "both",
-            "createdAt": "2026-03-13T14:27:11.225Z",
-            "updatedAt": "2026-03-13T14:27:11.225Z",
+            "createdAt": "2026-03-24T09:59:08.359Z",
+            "updatedAt": "2026-03-24T09:59:08.359Z",
             "enabled": true,
             "modelKey": "custom",
             "modelLabel": "Boshqa IP kamera",
@@ -405,8 +431,8 @@
             "autoSyncWorkLog": false,
             "workerIds": [],
             "countDirection": "both",
-            "createdAt": "2026-03-13T14:27:11.225Z",
-            "updatedAt": "2026-03-13T14:27:11.225Z",
+            "createdAt": "2026-03-24T09:59:08.359Z",
+            "updatedAt": "2026-03-24T09:59:08.359Z",
             "enabled": true,
             "modelKey": "custom",
             "modelLabel": "Boshqa IP kamera",
@@ -437,7 +463,7 @@
           }
         ]
       },
-      "updatedAt": "2026-03-13T14:27:11.225Z",
+      "updatedAt": "2026-03-24T09:59:08.359Z",
       "updatedBy": "90f385c52188515d6c8ed5a3",
       "createdAt": "2026-03-13T12:31:16.860Z",
       "_id": "83895866f3e13d142a6685ec"
@@ -605,9 +631,85 @@
       "updatedAt": "2026-03-13T15:20:48.866Z",
       "readAt": null,
       "_id": "068afc74cba15cab2f3d3af9"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "type": "salary_paid",
+      "title": "Oylik tushdi",
+      "body": "2026-03 hisob-kitobi bo'yicha 800000 so'm to'lov tasdiqlandi.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "payrollId": "c58ce0e97d75f10c94352d30"
+      },
+      "createdAt": "2026-03-14T06:35:31.248Z",
+      "updatedAt": "2026-03-14T06:35:31.248Z",
+      "readAt": null,
+      "_id": "09bfa6dde39f6312f49c420f"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "type": "worker_balance_entry",
+      "title": "Hisobingizga yangi yozuv qo'shildi",
+      "body": "Avans: 500000 so'm.",
+      "link": "/profile.html",
+      "meta": {
+        "type": "advance",
+        "amount": 500000,
+        "date": "2026-03-14"
+      },
+      "createdAt": "2026-03-14T06:36:13.225Z",
+      "updatedAt": "2026-03-14T06:36:13.225Z",
+      "readAt": null,
+      "_id": "3626d52eebf6b6acc94d586b"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "type": "worker_debt",
+      "monthKey": "2026-03",
+      "title": "Qarz balansi mavjud",
+      "body": "2026-03 bo'yicha 500000 so'm qarz balansi ko'rinmoqda.",
+      "link": "/profile.html",
+      "meta": {
+        "monthKey": "2026-03",
+        "debtAmount": 500000
+      },
+      "createdAt": "2026-03-14T06:36:13.236Z",
+      "updatedAt": "2026-03-14T06:36:13.236Z",
+      "readAt": null,
+      "_id": "86c181ffbe85a0aa7df7bd9e"
+    },
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "type": "worker_balance_entry",
+      "title": "Hisobingizga yangi yozuv qo'shildi",
+      "body": "Bonus: 500000 so'm.",
+      "link": "/profile.html",
+      "meta": {
+        "type": "bonus",
+        "amount": 500000,
+        "date": "2026-03-14"
+      },
+      "createdAt": "2026-03-14T06:36:48.753Z",
+      "updatedAt": "2026-03-14T06:36:48.753Z",
+      "readAt": null,
+      "_id": "822e1091898fea7f93540e7f"
     }
   ],
-  "payrolls": [],
+  "payrolls": [
+    {
+      "userId": "911211bf849250c5ee9a8801",
+      "monthKey": "2026-03",
+      "dueDate": "2026-03-05",
+      "amount": 800000,
+      "status": "paid",
+      "paidAt": "2026-03-14T06:35:31.247Z",
+      "notes": "",
+      "updatedAt": "2026-03-14T06:35:31.247Z",
+      "createdAt": "2026-03-14T06:35:31.247Z",
+      "_id": "c58ce0e97d75f10c94352d30"
+    }
+  ],
   "workLogs": [
     {
       "date": "2026-03-13",
@@ -627,7 +729,20 @@
     }
   ],
   "workerTransactions": [],
-  "customerPayments": [],
+  "customerPayments": [
+    {
+      "taskId": "e1e7634986e33fc6b5fcb48f",
+      "customerName": "Mega Stroy",
+      "amount": 500000,
+      "date": "2026-03-14",
+      "note": "",
+      "createdBy": "90f385c52188515d6c8ed5a3",
+      "createdAt": "2026-03-14T06:53:11.372Z",
+      "updatedAt": "2026-03-14T06:53:11.372Z",
+      "_id": "850961db8772b1653fd1c3c9"
+    }
+  ],
+  "customerBalances": [],
   "cameraCounts": [
     {
       "monitorId": "df18be5b86fac5b2",
@@ -673,13 +788,13 @@
       "date": "2026-03-14",
       "quantity": 0,
       "workLogId": "",
-      "status": "stopped",
+      "status": "running",
       "lastError": "",
       "lastWarning": "",
-      "lastFrameAt": "2026-03-14T06:10:49.009Z",
+      "lastFrameAt": "2026-03-14T06:54:07.761Z",
       "lastCountAt": null,
       "workerIds": [],
-      "updatedAt": "2026-03-14T06:10:49.922Z",
+      "updatedAt": "2026-03-14T06:54:07.761Z",
       "createdAt": "2026-03-14T06:10:04.870Z",
       "_id": "f7bb58dfec7c3281150c1669"
     },
@@ -691,15 +806,71 @@
       "date": "2026-03-14",
       "quantity": 0,
       "workLogId": "",
-      "status": "stopped",
+      "status": "error",
       "lastError": "RTSP port ulanmayapti (184.72.239.149:554). Stream manzili noto'g'ri yoki port yopiq.",
       "lastWarning": "",
       "lastFrameAt": null,
       "lastCountAt": null,
       "workerIds": [],
-      "updatedAt": "2026-03-14T06:10:49.923Z",
+      "updatedAt": "2026-03-14T06:54:07.374Z",
       "createdAt": "2026-03-14T06:10:05.650Z",
       "_id": "7223f17651167f30ae41a9e8"
+    },
+    {
+      "monitorId": "df18be5b86fac5b2",
+      "monitorName": "Test kamera",
+      "areaName": "Test zona",
+      "workType": "parmofka",
+      "date": "2026-03-24",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "running",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-24T10:04:15.145Z",
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-24T10:04:15.145Z",
+      "createdAt": "2026-03-24T09:41:56.296Z",
+      "_id": "1fa15cfb8e28404c22bc3cbf"
+    },
+    {
+      "monitorId": "b7797e7a19872f5d",
+      "monitorName": "Final test kamera",
+      "areaName": "Final zona",
+      "workType": "parmofka",
+      "date": "2026-03-24",
+      "quantity": 0,
+      "workLogId": "",
+      "status": "error",
+      "lastError": "RTSP port ulanmayapti (184.72.239.149:554). Stream manzili noto'g'ri yoki port yopiq.",
+      "lastWarning": "",
+      "lastFrameAt": null,
+      "lastCountAt": null,
+      "workerIds": [],
+      "updatedAt": "2026-03-24T10:04:13.688Z",
+      "createdAt": "2026-03-24T09:41:57.663Z",
+      "_id": "b9e145feb1f029e86eadcf66"
+    },
+    {
+      "monitorId": "a8c3c8a5cb0a66a8",
+      "monitorName": "Smoke Mobile Camera",
+      "areaName": "Smoke Test Line",
+      "workType": "parmofka",
+      "date": "2026-03-24",
+      "quantity": 1,
+      "workLogId": "",
+      "status": "removed",
+      "lastError": "",
+      "lastWarning": "",
+      "lastFrameAt": "2026-03-24T09:59:08.350Z",
+      "lastCountAt": "2026-03-24T09:59:08.277Z",
+      "workerIds": [
+        "911211bf849250c5ee9a8801"
+      ],
+      "updatedAt": "2026-03-24T09:59:08.363Z",
+      "createdAt": "2026-03-24T09:59:08.144Z",
+      "_id": "71baed555b8ad0ef10b39152"
     }
   ]
 }

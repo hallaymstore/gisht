@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #eef3f7;
+      --bg-main: #f2f0eb;
+      --bg-bottom: #e9e5df;
+      --surface: rgba(255, 255, 255, 0.76);
+      --surface-strong: #ffffff;
+      --surface-soft: #f5f7f9;
+      --text-main: #1b1d22;
+      --text-strong: #0f1115;
+      --text-soft: #5d6470;
+      --line: rgba(27, 29, 34, 0.1);
+      --accent: #2e6486;
+      --accent-strong: #214b65;
+      --accent-soft: rgba(46, 100, 134, 0.12);
+      --accent-rgb: 46 100 134;
+      --text-rgb: 27 29 34;
+      --shadow-panel: 0 18px 44px rgba(18, 22, 28, 0.08);
+      --shadow-card: 0 8px 22px rgba(18, 22, 28, 0.06);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #161d24;
+      --bg-main: #10171d;
+      --bg-bottom: #0b1116;
+      --surface: rgba(19, 28, 35, 0.82);
+      --surface-strong: #152028;
+      --surface-soft: #1a2731;
+      --text-main: #edf2f7;
+      --text-strong: #ffffff;
+      --text-soft: #b8c2cc;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #6fb0d8;
+      --accent-strong: #93c9e8;
+      --accent-soft: rgba(111, 176, 216, 0.15);
+      --accent-rgb: 111 176 216;
+      --text-rgb: 237 242 247;
+      --shadow-panel: 0 20px 56px rgba(0, 0, 0, 0.36);
+      --shadow-card: 0 10px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.16), transparent 28%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 54%, var(--bg-bottom) 100%);
+    }
+
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-panel); backdrop-filter: blur(18px); }
+    .card { background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+    .soft-card { background: var(--surface-soft); border: 1px solid var(--line); }
+    .text-strong { color: var(--text-strong); }
+    .text-soft { color: var(--text-soft); }
+    .accent { color: var(--accent); }
+    .btn-main, .btn-outline, .theme-button { border-radius: 999px; font-weight: 700; transition: transform .2s ease, color .2s ease, background .2s ease, border-color .2s ease; }
+    .btn-main:hover, .btn-outline:hover, .theme-button:hover { transform: translateY(-1px); }
+    .btn-main { background: var(--accent); color: #fff; }
+    .btn-main:hover { background: var(--accent-strong); }
+    .btn-outline, .theme-button { background: var(--surface-strong); border: 1px solid var(--line); color: var(--text-main); }
+    .btn-outline:hover, .theme-button:hover { border-color: var(--accent); color: var(--accent); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .6rem .95rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: .55rem; height: .55rem; border-radius: 999px; background: var(--accent); }
+    .brand-mark { background: var(--accent); color: #fff; }
+    .field-input {
+      background: var(--surface-strong);
+      color: var(--text-main);
+      border: 1px solid var(--line);
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .chip-accent {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: .55rem .85rem;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: .4rem .75rem;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      color: var(--text-soft);
+      font-size: .75rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <a href="/index.html" class="flex items-center gap-3">
+        <div class="brand-mark flex h-11 w-11 items-center justify-center rounded-2xl font-display text-lg font-extrabold">G</div>
+        <div>
+          <p class="font-display text-base font-bold text-strong sm:text-lg">G'isht Zavodi</p>
+          <p class="text-sm text-soft">Blog sahifasi</p>
+        </div>
+      </a>
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button type="button" class="theme-button px-4 py-3 text-sm" onclick="toggleTheme()"><span data-theme-label>Tungi mavzu</span></button>
+        <a href="/news.html" class="btn-outline px-4 py-3 text-sm">Yangiliklar</a>
+        <a href="/products.html" class="btn-outline px-4 py-3 text-sm">Mahsulotlar</a>
+        <a id="dashboardLink" href="/login.html" class="btn-main px-5 py-3 text-sm">Kirish</a>
+        <button id="logoutButton" class="btn-outline hidden px-5 py-3 text-sm">Chiqish</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 pb-16 pt-2 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-[0.98fr_1.02fr]">
+      <div class="space-y-5">
+        <span class="eyebrow">Ichki maqolalar</span>
+        <h1 class="font-display text-[clamp(2.3rem,5vw,4.6rem)] font-bold leading-[1.05] tracking-[-0.04em] text-strong">Zavod ichki ish tartibini mustahkamlovchi amaliy maqolalar.</h1>
+        <p class="max-w-2xl text-base leading-8 text-soft sm:text-lg">Reja tuzish, nazoratni bir xil usulda yuritish va kunlik ishlash madaniyatini mustahkamlash uchun foydali materiallar shu bo'limda jamlanadi.</p>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="card rounded-[22px] p-5"><p class="text-sm text-soft">Yo'nalish</p><p class="mt-2 font-display text-xl font-bold text-strong">Reja</p></div>
+          <div class="card rounded-[22px] p-5"><p class="text-sm text-soft">Asosiy mazmun</p><p class="mt-2 font-display text-xl font-bold text-strong">Nazorat</p></div>
+          <div class="card rounded-[22px] p-5"><p class="text-sm text-soft">Natija</p><p class="mt-2 font-display text-xl font-bold text-strong">Barqaror ish</p></div>
+        </div>
+      </div>
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <div class="soft-card rounded-[24px] p-6">
+          <p class="text-xs font-extrabold uppercase tracking-[0.24em] accent">Tahrir eslatmasi</p>
+          <h2 class="mt-3 font-display text-2xl font-bold text-strong sm:text-3xl">Tartibni yozma ko'rinishda saqlash jamoaviy ishlashni yengillashtiradi.</h2>
+          <p class="mt-4 text-sm leading-7 text-soft">Maqolalar ichki jarayonlarni bir xil standart asosida yuritishga yordam beradi va yangi xodimlar uchun ham aniq yo'l-yo'riq yaratadi.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <span class="eyebrow">Maqolalar ro'yxati</span>
+          <h2 class="mt-4 font-display text-[clamp(1.7rem,3vw,2.7rem)] font-bold tracking-[-0.03em] text-strong">Blog lentasi</h2>
+        </div>
+        <input id="searchInput" type="search" placeholder="Maqola qidiring..." class="field-input w-full rounded-full px-5 py-3 text-sm transition md:max-w-sm" />
+      </div>
+      <div id="blogGrid" class="mt-8 grid gap-5 lg:grid-cols-2"></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) localStorage.setItem(key, theme);
+      }
+      applyTheme(localStorage.getItem(key) || (media.matches ? "dark" : "light"), false);
+      window.toggleTheme = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    })();
+
+    const dashboardLink = document.getElementById("dashboardLink");
+    const logoutButton = document.getElementById("logoutButton");
+    const blogGrid = document.getElementById("blogGrid");
+    const searchInput = document.getElementById("searchInput");
+    let articles = [];
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("uz-UZ", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(new Date(value));
+    }
+
+    function render(items) {
+      blogGrid.innerHTML = items.map((item) => `
+        <article class="panel overflow-hidden rounded-[26px]">
+          <img src="${item.imageUrl}" alt="${item.title}" class="h-60 w-full object-cover" />
+          <div class="space-y-4 p-5 sm:p-6">
+            <div class="flex items-center justify-between gap-4">
+              <span class="chip-accent">Blog</span>
+              <p class="text-xs text-soft">${formatDate(item.createdAt)}</p>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl font-bold text-strong">${item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-soft">${item.excerpt}</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              ${(item.tags || []).map((tag) => `<span class="tag-pill">${tag}</span>`).join("")}
+            </div>
+            <details class="soft-card rounded-[22px] p-4">
+              <summary class="cursor-pointer text-sm font-bold accent">To'liq o'qish</summary>
+              <p class="mt-4 whitespace-pre-line text-sm leading-7 text-soft">${item.body}</p>
+            </details>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function filterArticles() {
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = !q ? articles : articles.filter((item) => [item.title, item.excerpt, item.body, ...(item.tags || [])].join(" ").toLowerCase().includes(q));
+      render(filtered);
+    }
+
+    async function loadArticles() {
+      const response = await fetch("/api/content?type=blog&limit=50");
+      const data = await response.json();
+      articles = data.items || [];
+      render(articles);
+    }
+
+    async function hydrateAuth() {
+      const response = await fetch("/api/auth/me");
+      const data = await response.json();
+      if (data.authenticated) {
+        dashboardLink.href = data.redirectTo;
+        dashboardLink.textContent = "Panelga o'tish";
+        logoutButton.classList.remove("hidden");
+      }
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    searchInput.addEventListener("input", filterArticles);
+
+    Promise.all([hydrateAuth(), loadArticles()]).catch(() => {
+      blogGrid.innerHTML = `<div class="card rounded-[22px] p-5 text-sm text-soft">Maqolalar vaqtincha yuklanmadi.</div>`;
+    });
+  </script>
+</body>
+</html>

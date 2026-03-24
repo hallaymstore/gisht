@@ -546,7 +546,7 @@
                 <input name="enabled" type="checkbox" class="h-4 w-4" />
                 Kamerani yoqish
               </label>
-              <div data-camera-network-only>
+              <div>
                 <label class="mb-2 block text-sm font-semibold text-strong">Kamera modeli</label>
                 <select name="modelKey" class="w-full rounded-[18px] border px-4 py-3 text-sm">
                   <option value="axis_vapix_generic">Axis VAPIX IP kamera</option>
@@ -583,9 +583,7 @@
                   <option value="snapshot">Snapshot API</option>
                   <option value="rtsp">RTSP + ffmpeg</option>
                   <option value="http">HTTP image / MJPEG</option>
-                  <option value="mobile">Telefon browser kamerasi</option>
                 </select>
-                <p id="cameraModeHint" class="mt-2 text-xs text-soft">IP kamera URL yoki RTSP/MJPEG manzili bilan ishlaydi.</p>
               </div>
             </div>
             <div class="grid gap-4 md:grid-cols-2">
@@ -607,18 +605,18 @@
               <select id="cameraWorkerIds" name="workerIds" multiple size="6" class="w-full rounded-[18px] border px-4 py-3 text-sm"></select>
               <p class="mt-2 text-xs text-soft">Faqat shu turga biriktirilgan 1-10 ishchini tanlang. Server count oshgani sari shu ishchilarga work logni yangilab boradi.</p>
             </div>
-            <div data-camera-network-only>
+            <div>
               <label class="mb-2 block text-sm font-semibold text-strong">Snapshot URL</label>
               <input name="snapshotUrl" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="http://camera-ip/ISAPI/Streaming/channels/101/picture" />
             </div>
-            <div data-camera-network-only>
+            <div>
               <label class="mb-2 block text-sm font-semibold text-strong">RTSP yoki HTTP stream URL</label>
               <input name="streamUrl" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="rtsp://camera-ip:554/Streaming/Channels/101" />
               <div class="mt-2 flex flex-wrap gap-2">
                 <button id="cameraUseDemoButton" type="button" class="btn-outline px-3 py-2 text-xs">Lokal demo oqimni qo'yish</button>
               </div>
             </div>
-            <div class="grid gap-4 md:grid-cols-2" data-camera-network-only>
+            <div class="grid gap-4 md:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-semibold text-strong">Autentifikatsiya</label>
                 <select name="authType" class="w-full rounded-[18px] border px-4 py-3 text-sm">
@@ -633,7 +631,7 @@
                 <input name="tokenQueryKey" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="token" />
               </div>
             </div>
-            <div class="grid gap-4 md:grid-cols-2" data-camera-network-only>
+            <div class="grid gap-4 md:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-semibold text-strong">Username</label>
                 <input name="username" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="admin" />
@@ -643,11 +641,11 @@
                 <input name="password" type="password" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Kamera paroli" />
               </div>
             </div>
-            <div data-camera-network-only>
+            <div>
               <label class="mb-2 block text-sm font-semibold text-strong">Bearer/query token</label>
               <input name="apiToken" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="API token" />
             </div>
-            <div class="grid gap-4 md:grid-cols-3" data-camera-network-only>
+            <div class="grid gap-4 md:grid-cols-3">
               <div>
                 <label class="mb-2 block text-sm font-semibold text-strong">FFmpeg path</label>
                 <input name="ffmpegPath" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Bo'sh qoldiring - ichki ffmpeg ishlaydi" />
@@ -721,19 +719,13 @@
               <p class="mt-2 text-soft">Stream misol: <span id="cameraStreamExample" class="font-semibold text-strong"></span></p>
               <p class="mt-2 text-soft">HTTP MJPEG misol: <span id="cameraHttpExample" class="font-semibold text-strong"></span></p>
             </div>
-            <div class="card rounded-[20px] p-4 text-sm text-soft" data-camera-network-only>
+            <div class="card rounded-[20px] p-4 text-sm text-soft">
               <p class="font-semibold text-strong">URL, auth va ffmpeg yordam</p>
               <p class="mt-3"><code>snapshotUrl</code> odatda kameraning JPG snapshot endpointi bo'ladi. Ko'p Hikvisionlarda <code>http://IP/ISAPI/Streaming/channels/101/picture</code>, ko'p Axislarda <code>http://IP/axis-cgi/jpg/image.cgi</code> ishlaydi.</p>
               <p class="mt-2"><code>streamUrl</code> RTSP yoki HTTP MJPEG bo'ladi. RTSP ko'p hollarda <code>rtsp://IP:554/...</code>, HTTP MJPEG esa <code>http://IP/.../mjpg</code> yoki <code>.../video.cgi</code> ko'rinishida bo'ladi. Hozir server MJPEGning birinchi JPEG frameini ham o'qiy oladi.</p>
               <p class="mt-2"><code>basic</code> oddiy login/parol bilan LAN kameralar uchun. <code>bearer</code> ko'proq cloud API yoki VMS gateway uchun. <code>query</code> token URL ichiga qo'shiladigan servislarda ishlatiladi. Oddiy zavod IP kamerada odatda <code>basic</code> yetadi.</p>
               <p class="mt-2"><code>ffmpegPath</code> bo'sh qolsa ham bo'ladi. Server ichida paket bilan kelgan ffmpeg ishlatiladi; faqat o'zingiz alohida ffmpeg qo'ymoqchi bo'lsangiz yo'l kiriting.</p>
               <p class="mt-2">URLni topish joyi: kamera web paneli, vendor manuali, <code>ISAPI</code>, <code>VAPIX</code>, <code>RTSP</code>, <code>ONVIF</code>, <code>Live View</code>, <code>Integration</code> bo'limlari.</p>
-            </div>
-            <div id="cameraMobileHelpCard" class="card hidden rounded-[20px] p-4 text-sm text-soft">
-              <p class="font-semibold text-strong">Telefon kamera rejimi</p>
-              <p class="mt-3">Bu rejimda IP kamera URL kerak emas. Admin zona yaratadi, ishchi esa telefonidan worker panelni ochib orqa kamerani yoqadi.</p>
-              <p class="mt-2">Qizil chiziq shu sozlamalardagi koordinata bo'yicha worker ekranida ko'rinadi. Telefon frame'lari serverga yuboriladi va count shu monitorning kunlik hisobiga qo'shiladi.</p>
-              <p class="mt-2">Admin paneldagi live preview worker telefonidan kelgan oxirgi frame'ni ko'rsatadi. Agar hali preview bo'lmasa, ishchi kamera tugmasini bosib jarayonni boshlashi kerak.</p>
             </div>
             <div class="card rounded-[20px] p-4 text-sm text-soft">
               <p class="font-semibold text-strong">O'rnatish tavsiyasi</p>
@@ -903,41 +895,6 @@
             </select>
           </div>
         </div>
-        <div class="card mt-6 rounded-[24px] p-5">
-          <h3 id="customerBalanceFormTitle" class="font-display text-xl font-bold text-strong">Zakazchi uchun qo'lda qoldiq kiritish</h3>
-          <form id="customerBalanceForm" class="mt-5 space-y-4">
-            <input id="customerBalanceEditId" type="hidden" />
-            <div class="grid gap-4 md:grid-cols-2">
-              <div>
-                <label class="mb-2 block text-sm font-semibold text-strong">Zakazchi nomi</label>
-                <input name="customerName" required class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: Mega Stroy" />
-              </div>
-              <div>
-                <label class="mb-2 block text-sm font-semibold text-strong">Sana</label>
-                <input name="date" type="date" class="w-full rounded-[18px] border px-4 py-3 text-sm" />
-              </div>
-            </div>
-            <div class="grid gap-4 md:grid-cols-2">
-              <div>
-                <label class="mb-2 block text-sm font-semibold text-strong">Olingan summa</label>
-                <input name="paidAmount" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: 500000" />
-              </div>
-              <div>
-                <label class="mb-2 block text-sm font-semibold text-strong">Qolgan summa</label>
-                <input name="remainingAmount" type="number" min="0" step="0.01" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: 1200000" />
-              </div>
-            </div>
-            <p id="customerBalanceTotalHint" class="text-xs text-soft">Jami hisob: 0 so'm</p>
-            <div>
-              <label class="mb-2 block text-sm font-semibold text-strong">Izoh</label>
-              <textarea name="note" rows="3" class="w-full rounded-[18px] border px-4 py-3 text-sm" placeholder="Masalan: zakazchi qisman pul berdi, qolgani qarzga yozildi"></textarea>
-            </div>
-            <div class="grid gap-3 sm:grid-cols-2">
-              <button id="customerBalanceSubmitButton" class="btn-main w-full px-5 py-3 text-sm">Qo'lda qoldiqni saqlash</button>
-              <button id="customerBalanceCancelButton" type="button" class="btn-outline hidden w-full px-5 py-3 text-sm">Bekor qilish</button>
-            </div>
-          </form>
-        </div>
         <div id="customerAccountsSummary" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
         <div id="customerAccountsList" class="mt-6 space-y-4"></div>
       </div>
@@ -1013,12 +970,6 @@
     const workerTransactionsList = document.getElementById("workerTransactionsList");
     const customerAccountSearch = document.getElementById("customerAccountSearch");
     const customerAccountFilter = document.getElementById("customerAccountFilter");
-    const customerBalanceForm = document.getElementById("customerBalanceForm");
-    const customerBalanceFormTitle = document.getElementById("customerBalanceFormTitle");
-    const customerBalanceEditId = document.getElementById("customerBalanceEditId");
-    const customerBalanceTotalHint = document.getElementById("customerBalanceTotalHint");
-    const customerBalanceSubmitButton = document.getElementById("customerBalanceSubmitButton");
-    const customerBalanceCancelButton = document.getElementById("customerBalanceCancelButton");
     const customerAccountsSummary = document.getElementById("customerAccountsSummary");
     const customerAccountsList = document.getElementById("customerAccountsList");
     const customerPaymentsList = document.getElementById("customerPaymentsList");
@@ -1041,13 +992,10 @@
     const cameraSnapshotExample = document.getElementById("cameraSnapshotExample");
     const cameraStreamExample = document.getElementById("cameraStreamExample");
     const cameraHttpExample = document.getElementById("cameraHttpExample");
-    const cameraModeHint = document.getElementById("cameraModeHint");
-    const cameraMobileHelpCard = document.getElementById("cameraMobileHelpCard");
     const cameraStartButton = document.getElementById("cameraStartButton");
     const cameraStopButton = document.getElementById("cameraStopButton");
     const cameraResetButton = document.getElementById("cameraResetButton");
     const cameraApplyButton = document.getElementById("cameraApplyButton");
-    const cameraNetworkOnlySections = [...document.querySelectorAll("[data-camera-network-only]")];
     const userRoleSelect = userForm.elements.role;
     const userPositionSelect = userForm.elements.positionTitle;
     const userUsernameInput = userForm.elements.username;
@@ -1125,8 +1073,7 @@
         financeForm,
         notificationForm,
         cameraSettingsForm,
-        workLogForm,
-        customerBalanceForm
+        workLogForm
       ].forEach((element) => {
         if (element) {
           element.classList.add("form-scroll");
@@ -1176,46 +1123,6 @@
         clearTimeout(timer);
         timer = setTimeout(() => fn(...args), wait);
       };
-    }
-
-    function updateCustomerBalanceTotalHint() {
-      const paidAmount = Math.max(0, Number(customerBalanceForm.elements.paidAmount.value || 0));
-      const remainingAmount = Math.max(0, Number(customerBalanceForm.elements.remainingAmount.value || 0));
-      customerBalanceTotalHint.textContent = `Jami hisob: ${formatMoney(paidAmount + remainingAmount)}`;
-    }
-
-    function resetCustomerBalanceForm() {
-      customerBalanceEditId.value = "";
-      customerBalanceFormTitle.textContent = "Zakazchi uchun qo'lda qoldiq kiritish";
-      customerBalanceSubmitButton.textContent = "Qo'lda qoldiqni saqlash";
-      customerBalanceCancelButton.classList.add("hidden");
-      customerBalanceForm.reset();
-      customerBalanceForm.elements.date.value = todayYmd();
-      updateCustomerBalanceTotalHint();
-    }
-
-    function customerBalancePayloadFromForm() {
-      return {
-        customerName: customerBalanceForm.elements.customerName.value.trim(),
-        date: customerBalanceForm.elements.date.value || todayYmd(),
-        paidAmount: customerBalanceForm.elements.paidAmount.value || 0,
-        remainingAmount: customerBalanceForm.elements.remainingAmount.value || 0,
-        note: customerBalanceForm.elements.note.value.trim(),
-      };
-    }
-
-    function startCustomerBalanceEdit(order) {
-      customerBalanceEditId.value = order.manualBalanceId || "";
-      customerBalanceFormTitle.textContent = "Zakazchi qoldig'ini tahrirlash";
-      customerBalanceSubmitButton.textContent = "Qoldiqni yangilash";
-      customerBalanceCancelButton.classList.remove("hidden");
-      customerBalanceForm.elements.customerName.value = order.customerName || "";
-      customerBalanceForm.elements.date.value = order.date || todayYmd();
-      customerBalanceForm.elements.paidAmount.value = order.paidAmount || 0;
-      customerBalanceForm.elements.remainingAmount.value = order.remainingAmount || 0;
-      customerBalanceForm.elements.note.value = order.note || "";
-      updateCustomerBalanceTotalHint();
-      customerBalanceForm.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function formatDate(value) {
@@ -1310,65 +1217,6 @@
       }
     }
 
-    function isMobileCameraSource(settings = cameraSettingsFromForm()) {
-      return String(settings?.streamMode || "").toLowerCase() === "mobile";
-    }
-
-    function cameraSourceLabel(item = {}) {
-      return isMobileCameraSource(item)
-        ? "Telefon browser"
-        : item.streamMode === "rtsp"
-          ? "RTSP"
-          : item.streamMode === "http"
-            ? "HTTP / MJPEG"
-            : "Snapshot";
-    }
-
-    function syncCameraSourceFields(settings = cameraSettingsFromForm()) {
-      const mobileSource = isMobileCameraSource(settings);
-      cameraNetworkOnlySections.forEach((section) => {
-        section.classList.toggle("hidden", mobileSource);
-        section.querySelectorAll("input, select, textarea, button").forEach((field) => {
-          if (field.id === "cameraUseDemoButton") {
-            field.disabled = mobileSource;
-          }
-        });
-      });
-      cameraMobileHelpCard.classList.toggle("hidden", !mobileSource);
-      cameraModeHint.textContent = mobileSource
-        ? "Ishchi telefonidan worker panel orqali orqa kamera ulanadi. URL maydonlari ishlatilmaydi."
-        : "IP kamera URL yoki RTSP/MJPEG manzili bilan ishlaydi.";
-    }
-
-    function cameraStatusMeta(item = selectedCamera()) {
-      if (!item) {
-        return { text: "Kamera hali tanlanmagan", tone: "muted" };
-      }
-      if (item.status === "running") {
-        return {
-          text: isMobileCameraSource(item)
-            ? "Telefon kamerasi online va count serverga tushyapti"
-            : "Server monitor ishlayapti",
-          tone: "success"
-        };
-      }
-      if (item.status === "error") {
-        return { text: item.lastError || "Kamera xatolik berdi", tone: "danger" };
-      }
-      if (item.status === "waiting_mobile") {
-        return { text: "Telefon kamerasi kutilmoqda", tone: "warning" };
-      }
-      if (item.enabled) {
-        return {
-          text: isMobileCameraSource(item)
-            ? "Telefon ulanadi, birinchi frame kutilmoqda"
-            : "Kamera yoqilgan, navbatdagi frame kutilmoqda",
-          tone: "warning"
-        };
-      }
-      return { text: "Kamera o'chirilgan", tone: "muted" };
-    }
-
     function syncCameraStatus(text = "", tone = "muted") {
       cameraStatusText.textContent = text || "Kamera hali ishga tushmagan";
       cameraStatusPill.textContent = tone === "success"
@@ -1424,17 +1272,6 @@
     }
 
     function syncCameraHints(settings = selectedCamera() || {}) {
-      if (isMobileCameraSource(settings)) {
-        cameraModelNote.textContent = "Telefon browser kamerasi - ishchi paneli orqali orqa kamera ulanadi.";
-        cameraSnapshotExample.textContent = "Telefon worker panelida video oqimi ishlatiladi";
-        cameraStreamExample.textContent = "Server worker telefonidan yuborilgan frame'larni qabul qiladi";
-        cameraHttpExample.textContent = "Admin preview oxirgi yuborilgan frame'ni ko'rsatadi";
-        cameraSettingsForm.elements.snapshotUrl.placeholder = "Telefon rejimida kerak emas";
-        cameraSettingsForm.elements.streamUrl.placeholder = "Telefon rejimida kerak emas";
-        cameraSettingsForm.elements.ffmpegPath.placeholder = "Telefon rejimida kerak emas";
-        return;
-      }
-
       const preset = cameraModelPresets[settings.modelKey] || cameraModelPresets.custom;
       const modelLabel = settings.modelLabel || preset.label;
       const modelDescription = settings.modelDescription || preset.description;
@@ -1551,10 +1388,15 @@
       });
       cameraSubmitButton.textContent = settings.id ? "Kamerani yangilash" : "Kamera saqlash";
       cameraCancelButton.classList.toggle("hidden", !settings.id);
-      syncCameraSourceFields(settings);
       syncCameraHints(settings);
-      const statusMeta = cameraStatusMeta(settings);
-      syncCameraStatus(statusMeta.text, statusMeta.tone);
+      syncCameraStatus(
+        settings.status === "running"
+          ? "Server monitor ishlayapti"
+          : settings.enabled
+            ? "Kamera yoqilgan, server tomonidan kuzatiladi"
+            : "Kamera o'chirilgan",
+        settings.status === "running" ? "success" : settings.enabled ? "warning" : "muted"
+      );
     }
 
     function resetCameraCounterState() {
@@ -1642,13 +1484,6 @@
         const response = await fetch(`/api/camera/frame?monitorId=${encodeURIComponent(item.id)}&ts=${Date.now()}`, { cache: "no-store" });
         if (!response.ok) {
           const payload = await response.json().catch(() => ({}));
-          if (isMobileCameraSource(item) && response.status === 404) {
-            cameraDetectionMeta.textContent = payload.error || "Telefon kamerasi hali frame yubormagan.";
-            syncCameraStatus("Telefon frame kutilmoqda...", "warning");
-            const interval = Number(item.frameIntervalMs || cameraSettingsForm.elements.frameIntervalMs.value || 900);
-            cameraRuntime.timer = setTimeout(runCameraFrame, interval);
-            return;
-          }
           throw new Error(payload.error || "Kamera frame olinmadi.");
         }
         const blob = await response.blob();
@@ -1657,17 +1492,8 @@
         if ("close" in image && typeof image.close === "function") {
           image.close();
         }
-        cameraDetectionMeta.textContent = item.lastWarning
-          || item.lastError
-          || (isMobileCameraSource(item)
-            ? "Preview worker telefonidan kelgan oxirgi frame bilan yangilanmoqda."
-            : "Preview ochiq. Hisob serverning o'zida davom etmoqda.");
-        syncCameraStatus(
-          isMobileCameraSource(item)
-            ? "Telefon preview ishlayapti, count serverga tushmoqda"
-            : "Preview ishlayapti, server countni davom ettirayapti",
-          "success"
-        );
+        cameraDetectionMeta.textContent = item.lastWarning || item.lastError || "Preview ochiq. Hisob serverning o'zida davom etmoqda.";
+        syncCameraStatus("Preview ishlayapti, server countni davom ettirayapti", "success");
         if (Date.now() - cameraRuntime.lastStatsAt > 5000) {
           cameraRuntime.lastStatsAt = Date.now();
           refreshCameraMonitors(false).catch(() => {});
@@ -1723,14 +1549,12 @@
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
                     <h4 class="font-display text-lg font-bold text-strong">${item.name}</h4>
-                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Ishlayapti" : item.status === "error" ? "Xato" : item.status === "waiting_mobile" ? "Telefon kutilmoqda" : item.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
+                    <span class="status-pill ${item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"}">${item.status === "running" ? "Ishlayapti" : item.status === "error" ? "Xato" : item.enabled ? "Kutilmoqda" : "O'chirilgan"}</span>
                     <span class="status-pill outline">${workTypeLabel(item.workType)}</span>
-                    <span class="status-pill outline">${cameraSourceLabel(item)}</span>
                   </div>
                   <p class="mt-2 text-sm text-soft">${item.areaName}</p>
                   <p class="mt-2 text-sm text-soft">Bugun: <span class="font-semibold text-strong">${Number(item.countToday || 0)} ta</span> • Work log: <span class="font-semibold text-strong">${item.workLogId ? "sync qilingan" : "hali yo'q"}</span></p>
                   <p class="mt-2 text-sm text-soft">Ishchilar: <span class="font-semibold text-strong">${(item.workers || []).map((worker) => worker.fullName).join(", ") || "biriktirilmagan"}</span></p>
-                  ${item.mobileSession?.fullName ? `<p class="mt-2 text-sm text-soft">Ulangan telefon: <span class="font-semibold text-strong">${item.mobileSession.fullName}</span></p>` : ""}
                   ${item.lastWarning ? `<p class="mt-2 text-sm text-soft">Ogohlantirish: <span class="font-semibold text-strong">${item.lastWarning}</span></p>` : ""}
                   ${item.lastError ? `<p class="mt-2 text-sm text-soft">Xato: <span class="font-semibold text-strong">${item.lastError}</span></p>` : ""}
                 </div>
@@ -1748,13 +1572,17 @@
       const item = selectedCamera();
       updateCameraCountDisplay(item);
       if (item) {
-        const statusMeta = cameraStatusMeta(item);
-        syncCameraStatus(statusMeta.text, statusMeta.tone);
-        cameraDetectionMeta.textContent = item.lastWarning
-          || item.lastError
-          || (isMobileCameraSource(item)
-            ? "Preview worker telefonidan kelgan oxirgi frame'ni ko'rsatadi, count esa shu zonaning server hisobiga yoziladi."
-            : "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.");
+        syncCameraStatus(
+          item.status === "running"
+            ? "Server monitor ishlayapti"
+            : item.status === "error"
+              ? item.lastError || "Kamera xatolik berdi"
+              : item.enabled
+                ? "Kamera yoqilgan, navbatdagi frame kutilmoqda"
+                : "Kamera o'chirilgan",
+          item.status === "running" ? "success" : item.status === "error" ? "danger" : item.enabled ? "warning" : "muted"
+        );
+        cameraDetectionMeta.textContent = item.lastWarning || item.lastError || "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.";
       } else {
         syncCameraStatus("Kamera hali tanlanmagan", "muted");
         cameraDetectionMeta.textContent = "Bu count admin paneldan mustaqil ravishda server ichidagi background monitor orqali yuradi.";
@@ -2414,21 +2242,10 @@
                 ${(item.orders || []).map((order) => `
                   <div class="card rounded-[18px] p-4">
                     <div class="flex flex-wrap items-center justify-between gap-3">
-                      <div class="flex flex-wrap items-center gap-2">
-                        <p class="text-sm text-soft">${order.date} | ${order.quantity || 0} ta</p>
-                        ${order.source === "manual" ? `<span class="status-pill outline">Qo'lda</span>` : ""}
-                      </div>
-                      <div class="flex flex-wrap gap-2">
-                        ${order.manualBalanceId
-                          ? `
-                            <button data-customer-balance-id="${order.manualBalanceId}" data-customer-balance-action="edit" class="btn-outline px-4 py-2 text-xs">Tahrirlash</button>
-                            <button data-customer-balance-id="${order.manualBalanceId}" data-customer-balance-action="delete" class="btn-outline px-4 py-2 text-xs">O'chirish</button>
-                          `
-                          : `<button data-order-id="${order.taskId}" data-order-remaining="${order.remainingAmount}" class="btn-outline px-4 py-2 text-xs">To'lov yozish</button>`}
-                      </div>
+                      <p class="text-sm text-soft">${order.date} | ${order.quantity} ta</p>
+                      <button data-order-id="${order.taskId}" data-order-remaining="${order.remainingAmount}" class="btn-outline px-4 py-2 text-xs">To'lov yozish</button>
                     </div>
                     <p class="mt-2 text-sm text-soft">Buyurtma: <span class="font-semibold text-strong">${formatMoney(order.revenue)}</span> | Tushgan: <span class="font-semibold text-strong">${formatMoney(order.paidAmount)}</span> | Qolgan: <span class="font-semibold text-strong">${formatMoney(order.remainingAmount)}</span></p>
-                    ${order.note ? `<p class="mt-2 text-sm leading-7 text-soft">${order.note}</p>` : ""}
                   </div>
                 `).join("")}
               </div>
@@ -3031,59 +2848,7 @@
       }
     });
 
-    customerBalanceForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      try {
-        const payload = customerBalancePayloadFromForm();
-        const balanceId = customerBalanceEditId.value;
-        await request(balanceId ? `/api/customer-balances/${balanceId}` : "/api/customer-balances", {
-          method: balanceId ? "PATCH" : "POST",
-          body: JSON.stringify(payload)
-        });
-        resetCustomerBalanceForm();
-        setMessage(balanceId ? "Zakazchi qoldig'i yangilandi." : "Zakazchi qoldig'i saqlandi.");
-        await loadDashboard();
-      } catch (error) {
-        setMessage(error.message, true);
-      }
-    });
-
-    customerBalanceCancelButton.addEventListener("click", () => {
-      resetCustomerBalanceForm();
-    });
-
-    ["paidAmount", "remainingAmount"].forEach((field) => {
-      customerBalanceForm.elements[field].addEventListener("input", updateCustomerBalanceTotalHint);
-    });
-
     customerAccountsList.addEventListener("click", async (event) => {
-      const manualButton = event.target.closest("button[data-customer-balance-id][data-customer-balance-action]");
-      if (manualButton) {
-        try {
-          const manualOrder = state.customerAccounts
-            .flatMap((item) => item.orders || [])
-            .find((order) => order.manualBalanceId === manualButton.dataset.customerBalanceId);
-          if (!manualOrder) {
-            throw new Error("Qo'lda kiritilgan qoldiq topilmadi.");
-          }
-
-          if (manualButton.dataset.customerBalanceAction === "edit") {
-            startCustomerBalanceEdit(manualOrder);
-            return;
-          }
-
-          if (!confirm("Qo'lda kiritilgan zakazchi qoldig'ini o'chirishni tasdiqlaysizmi?")) return;
-          await request(`/api/customer-balances/${manualButton.dataset.customerBalanceId}`, { method: "DELETE" });
-          resetCustomerBalanceForm();
-          setMessage("Zakazchi qoldig'i o'chirildi.");
-          await loadDashboard();
-          return;
-        } catch (error) {
-          setMessage(error.message, true);
-          return;
-        }
-      }
-
       const button = event.target.closest("button[data-order-id]");
       if (!button) return;
       try {
@@ -3131,12 +2896,6 @@
       syncCameraHints(cameraSettingsFromForm());
     });
 
-    cameraSettingsForm.elements.streamMode.addEventListener("change", () => {
-      const settings = cameraSettingsFromForm();
-      syncCameraSourceFields(settings);
-      syncCameraHints(settings);
-    });
-
     cameraSettingsForm.elements.streamUrl.addEventListener("input", () => {
       const value = cameraSettingsForm.elements.streamUrl.value.trim().toLowerCase();
       if (value.startsWith("rtsp://")) {
@@ -3144,7 +2903,6 @@
       } else if (value.startsWith("http://") || value.startsWith("https://")) {
         cameraSettingsForm.elements.streamMode.value = "http";
       }
-      syncCameraSourceFields(cameraSettingsFromForm());
     });
 
     cameraSettingsForm.elements.snapshotUrl.addEventListener("input", () => {
@@ -3152,7 +2910,6 @@
       if (value.startsWith("http://") || value.startsWith("https://")) {
         cameraSettingsForm.elements.streamMode.value = "snapshot";
       }
-      syncCameraSourceFields(cameraSettingsFromForm());
     });
 
     cameraUseDemoButton.addEventListener("click", () => {
@@ -3173,7 +2930,6 @@
       cameraLinePreset.value = "vertical_center";
       applyCameraLinePreset("vertical_center");
       syncCountDirectionLabels();
-      syncCameraSourceFields(cameraSettingsFromForm());
       syncCameraHints(cameraSettingsFromForm());
       setMessage("Lokal demo oqim qo'yildi. Endi kamerani saqlab preview boshlashingiz mumkin.");
     });
@@ -3336,7 +3092,6 @@
         productionDateFilter.value = todayYmd();
         resetUserForm();
         resetContentForm();
-        resetCustomerBalanceForm();
         resetWorkLogForm();
         resetCameraCounterState();
         updateNotificationTargets();

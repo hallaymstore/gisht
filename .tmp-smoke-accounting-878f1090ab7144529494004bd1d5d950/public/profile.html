@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil | G'isht Zavodi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      const originalWarn = console.warn.bind(console);
+      console.warn = (...args) => {
+        if (String(args[0] || "").includes("cdn.tailwindcss.com should not be used in production")) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    })();
+  </script>  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            display: ["Sora", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #f4ede6;
+      --bg-main: #efebe5;
+      --bg-bottom: #e5e0d9;
+      --surface: rgba(255,255,255,.78);
+      --surface-strong: #fff;
+      --surface-soft: #f7f2ec;
+      --text-main: #1f1913;
+      --text-strong: #120f0c;
+      --text-soft: #65584d;
+      --line: rgba(31,25,19,.11);
+      --accent: #a3522b;
+      --accent-strong: #7d3719;
+      --accent-soft: rgba(163,82,43,.12);
+      --success-soft: rgba(33,150,83,.12);
+      --success-text: #1f8d56;
+      --warning-soft: rgba(186,125,26,.14);
+      --warning-text: #a26913;
+      --muted-soft: rgba(31,25,19,.06);
+      --shadow-panel: 0 18px 44px rgba(34,26,18,.08);
+      --shadow-card: 0 8px 22px rgba(34,26,18,.06);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #171d22;
+      --bg-main: #10171c;
+      --bg-bottom: #0c1216;
+      --surface: rgba(20,28,34,.84);
+      --surface-strong: #182127;
+      --surface-soft: #1f2931;
+      --text-main: #edf2f7;
+      --text-strong: #fff;
+      --text-soft: #bac3cb;
+      --line: rgba(255,255,255,.09);
+      --accent: #dd9161;
+      --accent-strong: #f1b089;
+      --accent-soft: rgba(221,145,97,.14);
+      --success-soft: rgba(92,209,149,.18);
+      --success-text: #90e4b7;
+      --warning-soft: rgba(239,194,109,.18);
+      --warning-text: #f0cb7d;
+      --muted-soft: rgba(255,255,255,.08);
+      --shadow-panel: 0 20px 56px rgba(0,0,0,.36);
+      --shadow-card: 0 10px 26px rgba(0,0,0,.24);
+    }
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(163,82,43,.15), transparent 28%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-main) 54%, var(--bg-bottom) 100%);
+    }
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-panel); backdrop-filter: blur(18px); }
+    .card { background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+    .soft-card { background: var(--surface-soft); border: 1px solid var(--line); }
+    .text-strong { color: var(--text-strong); }
+    .text-soft { color: var(--text-soft); }
+    .accent { color: var(--accent); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem; padding: .6rem .95rem; border-radius: 999px;
+      background: var(--surface-strong); border: 1px solid var(--line); color: var(--accent);
+      font-size: .75rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: .55rem; height: .55rem; border-radius: 999px; background: var(--accent); }
+    .btn-main, .btn-outline, .theme-button {
+      border-radius: 999px; font-weight: 700; transition: transform .2s ease, color .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn-main:hover, .btn-outline:hover, .theme-button:hover { transform: translateY(-1px); }
+    .btn-main { background: var(--accent); color: #fff; }
+    .btn-main:hover { background: var(--accent-strong); }
+    .btn-outline, .theme-button { background: var(--surface-strong); border: 1px solid var(--line); color: var(--text-main); }
+    .btn-outline:hover, .theme-button:hover { border-color: var(--accent); color: var(--accent); }
+    input, textarea {
+      width: 100%; background: var(--surface-strong); color: var(--text-main); border: 1px solid var(--line); outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    .status-pill {
+      display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: .5rem .8rem;
+      border: 1px solid transparent; font-size: .75rem; font-weight: 800; letter-spacing: .03em; line-height: 1;
+    }
+    .status-pill.success { background: var(--success-soft); color: var(--success-text); }
+    .status-pill.warning { background: var(--warning-soft); color: var(--warning-text); }
+    .status-pill.muted { background: var(--muted-soft); color: var(--text-soft); }
+    .message-box { border: 1px solid var(--line); }
+    .message-box.success { background: var(--success-soft); color: var(--success-text); }
+    .message-box.error { background: rgba(184,72,72,.12); color: #b65353; }
+  </style>
+</head>
+<body>
+  <header class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+    <nav class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <span class="eyebrow">Profil</span>
+        <h1 class="mt-4 font-display text-[clamp(2rem,4vw,3.4rem)] font-bold tracking-[-0.04em] text-strong">Shaxsiy sahifa va ish holati</h1>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button type="button" class="theme-button px-4 py-3 text-sm" onclick="toggleTheme()"><span data-theme-label>Tungi mavzu</span></button>
+        <a id="dashboardLink" href="/dashboard" class="btn-outline px-4 py-3 text-sm">Panelga qaytish</a>
+        <a href="/index.html" class="btn-outline px-4 py-3 text-sm">Saytga qaytish</a>
+        <button id="logoutButton" class="btn-main px-5 py-3 text-sm">Chiqish</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl space-y-7 px-4 pb-16 sm:px-6 lg:px-8">
+    <p id="message" class="hidden rounded-[22px] px-5 py-4 text-sm"></p>
+    <section id="summaryGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></section>
+
+    <section class="grid gap-6 xl:grid-cols-[0.94fr_1.06fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Asosiy ma'lumot</span>
+        <div id="profileSummary" class="mt-6"></div>
+      </div>
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Tahrirlash</span>
+        <form id="profileForm" class="mt-6 space-y-4">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">To'liq ism</label>
+              <input name="fullName" class="rounded-[18px] px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Lavozim nomi</label>
+              <input name="positionTitle" class="rounded-[18px] px-4 py-3 text-sm" />
+            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Telefon</label>
+              <input name="phone" class="rounded-[18px] px-4 py-3 text-sm" />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-strong">Avatar manzili</label>
+              <input name="avatarUrl" class="rounded-[18px] px-4 py-3 text-sm" />
+            </div>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Bio</label>
+            <textarea name="bio" rows="4" class="rounded-[18px] px-4 py-3 text-sm"></textarea>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-strong">Yangi parol</label>
+            <input name="password" type="password" class="rounded-[18px] px-4 py-3 text-sm" placeholder="O'zgartirmasangiz bo'sh qoldiring" />
+          </div>
+          <button class="btn-main w-full px-5 py-3 text-sm">Saqlash</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Oylik</span>
+        <div id="salaryBox" class="mt-6"></div>
+      </div>
+      <div class="panel rounded-[28px] p-5 sm:p-6">
+        <span class="eyebrow">Xabarnomalar</span>
+        <div id="notifications" class="mt-6 space-y-4"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const key = "gisht_theme";
+      const root = document.documentElement;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      function applyTheme(theme, persist = true) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelectorAll("[data-theme-label]").forEach((node) => {
+          node.textContent = theme === "dark" ? "Kunduzgi mavzu" : "Tungi mavzu";
+        });
+        if (persist) localStorage.setItem(key, theme);
+      }
+      applyTheme(localStorage.getItem(key) || (media.matches ? "dark" : "light"), false);
+      window.toggleTheme = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    })();
+
+    const logoutButton = document.getElementById("logoutButton");
+    const dashboardLink = document.getElementById("dashboardLink");
+    const profileForm = document.getElementById("profileForm");
+    const message = document.getElementById("message");
+    const summaryGrid = document.getElementById("summaryGrid");
+    const profileSummary = document.getElementById("profileSummary");
+    const salaryBox = document.getElementById("salaryBox");
+    const notifications = document.getElementById("notifications");
+    let profileState = null;
+
+    function setMessage(text, isError = false) {
+      message.textContent = text;
+      message.className = `message-box ${isError ? "error" : "success"} rounded-[22px] px-5 py-4 text-sm`;
+      message.classList.remove("hidden");
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("uz-UZ", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value));
+    }
+
+    function formatMoney(value) {
+      return `${new Intl.NumberFormat("uz-UZ").format(Number(value || 0))} so'm`;
+    }
+
+    async function request(url, options = {}) {
+      const response = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "So'rov bajarilmadi.");
+      return data;
+    }
+
+    function renderSummary(profile) {
+      const user = profile.user;
+      const roleSummary = profile.roleSummary || {};
+      const payroll = profile.payroll;
+      const productionSummary = profile.productionSummary || { totals: {}, mine: null };
+      dashboardLink.href = profile.dashboardPath || "/dashboard";
+      const roleLabel = { admin: "Admin", organizer: "Organizer", worker: "Ishchi" };
+      const roleSummaryLabel = {
+        totalAssigned: "Jami biriktirilgan",
+        doneCount: "Yakunlangan",
+        activeCount: "Faol jarayon",
+        plannedByMe: "Men kiritgan topshiriqlar",
+        usersCount: "Foydalanuvchilar",
+        activeUsersCount: "Faol xodimlar",
+        contentsCount: "Materiallar",
+        taskCount: "Topshiriqlar",
+        doneTodayCount: "Bugun yakunlangan"
+      };
+
+      const items = [
+        { label: "Rol", value: roleLabel[user.role] || user.role },
+        { label: "Lavozim", value: user.positionTitle || "Kiritilmagan" },
+        { label: "Joriy oylik", value: payroll ? formatMoney(payroll.amount) : "Shakllanmagan" },
+        { label: "Xabarnomalar", value: profile.notifications.length }
+      ];
+
+      summaryGrid.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-2xl font-bold text-strong">${item.value}</p>
+        </article>
+      `).join("");
+
+      profileSummary.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <h2 class="font-display text-2xl font-bold text-strong">${user.fullName}</h2>
+          <p class="mt-2 text-sm text-soft">@${user.username}</p>
+          <p class="mt-2 text-sm text-soft">${user.phone || "Telefon kiritilmagan"}</p>
+          <p class="mt-4 text-sm leading-7 text-soft">${user.bio || "Hozircha qisqa ma'lumot kiritilmagan."}</p>
+          <div class="mt-5 grid gap-3 md:grid-cols-2">
+            ${Object.entries(roleSummary).map(([key, value]) => `<div class="card rounded-[18px] p-4"><p class="text-sm text-soft">${roleSummaryLabel[key] || key}</p><p class="mt-2 font-display text-xl font-bold text-strong">${value}</p></div>`).join("")}
+          </div>
+        </article>
+      `;
+
+      salaryBox.innerHTML = payroll
+        ? `
+            <article class="soft-card rounded-[22px] p-5">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-display text-2xl font-bold text-strong">${formatMoney(payroll.amount)}</h3>
+                <span class="status-pill ${payroll.status === "paid" ? "success" : "warning"}">${payroll.status === "paid" ? "To'langan" : "Kutilmoqda"}</span>
+              </div>
+              <p class="mt-3 text-sm text-soft">${payroll.monthKey} oyi • to'lov sanasi ${payroll.dueDate}</p>
+              <p class="mt-3 text-sm text-soft">${payroll.status === "paid" ? "To'lov tizimda tasdiqlangan." : "To'lov sanasi yetganda xabarnoma yuboriladi."}</p>
+            </article>
+          `
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bu oy uchun oylik yozuvi topilmadi.</div>`;
+
+      notifications.innerHTML = profile.notifications.length
+        ? profile.notifications.map((item) => `
+            <article class="soft-card rounded-[22px] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-display text-lg font-bold text-strong">${item.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-soft">${item.body}</p>
+                  <p class="mt-3 text-xs text-soft">${formatDate(item.createdAt)}</p>
+                </div>
+                ${!item.isRead ? `<button data-notification-id="${item.id}" class="btn-outline px-4 py-2 text-xs">O'qildi</button>` : `<span class="status-pill muted">O'qilgan</span>`}
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Xabarnomalar mavjud emas.</div>`;
+
+      profileForm.fullName.value = user.fullName || "";
+      profileForm.positionTitle.value = user.positionTitle || "";
+      profileForm.phone.value = user.phone || "";
+      profileForm.avatarUrl.value = user.avatarUrl || "";
+      profileForm.bio.value = user.bio || "";
+      profileForm.password.value = "";
+    }
+
+    function renderSummary(profile) {
+      const user = profile.user;
+      const roleSummary = profile.roleSummary || {};
+      const payroll = profile.payroll;
+      dashboardLink.href = profile.dashboardPath || "/dashboard";
+      const roleLabel = { admin: "Admin", organizer: "Organizer", worker: "Ishchi" };
+      const roleSummaryLabel = {
+        totalAssigned: "Jami biriktirilgan",
+        doneCount: "Yakunlangan",
+        activeCount: "Faol jarayon",
+        plannedByMe: "Men kiritgan topshiriqlar",
+        usersCount: "Foydalanuvchilar",
+        activeUsersCount: "Faol xodimlar",
+        contentsCount: "Materiallar",
+        taskCount: "Topshiriqlar",
+        doneTodayCount: "Bugun yakunlangan",
+        thisMonthBatches: "Oydagi partiyalar",
+        payableAmount: "To'lanishi kerak",
+        debtAmount: "Qarz balansi",
+        todayQuantity: "Bugungi dona",
+        todayAmount: "Bugungi ulush",
+        cameraManagedTypes: "Kamera turlari",
+        todayProductionQuantity: "Bugungi ishlab chiqarish",
+        todayProductionAmount: "Bugungi ishlab chiqarish summasi"
+      };
+
+      const productionHeadline = user.role === "worker"
+        ? formatMoney(productionSummary.mine?.todayAmount || 0)
+        : formatMoney(productionSummary.totals?.totalAmount || 0);
+
+      const items = [
+        { label: "Rol", value: roleLabel[user.role] || user.role },
+        { label: "Lavozim", value: user.positionTitle || "Kiritilmagan" },
+        { label: "Joriy hisob", value: payroll ? formatMoney(payroll.accruedAmount || payroll.amount) : "Shakllanmagan" },
+        { label: "Bugungi avtomatik hisob", value: productionHeadline },
+        { label: "Xabarnomalar", value: profile.notifications.length }
+      ];
+
+      summaryGrid.innerHTML = items.map((item) => `
+        <article class="card rounded-[22px] p-5">
+          <p class="text-sm text-soft">${item.label}</p>
+          <p class="mt-3 font-display text-2xl font-bold text-strong">${item.value}</p>
+        </article>
+      `).join("");
+
+      profileSummary.innerHTML = `
+        <article class="soft-card rounded-[22px] p-5">
+          <h2 class="font-display text-2xl font-bold text-strong">${user.fullName}</h2>
+          <p class="mt-2 text-sm text-soft">@${user.username}</p>
+          <p class="mt-2 text-sm text-soft">${user.phone || "Telefon kiritilmagan"}</p>
+          ${user.role === "worker" ? `<p class="mt-2 text-sm text-soft">Asosiy turi: <span class="font-semibold text-strong">${user.assignedWorkTypeLabel || "Biriktirilmagan"}</span></p>` : ""}
+          <p class="mt-2 text-sm text-soft">${productionSummary.note || "Ishlab chiqarish hisobi kamera counti bilan yuradi."}</p>
+          <p class="mt-4 text-sm leading-7 text-soft">${user.bio || "Hozircha qisqa ma'lumot kiritilmagan."}</p>
+          <div class="mt-5 grid gap-3 md:grid-cols-2">
+            ${Object.entries(roleSummary).map(([key, value]) => `<div class="card rounded-[18px] p-4"><p class="text-sm text-soft">${roleSummaryLabel[key] || key}</p><p class="mt-2 font-display text-xl font-bold text-strong">${typeof value === "number" && (key.includes("Amount") || key.includes("debt")) ? formatMoney(value) : value}</p></div>`).join("")}
+          </div>
+        </article>
+      `;
+
+      salaryBox.innerHTML = payroll
+        ? `
+            <article class="soft-card rounded-[22px] p-5">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-display text-2xl font-bold text-strong">${formatMoney(payroll.accruedAmount || payroll.amount)}</h3>
+                <span class="status-pill ${payroll.status === "debt" ? "danger" : payroll.status === "paid" ? "success" : "warning"}">${payroll.status === "debt" ? "Qarzdor" : payroll.status === "paid" ? "To'langan" : payroll.status === "partial" ? "Qisman" : "Kutilmoqda"}</span>
+              </div>
+              <p class="mt-3 text-sm text-soft">${payroll.monthKey} oyi • hisob sanasi ${payroll.dueDate}</p>
+              <div class="mt-4 space-y-2 text-sm">
+                <p class="text-soft">Hisoblangan: <span class="font-semibold text-strong">${formatMoney(payroll.accruedAmount)}</span></p>
+                <p class="text-soft">Avans va chiqim: <span class="font-semibold text-strong">${formatMoney(payroll.advanceAmount)}</span></p>
+                <p class="text-soft">To'langan: <span class="font-semibold text-strong">${formatMoney(payroll.paidAmount)}</span></p>
+                <p class="text-soft">Qolgan summa: <span class="font-semibold text-strong">${formatMoney(payroll.payableAmount)}</span></p>
+                ${payroll.debtAmount > 0 ? `<p class="text-soft">Qarz balansi: <span class="font-semibold text-strong">${formatMoney(payroll.debtAmount)}</span></p>` : ""}
+              </div>
+            </article>
+          `
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Bu oy uchun hisob-kitob yozuvi topilmadi.</div>`;
+
+      notifications.innerHTML = profile.notifications.length
+        ? profile.notifications.map((item) => `
+            <article class="soft-card rounded-[22px] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-display text-lg font-bold text-strong">${item.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-soft">${item.body}</p>
+                  <p class="mt-3 text-xs text-soft">${formatDate(item.createdAt)}</p>
+                </div>
+                ${!item.isRead ? `<button data-notification-id="${item.id}" class="btn-outline px-4 py-2 text-xs">O'qildi</button>` : `<span class="status-pill muted">O'qilgan</span>`}
+              </div>
+            </article>
+          `).join("")
+        : `<div class="soft-card rounded-[22px] p-5 text-sm text-soft">Xabarnomalar mavjud emas.</div>`;
+
+      profileForm.fullName.value = user.fullName || "";
+      profileForm.positionTitle.value = user.positionTitle || "";
+      profileForm.phone.value = user.phone || "";
+      profileForm.avatarUrl.value = user.avatarUrl || "";
+      profileForm.bio.value = user.bio || "";
+      profileForm.password.value = "";
+    }
+
+    profileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await request("/api/profile", {
+          method: "PATCH",
+          body: JSON.stringify({
+            fullName: profileForm.fullName.value,
+            positionTitle: profileForm.positionTitle.value,
+            phone: profileForm.phone.value,
+            avatarUrl: profileForm.avatarUrl.value,
+            bio: profileForm.bio.value,
+            password: profileForm.password.value
+          })
+        });
+        setMessage("Profil ma'lumotlari saqlandi.");
+        profileState = await request("/api/profile");
+        renderSummary(profileState);
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    notifications.addEventListener("click", async (event) => {
+      const button = event.target.closest("button[data-notification-id]");
+      if (!button) return;
+      try {
+        await request(`/api/notifications/${button.dataset.notificationId}/read`, {
+          method: "PATCH",
+          body: JSON.stringify({})
+        });
+        profileState = await request("/api/profile");
+        renderSummary(profileState);
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+
+    (async () => {
+      try {
+        profileState = await request("/api/profile");
+        renderSummary(profileState);
+      } catch (error) {
+        setMessage(error.message || "Profil yuklanmadi.", true);
+      }
+    })();
+  </script>
+</body>
+</html>

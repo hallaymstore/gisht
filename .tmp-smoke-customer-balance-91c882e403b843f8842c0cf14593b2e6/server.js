@@ -83,9 +83,6 @@ const cameraMonitorService = {
   ready: false,
   reloading: null,
 };
-const CAMERA_MOBILE_STALE_MIN_MS = 8_000;
-const CAMERA_MOBILE_STALE_MULTIPLIER = 4;
-const CAMERA_MOBILE_SESSION_TTL_MS = 15_000;
 const demoCameraState = {
   requestCount: 0,
 };
@@ -515,32 +512,12 @@ function normalizeCameraModelKey(value, fallback = "custom") {
 
 function normalizeCameraStreamMode(value, fallback = "snapshot") {
   const mode = safeString(value, 30).toLowerCase();
-  return ["snapshot", "rtsp", "http", "mobile"].includes(mode) ? mode : fallback;
+  return ["snapshot", "rtsp", "http"].includes(mode) ? mode : fallback;
 }
 
 function normalizeCameraAuthType(value, fallback = "basic") {
   const authType = safeString(value, 30).toLowerCase();
   return ["none", "basic", "bearer", "query"].includes(authType) ? authType : fallback;
-}
-
-function isMobileCameraMonitor(settings = {}) {
-  return normalizeCameraStreamMode(settings.streamMode, "snapshot") === "mobile";
-}
-
-function cameraMobileStaleAfterMs(settings = {}) {
-  return Math.max(
-    CAMERA_MOBILE_STALE_MIN_MS,
-    Number(settings.frameIntervalMs || defaultCameraSettings().frameIntervalMs) * CAMERA_MOBILE_STALE_MULTIPLIER,
-  );
-}
-
-function cameraDateMs(value) {
-  if (!value) {
-    return 0;
-  }
-  const date = value instanceof Date ? value : new Date(value);
-  const time = date.getTime();
-  return Number.isFinite(time) ? time : 0;
 }
 
 function clampUnit(value, fallback = 0.5) {
@@ -1583,7 +1560,6 @@ async function listWorkersForCameraMonitor(monitor) {
 
 async function validateCameraMonitorConfig(monitor, fallbackMonitor = {}) {
   const normalized = normalizeCameraMonitor(monitor, fallbackMonitor);
-  const mobileSource = isMobileCameraMonitor(normalized);
 
   if (!normalized.name) {
     throw new Error("Kamera nomi majburiy.");
@@ -1591,14 +1567,11 @@ async function validateCameraMonitorConfig(monitor, fallbackMonitor = {}) {
   if (!normalized.areaName) {
     throw new Error("Zona nomi majburiy.");
   }
-  if (!mobileSource && !normalized.snapshotUrl && !normalized.streamUrl) {
+  if (!normalized.snapshotUrl && !normalized.streamUrl) {
     throw new Error("Snapshot yoki RTSP/HTTP stream manzili kiritilishi kerak.");
   }
-  if (!mobileSource && normalized.streamMode === "rtsp" && !normalized.streamUrl) {
+  if (normalized.streamMode === "rtsp" && !normalized.streamUrl) {
     throw new Error("RTSP rejimida `streamUrl` majburiy.");
-  }
-  if (mobileSource && !normalized.workerIds.length) {
-    throw new Error("Telefon kamerasi rejimi uchun kamida bitta ishchi biriktiring.");
   }
   if (normalized.autoSyncWorkLog && !normalized.workerIds.length) {
     throw new Error("Auto work log uchun kameraga 1-10 ta ishchi biriktiring.");
@@ -2337,15 +2310,11 @@ function createCameraRuntime(monitor, counter = null) {
     lastCountAt: counter?.lastCountAt ? new Date(counter.lastCountAt) : null,
     lastError: counter?.lastError || "",
     lastWarning: counter?.lastWarning || "",
-    status: monitor.enabled ? (isMobileCameraMonitor(monitor) ? "waiting_mobile" : "starting") : "disabled",
+    status: monitor.enabled ? "starting" : "disabled",
     workLogId: counter?.workLogId || "",
     frameWidth: 0,
     frameHeight: 0,
     needsWorkLogRefresh: true,
-    lastPreviewBuffer: null,
-    lastPreviewContentType: "image/jpeg",
-    lastPreviewUpdatedAt: null,
-    mobileSession: null,
   };
 }
 
@@ -2371,7 +2340,7 @@ async function persistCameraRuntime(runtime) {
     date: runtime.dateKey || getYmd(),
     quantity: Math.max(0, Math.round(runtime.count || 0)),
     workLogId: runtime.workLogId || "",
-    status: runtime.status || (isMobileCameraMonitor(runtime.monitor) ? "waiting_mobile" : "idle"),
+    status: runtime.status || "idle",
     lastError: runtime.lastError || "",
     lastWarning: runtime.lastWarning || "",
     lastFrameAt: runtime.lastFrameAt || null,
@@ -2381,108 +2350,8 @@ async function persistCameraRuntime(runtime) {
   });
 }
 
-async function syncCameraRuntimeDate(runtime) {
-  const currentDate = getYmd();
-  if (runtime.dateKey === currentDate) {
-    return;
-  }
-
-  const counter = await getCameraCountRecord(runtime.monitor.id, currentDate);
-  runtime.dateKey = currentDate;
-  runtime.count = Math.max(0, Math.round(counter?.quantity || 0));
-  runtime.workLogId = counter?.workLogId || "";
-  runtime.previousGray = null;
-  runtime.tracks = [];
-  runtime.nextTrackId = 1;
-  runtime.needsWorkLogRefresh = true;
-}
-
-function activeCameraMobileSession(runtime, now = Date.now()) {
-  const lastSeenAt = cameraDateMs(runtime?.mobileSession?.lastSeenAt);
-  if (!runtime?.mobileSession?.workerId || !lastSeenAt) {
-    return null;
-  }
-  if (now - lastSeenAt > CAMERA_MOBILE_SESSION_TTL_MS) {
-    return null;
-  }
-  return {
-    workerId: normalizeIdString(runtime.mobileSession.workerId),
-    fullName: runtime.mobileSession.fullName || "",
-    lastSeenAt: runtime.mobileSession.lastSeenAt,
-  };
-}
-
-async function ingestCameraFrame(runtime, frame, options = {}) {
-  await syncCameraRuntimeDate(runtime);
-
-  const processed = await processCameraFrameBuffer(frame.buffer);
-  runtime.frameWidth = processed.width;
-  runtime.frameHeight = processed.height;
-  runtime.lastFrameAt = new Date();
-  runtime.lastError = "";
-  runtime.lastPreviewBuffer = options.previewBuffer || frame.buffer;
-  runtime.lastPreviewContentType = options.previewContentType || frame.contentType || "image/jpeg";
-  runtime.lastPreviewUpdatedAt = runtime.lastFrameAt;
-
-  if (options.mobileSession) {
-    runtime.mobileSession = {
-      workerId: normalizeIdString(options.mobileSession.workerId),
-      fullName: options.mobileSession.fullName || "",
-      lastSeenAt: runtime.lastFrameAt,
-    };
-  }
-
-  let increment = 0;
-  if (runtime.previousGray && runtime.previousGray.length === processed.gray.length) {
-    const detectionState = collectCameraDetections(
-      processed.gray,
-      runtime.previousGray,
-      processed.width,
-      processed.height,
-      runtime.monitor,
-    );
-    increment = updateCameraTracks(runtime, detectionState.detections, detectionState.line);
-  } else {
-    runtime.tracks = [];
-  }
-
-  runtime.previousGray = processed.gray;
-
-  if (increment > 0) {
-    runtime.count = Math.max(0, Math.round(runtime.count + increment));
-    runtime.lastCountAt = new Date();
-    runtime.needsWorkLogRefresh = true;
-  }
-
-  if (runtime.needsWorkLogRefresh) {
-    const syncResult = await syncCameraWorkLogFromMonitor(
-      runtime.monitor,
-      runtime.dateKey,
-      Math.max(0, Math.round(runtime.count || 0)),
-    );
-    runtime.workLogId = syncResult.workLogId || runtime.workLogId || "";
-    runtime.lastWarning = syncResult.warning || "";
-    runtime.needsWorkLogRefresh = false;
-  }
-
-  runtime.status = "running";
-  await persistCameraRuntime(runtime);
-
-  return {
-    increment,
-    count: runtime.count,
-    workLogId: runtime.workLogId || "",
-  };
-}
-
 function scheduleCameraRuntime(runtime, delay = null) {
   if (!runtime?.active) {
-    return;
-  }
-  if (isMobileCameraMonitor(runtime.monitor)) {
-    if (!runtime.status || runtime.status === "starting") {
-      runtime.status = "waiting_mobile";
-    }
     return;
   }
   if (runtime.timer) {
@@ -2502,19 +2371,63 @@ async function runCameraRuntime(runtime) {
   if (!runtime?.active) {
     return;
   }
-  if (isMobileCameraMonitor(runtime.monitor)) {
-    runtime.status = "waiting_mobile";
-    await persistCameraRuntime(runtime);
-    return;
+
+  const currentDate = getYmd();
+  if (runtime.dateKey !== currentDate) {
+    const counter = await getCameraCountRecord(runtime.monitor.id, currentDate);
+    runtime.dateKey = currentDate;
+    runtime.count = Math.max(0, Math.round(counter?.quantity || 0));
+    runtime.workLogId = counter?.workLogId || "";
+    runtime.previousGray = null;
+    runtime.tracks = [];
+    runtime.nextTrackId = 1;
+    runtime.needsWorkLogRefresh = true;
   }
 
   try {
     runtime.status = "capturing";
     const frame = await fetchCameraFrame(runtime.monitor);
-    await ingestCameraFrame(runtime, frame, {
-      previewBuffer: frame.buffer,
-      previewContentType: frame.contentType,
-    });
+    const processed = await processCameraFrameBuffer(frame.buffer);
+    runtime.frameWidth = processed.width;
+    runtime.frameHeight = processed.height;
+    runtime.lastFrameAt = new Date();
+    runtime.lastError = "";
+    let increment = 0;
+
+    if (runtime.previousGray && runtime.previousGray.length === processed.gray.length) {
+      const detectionState = collectCameraDetections(
+        processed.gray,
+        runtime.previousGray,
+        processed.width,
+        processed.height,
+        runtime.monitor,
+      );
+      increment = updateCameraTracks(runtime, detectionState.detections, detectionState.line);
+    } else {
+      runtime.tracks = [];
+    }
+
+    runtime.previousGray = processed.gray;
+
+    if (increment > 0) {
+      runtime.count = Math.max(0, Math.round(runtime.count + increment));
+      runtime.lastCountAt = new Date();
+      runtime.needsWorkLogRefresh = true;
+    }
+
+    if (runtime.needsWorkLogRefresh) {
+      const syncResult = await syncCameraWorkLogFromMonitor(
+        runtime.monitor,
+        runtime.dateKey,
+        Math.max(0, Math.round(runtime.count || 0)),
+      );
+      runtime.workLogId = syncResult.workLogId || runtime.workLogId || "";
+      runtime.lastWarning = syncResult.warning || "";
+      runtime.needsWorkLogRefresh = false;
+    }
+
+    runtime.status = "running";
+    await persistCameraRuntime(runtime);
   } catch (error) {
     runtime.status = "error";
     runtime.lastError = error.message || "Kamera xatosi.";
@@ -2571,55 +2484,14 @@ async function reloadCameraMonitorService() {
       if (!runtime) {
         runtime = createCameraRuntime(monitor, counter);
         cameraMonitorService.runtimes.set(monitor.id, runtime);
+        scheduleCameraRuntime(runtime, 50);
       } else {
-        const sourceChanged = normalizeCameraStreamMode(runtime.monitor.streamMode, "snapshot")
-          !== normalizeCameraStreamMode(monitor.streamMode, "snapshot");
         runtime.monitor = monitor;
         runtime.active = true;
         runtime.needsWorkLogRefresh = true;
-        if (sourceChanged) {
-          runtime.previousGray = null;
-          runtime.tracks = [];
-          runtime.nextTrackId = 1;
-          runtime.lastPreviewBuffer = null;
-          runtime.lastPreviewUpdatedAt = null;
-          runtime.mobileSession = null;
-        }
-        if (!isMobileCameraMonitor(monitor)) {
-          runtime.mobileSession = null;
-        }
-        runtime.status = runtime.status === "error"
-          ? (isMobileCameraMonitor(monitor) ? "waiting_mobile" : "starting")
-          : runtime.status;
+        runtime.status = runtime.status === "error" ? "starting" : runtime.status;
+        scheduleCameraRuntime(runtime, 50);
       }
-
-      if (isMobileCameraMonitor(monitor)) {
-        if (!counter) {
-          await setCameraCountRecord({
-            monitorId: monitor.id,
-            monitorName: monitor.name,
-            areaName: monitor.areaName,
-            workType: monitor.workType,
-            date: getYmd(),
-            quantity: 0,
-            workLogId: "",
-            status: "waiting_mobile",
-            lastError: "",
-            lastWarning: "",
-            lastFrameAt: null,
-            lastCountAt: null,
-            workerIds: monitor.workerIds || [],
-            updatedAt: new Date(),
-            createdAt: new Date(),
-          }).catch(() => null);
-        } else if (!runtime.lastFrameAt) {
-          runtime.status = "waiting_mobile";
-        }
-        await persistCameraRuntime(runtime).catch(() => null);
-        continue;
-      }
-
-      scheduleCameraRuntime(runtime, 50);
     }
 
     for (const id of [...cameraMonitorService.runtimes.keys()]) {
@@ -2688,44 +2560,23 @@ async function buildCameraMonitorsPayload(date = getYmd()) {
   const counterMap = new Map(counters.map((item) => [item.monitorId, item]));
   const workerIds = [...new Set(system.monitors.flatMap((item) => item.workerIds || []))];
   const workerMap = await getUserMapByIds(workerIds);
-  const now = Date.now();
 
   return system.monitors.map((monitor) => {
     const runtime = cameraMonitorService.runtimes.get(monitor.id);
     const counter = counterMap.get(monitor.id) || null;
     const workers = (monitor.workerIds || []).map((item) => workerMap.get(item)).filter(Boolean);
-    const lastFrameAt = runtime?.lastFrameAt || counter?.lastFrameAt || null;
-    const lastCountAt = runtime?.lastCountAt || counter?.lastCountAt || null;
-    let status = runtime?.status || counter?.status || (monitor.enabled ? "idle" : "disabled");
-    let lastWarning = runtime?.lastWarning || counter?.lastWarning || "";
-    const mobileSession = activeCameraMobileSession(runtime, now);
-
-    if (monitor.enabled && isMobileCameraMonitor(monitor)) {
-      const staleAfterMs = cameraMobileStaleAfterMs(monitor);
-      const lastFrameMs = cameraDateMs(lastFrameAt);
-      if (!lastFrameMs || now - lastFrameMs > staleAfterMs) {
-        status = "waiting_mobile";
-        if (!lastWarning) {
-          lastWarning = "Telefon kamerasi kutilmoqda.";
-        }
-      } else {
-        status = "running";
-      }
-    }
-
     return {
       ...monitor,
       workers,
       countToday: Math.max(0, Math.round(runtime?.count ?? counter?.quantity ?? 0)),
-      status,
+      status: runtime?.status || counter?.status || (monitor.enabled ? "idle" : "disabled"),
       lastError: runtime?.lastError || counter?.lastError || "",
-      lastWarning,
-      lastFrameAt,
-      lastCountAt,
+      lastWarning: runtime?.lastWarning || counter?.lastWarning || "",
+      lastFrameAt: runtime?.lastFrameAt || counter?.lastFrameAt || null,
+      lastCountAt: runtime?.lastCountAt || counter?.lastCountAt || null,
       workLogId: runtime?.workLogId || counter?.workLogId || "",
       frameWidth: runtime?.frameWidth || 0,
       frameHeight: runtime?.frameHeight || 0,
-      mobileSession,
     };
   });
 }
@@ -5458,36 +5309,6 @@ async function handleFinanceSettingsUpdate(request, response) {
   sendJson(response, 200, { ok: true, settings });
 }
 
-function decodeBase64ImagePayload(value) {
-  const raw = String(value || "").trim();
-  if (!raw) {
-    throw new Error("Kamera rasmi yuborilmadi.");
-  }
-
-  let contentType = "image/jpeg";
-  let base64 = raw;
-  const dataUrlMatch = raw.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/);
-  if (dataUrlMatch) {
-    contentType = safeString(dataUrlMatch[1], 80) || contentType;
-    [, , base64] = dataUrlMatch;
-  }
-
-  const buffer = Buffer.from(base64.replace(/\s+/g, ""), "base64");
-  if (!buffer.length) {
-    throw new Error("Telefon kamerasi rasmi o'qilmadi.");
-  }
-
-  return {
-    buffer,
-    contentType,
-  };
-}
-
-async function getCameraMonitorById(id) {
-  const system = await getCameraSystemSettings();
-  return system.monitors.find((item) => item.id === id) || null;
-}
-
 async function resolveRequestedCameraMonitor(urlObject) {
   const system = await getCameraSystemSettings();
   const monitorId = safeString(urlObject.searchParams.get("monitorId"), 40);
@@ -5526,31 +5347,14 @@ async function handleCameraSettingsUpdate(request, response) {
 }
 
 async function handleCameraMonitorsList(request, response, urlObject) {
-  const auth = await requireAuth(request, response, ["admin", "organizer", "worker"]);
+  const auth = await requireAuth(request, response, ["admin"]);
   if (!auth) {
     return;
   }
 
   const date = safeString(urlObject.searchParams.get("date"), 10) || getYmd();
-  const mine = parseBoolean(urlObject.searchParams.get("mine"), false);
-  const streamMode = normalizeCameraStreamMode(urlObject.searchParams.get("streamMode"), "");
-  const viewerId = normalizeIdString(auth.user._id);
-  let items = await buildCameraMonitorsPayload(date);
-
-  if (auth.user.role === "worker" || mine) {
-    items = items.filter((item) => (item.workerIds || []).some((workerId) => normalizeIdString(workerId) === viewerId));
-  }
-
-  if (auth.user.role === "worker") {
-    items = items.filter((item) => item.enabled);
-  }
-
-  if (streamMode) {
-    items = items.filter((item) => item.streamMode === streamMode);
-  }
-
   sendJson(response, 200, {
-    items,
+    items: await buildCameraMonitorsPayload(date),
     date,
   });
 }
@@ -5631,104 +5435,12 @@ async function handleCameraFrame(request, response, urlObject) {
   }
 
   try {
-    if (isMobileCameraMonitor(monitor)) {
-      const runtime = cameraMonitorService.runtimes.get(monitor.id);
-      const previewBuffer = runtime?.lastPreviewBuffer;
-      const previewUpdatedAt = cameraDateMs(runtime?.lastPreviewUpdatedAt || runtime?.lastFrameAt);
-      if (!previewBuffer || !previewUpdatedAt || Date.now() - previewUpdatedAt > cameraMobileStaleAfterMs(monitor) * 2) {
-        return sendJson(response, 404, { error: "Telefon kamerasi hali jonli frame yubormagan." });
-      }
-      return sendBuffer(response, 200, previewBuffer, runtime?.lastPreviewContentType || "image/jpeg", {
-        "Cache-Control": "no-store, max-age=0",
-      });
-    }
-
     const frame = await fetchCameraFrame(monitor);
     return sendBuffer(response, 200, frame.buffer, frame.contentType, {
       "Cache-Control": "no-store, max-age=0",
     });
   } catch (error) {
     return sendJson(response, 502, { error: error.message || "Kamera frame olib bo'lmadi." });
-  }
-}
-
-async function handleCameraMobileFrameUpload(request, response, id) {
-  const auth = await requireAuth(request, response, ["admin", "worker"]);
-  if (!auth) {
-    return;
-  }
-
-  const monitor = await getCameraMonitorById(id);
-  if (!monitor) {
-    return sendJson(response, 404, { error: "Kamera topilmadi." });
-  }
-  if (!monitor.enabled) {
-    return sendJson(response, 400, { error: "Kamera hali yoqilmagan." });
-  }
-  if (!isMobileCameraMonitor(monitor)) {
-    return sendJson(response, 400, { error: "Bu kamera telefon browser rejimida emas." });
-  }
-
-  const viewerId = normalizeIdString(auth.user._id);
-  if (auth.user.role === "worker" && !(monitor.workerIds || []).some((workerId) => normalizeIdString(workerId) === viewerId)) {
-    return sendJson(response, 403, { error: "Bu kamera sizga biriktirilmagan." });
-  }
-
-  try {
-    const body = await readBody(request);
-    const frame = decodeBase64ImagePayload(body.imageBase64 || body.frame || body.imageData);
-    let runtime = cameraMonitorService.runtimes.get(monitor.id);
-
-    if (!runtime) {
-      await reloadCameraMonitorService();
-      runtime = cameraMonitorService.runtimes.get(monitor.id);
-    }
-    if (!runtime) {
-      runtime = createCameraRuntime(monitor, await getCameraCountRecord(monitor.id, getYmd()));
-      cameraMonitorService.runtimes.set(monitor.id, runtime);
-    }
-
-    runtime.monitor = monitor;
-    runtime.active = true;
-
-    const activeSession = activeCameraMobileSession(runtime);
-    if (
-      auth.user.role === "worker" &&
-      activeSession &&
-      activeSession.workerId !== viewerId
-    ) {
-      const sessionOwner = activeSession.fullName || "boshqa ishchi";
-      return sendJson(response, 409, {
-        error: `Bu kamera hozir ${sessionOwner} telefoniga ulangan. Avval o'sha sessiyani to'xtating yoki 15 soniya kuting.`,
-      });
-    }
-
-    runtime.status = "capturing";
-    const result = await ingestCameraFrame(runtime, frame, {
-      previewBuffer: frame.buffer,
-      previewContentType: frame.contentType,
-      mobileSession: {
-        workerId: viewerId,
-        fullName: auth.user.fullName || auth.user.username || "Ishchi",
-      },
-    });
-
-    const payload = await buildCameraMonitorsPayload(getYmd());
-    const item = payload.find((entry) => entry.id === monitor.id) || null;
-    return sendJson(response, 200, {
-      ok: true,
-      item,
-      increment: result.increment,
-      count: result.count,
-    });
-  } catch (error) {
-    const runtime = cameraMonitorService.runtimes.get(monitor.id);
-    if (runtime) {
-      runtime.status = "error";
-      runtime.lastError = error.message || "Telefon kamerasi frame xatosi.";
-      await persistCameraRuntime(runtime).catch(() => null);
-    }
-    return sendJson(response, 400, { error: error.message || "Telefon kamerasi frame yuborilmadi." });
   }
 }
 
@@ -6322,11 +6034,6 @@ async function handleApi(request, response, urlObject) {
 
   if (pathname === "/api/cameras" && request.method === "POST") {
     return handleCameraMonitorCreate(request, response);
-  }
-
-  if (pathname.startsWith("/api/cameras/") && pathname.endsWith("/mobile-frame") && request.method === "POST") {
-    const parts = pathname.split("/");
-    return handleCameraMobileFrameUpload(request, response, parts[3]);
   }
 
   if (pathname.startsWith("/api/cameras/") && pathname.endsWith("/reset") && request.method === "POST") {
